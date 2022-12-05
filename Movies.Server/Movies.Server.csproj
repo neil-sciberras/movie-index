@@ -53,10 +53,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Movies.AppInfo\Movies.AppInfo.csproj" />
     <ProjectReference Include="..\Movies.Contracts\Movies.Contracts.csproj" />
     <ProjectReference Include="..\Movies.GrainClients\Movies.GrainClients.csproj" />
     <ProjectReference Include="..\Movies.Grains\Movies.Grains.csproj" />
-    <ProjectReference Include="..\Movies.ServiceHosting\Movies.AppInfo.csproj" />
     <ProjectReference Include="..\Movies.Utils\Movies.Utils.csproj" />
   </ItemGroup>
 
