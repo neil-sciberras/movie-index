@@ -5,8 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Movies.Core;
-using Movies.Core.Hosting;
+using Movies.AppInfo;
 using Orleans;
 using Serilog;
 using System.Diagnostics;
@@ -14,14 +13,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
-namespace Movies.Server
+namespace Movies.Server.ApiHostedService
 {
-	public class ApiHostedServiceOptions
-	{
-		//public string PathString { get; set; } = "/health";
-		public int Port { get; set; } = 8880;
-	}
-
 	public class ApiHostedService : IHostedService
 	{
 		private readonly IAppInfo _appInfo;
@@ -39,8 +32,10 @@ namespace Movies.Server
 		{
 			_appInfo = appInfo;
 			_logger = logger;
+
 			logger.LogInformation("Initializing api {appName} ({version}) [{env}] on port {apiPort}...",
 				appInfo.Name, appInfo.Version, appInfo.Environment, options.Value.Port);
+			
 			ConsoleTitleBuilder.Append(() => $"(Api port: {options.Value.Port} | pid: {Process.GetCurrentProcess().Id})");
 
 			_host = WebHost.CreateDefaultBuilder()
@@ -66,7 +61,9 @@ namespace Movies.Server
 		{
 			_logger.LogInformation("App started successfully {appName} ({version}) [{env}]",
 				_appInfo.Name, _appInfo.Version, _appInfo.Environment);
+
 			await _host.StartAsync(cancellationToken);
+			
 			ConsoleTitleBuilder.Append("- Api status: running 🚀");
 		}
 

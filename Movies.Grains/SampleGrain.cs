@@ -8,8 +8,7 @@ namespace Movies.Grains
 	[StorageProvider(ProviderName = "Default")]
 	public class SampleGrain : Grain<SampleDataModel>, ISampleGrain
 	{
-		public Task<SampleDataModel> Get()
-			=> Task.FromResult(State);
+		public Task<SampleDataModel> Get() => Task.FromResult(State);
 
 		public Task Set(string name)
 		{

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-// ReSharper disable once CheckNamespace
-namespace Movies.Core
+namespace Movies.Extensions
 {
 	public static class StringExtensions
 	{

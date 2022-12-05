@@ -2,8 +2,7 @@
 using System.Collections.Concurrent;
 using System.Text;
 
-// ReSharper disable once CheckNamespace
-namespace Movies.Core
+namespace Movies.Extensions
 {
 	public static class ReflectionExtensions
 	{

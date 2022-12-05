@@ -4,8 +4,7 @@ using GraphQL.Types;
 using GraphQL.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Movies.Core;
-using Movies.Core.Web;
+using Movies.Extensions;
 
 namespace Movies.Server.Gql
 {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Movies.Core;
+using Movies.AppInfo;
 using Orleans;
 using System;
 
-namespace Movies.Server.Infrastructure
+namespace Movies.Server.Infrastructure.Client
 {
 	public class ClientBuilderContext
 	{

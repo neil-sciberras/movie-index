@@ -6,11 +6,10 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Movies.Core;
+using Movies.AppInfo;
 using Movies.GrainClients;
-using Movies.Server.Gql;
 using Movies.Server.Gql.App;
-using Movies.Server.Infrastructure;
+using Movies.Server.Infrastructure.Authentication;
 
 namespace Movies.Server
 {
@@ -39,8 +38,7 @@ namespace Movies.Server
 					.WithOrigins("http://localhost:4200")
 					.AllowAnyMethod()
 					.AllowAnyHeader()
-					.AllowCredentials()
-					;
+					.AllowCredentials();
 			}));
 
 			// note: to fix graphql for .net core 3
@@ -51,8 +49,7 @@ namespace Movies.Server
 
 			services.AddAppClients();
 			services.AddAppGraphQL();
-			services.AddControllers()
-			.AddNewtonsoftJson();
+			services.AddControllers().AddNewtonsoftJson();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

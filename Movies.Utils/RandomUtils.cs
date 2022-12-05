@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Movies.Core.Utils
+namespace Movies.Utils
 {
 	public static class RandomUtils
 	{

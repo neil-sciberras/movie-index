@@ -5,7 +5,7 @@ using Movies.Server.Gql.Types;
 
 namespace Movies.Server.Gql.App
 {
-	public static class AppGqlExtensions
+	public static class ServiceCollectionExtensions
 	{
 		public static void AddAppGraphQL(this IServiceCollection services)
 		{

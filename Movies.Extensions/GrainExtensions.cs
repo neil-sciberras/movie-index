@@ -1,5 +1,6 @@
-﻿// ReSharper disable once CheckNamespace
-namespace Orleans
+﻿using Orleans;
+
+namespace Movies.Extensions
 {
 	public static class GrainExtensions
 	{
@@ -9,11 +10,9 @@ namespace Orleans
 		/// <param name="grain"></param>
 		/// <returns></returns>
 		public static string GetPrimaryKeyAny(this Grain grain) //  todo: ideally this should be IGrain instead, if Grain implemented IGrain.
-		{
-			return grain.GetPrimaryKeyString()
-				   ?? (grain.IsPrimaryKeyBasedOnLong()
-					   ? grain.GetPrimaryKeyLong().ToString()
-					   : grain.GetPrimaryKey().ToString());
-		}
+			=> grain.GetPrimaryKeyString()
+			   ?? (grain.IsPrimaryKeyBasedOnLong()
+				   ? grain.GetPrimaryKeyLong().ToString()
+				   : grain.GetPrimaryKey().ToString());
 	}
 }

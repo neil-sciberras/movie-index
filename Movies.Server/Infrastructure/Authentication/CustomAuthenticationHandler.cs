@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
-namespace Movies.Server.Infrastructure
+namespace Movies.Server.Infrastructure.Authentication
 {
 	public class CustomAuthenticationHandler : AuthenticationHandler<JwtBearerOptions>
 	{
@@ -21,10 +20,8 @@ namespace Movies.Server.Infrastructure
 			IOptionsMonitor<JwtBearerOptions> options,
 			ILoggerFactory logger,
 			UrlEncoder encoder,
-			ISystemClock clock
-		) : base(options, logger, encoder, clock)
-		{
-		}
+			ISystemClock clock) 
+			: base(options, logger, encoder, clock) { }
 
 		protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
 		{
@@ -68,30 +65,5 @@ namespace Movies.Server.Infrastructure
 		};
 
 		public Task<AuthModel> GetByKey(string key) => Task.FromResult(_mockUsers.FirstOrDefault(x => x.Key == key));
-	}
-
-	public static class AuthServiceCollectionExtensions
-	{
-		public static void AddCustomAuthentication(this IServiceCollection services)
-		{
-			services.AddAuthentication(CustomAuthenticationHandler.SecretKey)
-				.AddScheme<JwtBearerOptions, CustomAuthenticationHandler>(CustomAuthenticationHandler.SecretKey, null);
-
-			services.AddAuthorization(auth =>
-			{
-				auth.AddPolicy(CustomAuthenticationHandler.SecretKey, builder =>
-				{
-					builder.AddAuthenticationSchemes(CustomAuthenticationHandler.SecretKey)
-						.RequireAuthenticatedUser();
-				});
-			});
-		}
-	}
-
-	public class AuthModel
-	{
-		public string Id { get; set; }
-		public string Name { get; set; }
-		public string Key { get; set; }
 	}
 }

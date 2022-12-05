@@ -9,9 +9,7 @@ namespace Movies.Server.Controllers
 	{
 		private readonly ISampleGrainClient _client;
 
-		public SampleDataController(
-			ISampleGrainClient client
-		)
+		public SampleDataController(ISampleGrainClient client)
 		{
 			_client = client;
 		}

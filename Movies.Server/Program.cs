@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Movies.Core;
-using Movies.Server.Infrastructure;
+using Movies.AppInfo;
+using Movies.Extensions;
 using Orleans;
 using Orleans.Hosting;
 using Serilog;
@@ -11,6 +11,9 @@ using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Movies.Grains;
+using Movies.Server.Filters;
+using Movies.Server.ApiHostedService;
+using Movies.Server.Infrastructure.Silo;
 
 namespace Movies.Server
 {
@@ -21,6 +24,7 @@ namespace Movies.Server
 			var hostBuilder = new HostBuilder();
 
 			IAppInfo appInfo = null;
+
 			hostBuilder
 				.ConfigureHostConfiguration(cfg =>
 				{
@@ -30,7 +34,7 @@ namespace Movies.Server
 				})
 				.ConfigureServices((ctx, services) =>
 				{
-					appInfo = new AppInfo(ctx.Configuration);
+					appInfo = new AppInfo.AppInfo(ctx.Configuration);
 					Console.Title = $"{appInfo.Name} - {appInfo.Environment}";
 
 					services.AddSingleton(appInfo);
@@ -46,14 +50,15 @@ namespace Movies.Server
 				})
 				.ConfigureAppConfiguration((ctx, cfg) =>
 				{
-					var shortEnvName = AppInfo.MapEnvironmentName(ctx.HostingEnvironment.EnvironmentName);
+					var shortEnvName = AppInfo.AppInfo.MapEnvironmentName(ctx.HostingEnvironment.EnvironmentName);
+					
 					cfg.AddJsonFile("appsettings.json")
 						.AddJsonFile($"appsettings.{shortEnvName}.json", optional: true)
 						.AddJsonFile("app-info.json")
 						.AddEnvironmentVariables()
 						.AddCommandLine(args);
 
-					appInfo = new AppInfo(cfg.Build());
+					appInfo = new AppInfo.AppInfo(cfg.Build());
 
 					if (!appInfo.IsDockerized) return;
 
@@ -67,7 +72,8 @@ namespace Movies.Server
 				})
 				.UseSerilog((ctx, loggerConfig) =>
 				{
-					loggerConfig.Enrich.FromLogContext()
+					loggerConfig
+						.Enrich.FromLogContext()
 						.ReadFrom.Configuration(ctx.Configuration)
 						.Enrich.WithMachineName()
 						.Enrich.WithDemystifiedStackTraces()
@@ -92,12 +98,12 @@ namespace Movies.Server
 							.AddApplicationPart(typeof(SampleGrain).Assembly).WithReferences()
 						)
 						.AddIncomingGrainCallFilter<LoggingIncomingCallFilter>()
-					;
+						.AddOutgoingGrainCallFilter<LoggingOutgoingCallFilter>();
 
 				})
 				.ConfigureServices((ctx, services) =>
 				{
-					services.AddHostedService<ApiHostedService>();
+					services.AddHostedService<ApiHostedService.ApiHostedService>();
 				})
 				;
 

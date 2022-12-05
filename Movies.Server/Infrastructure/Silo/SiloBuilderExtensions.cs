@@ -1,36 +1,12 @@
-﻿using Microsoft.Extensions.Hosting;
-using Movies.Core;
+﻿using Movies.AppInfo;
+using Movies.Extensions;
 using Orleans.Configuration;
 using Orleans.Hosting;
 using System;
-using System.Diagnostics;
 using System.Net;
-using HostBuilderContext = Microsoft.Extensions.Hosting.HostBuilderContext;
 
-namespace Movies.Server.Infrastructure
+namespace Movies.Server.Infrastructure.Silo
 {
-	public enum StorageProviderType
-	{
-		Memory
-	}
-
-	[DebuggerDisplay("{DebuggerDisplay,nq}")]
-	public class AppSiloOptions
-	{
-		private string DebuggerDisplay => $"GatewayPort: '{GatewayPort}', SiloPort: '{SiloPort}'";
-
-		public int GatewayPort { get; set; } = 30000;
-		public int SiloPort { get; set; } = 11111;
-		public StorageProviderType? StorageProviderType { get; set; }
-	}
-
-	public class AppSiloBuilderContext
-	{
-		public HostBuilderContext HostBuilderContext { get; set; }
-		public IAppInfo AppInfo { get; set; }
-		public AppSiloOptions SiloOptions { get; set; }
-	}
-
 	public static class SiloBuilderExtensions
 	{
 		private static StorageProviderType _defaultProviderType;
@@ -40,6 +16,7 @@ namespace Movies.Server.Infrastructure
 			_defaultProviderType = context.SiloOptions.StorageProviderType ?? StorageProviderType.Memory;
 
 			var appInfo = context.AppInfo;
+
 			siloHost
 				.AddMemoryGrainStorageAsDefault()
 				.Configure<ClusterOptions>(options =>
@@ -72,8 +49,7 @@ namespace Movies.Server.Infrastructure
 			var gatewayPort = context.SiloOptions.GatewayPort;
 
 			return siloHost
-					.UseLocalhostClustering(siloPort: siloPort, gatewayPort: gatewayPort)
-				;
+					.UseLocalhostClustering(siloPort: siloPort, gatewayPort: gatewayPort);
 		}
 
 		public static ISiloBuilder UseStorage(this ISiloBuilder siloBuilder, string storeProviderName, IAppInfo appInfo, StorageProviderType? storageProvider = null, string storeName = null)

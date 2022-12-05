@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Movies.Core.Utils;
+using Movies.Utils;
 using Orleans;
 using Orleans.Configuration;
 using System;
@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Movies.Server.Infrastructure
+namespace Movies.Server.Infrastructure.Client
 {
 	public static class ClientBuilderExtensions
 	{

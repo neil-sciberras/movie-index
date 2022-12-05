@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Movies.Extensions;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Movies.Core.Utils
+namespace Movies.Utils.StringTokenParser
 {
 	// reference: https://gist.github.com/wcharczuk/2284226.
 	/// <summary>

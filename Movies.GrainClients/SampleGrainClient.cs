@@ -8,9 +8,7 @@ namespace Movies.GrainClients
 	{
 		private readonly IGrainFactory _grainFactory;
 
-		public SampleGrainClient(
-			IGrainFactory grainFactory
-		)
+		public SampleGrainClient(IGrainFactory grainFactory)
 		{
 			_grainFactory = grainFactory;
 		}

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Movies.Core.Hosting
+namespace Movies.Server.ApiHostedService
 {
 	/// <summary>
 	/// Class to be able to set console title easier.

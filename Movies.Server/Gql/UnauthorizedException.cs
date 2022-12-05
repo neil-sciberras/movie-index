@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Movies.Core.Web
+namespace Movies.Server.Gql
 {
 	public class UnauthorizedException : Exception
 	{

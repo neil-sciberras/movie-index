@@ -1,6 +1,7 @@
-﻿using Serilog;
+﻿using Movies.AppInfo;
+using Serilog;
 
-namespace Movies.Core
+namespace Movies.Extensions
 {
 	public static class LoggingExtensions
 	{
