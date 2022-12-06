@@ -10,7 +10,7 @@ using Microsoft.OpenApi.Models;
 using Movies.AppInfo;
 using Movies.GrainClients;
 using Movies.GraphQL.App;
-using Movies.Server.Infrastructure.Authentication;
+using Movies.Infrastructure.Authentication;
 
 namespace Movies.Server
 {

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Movies.Server.Infrastructure.Authentication;
+namespace Movies.Infrastructure.Authentication;
 
 public static class AuthServiceCollectionExtensions
 {

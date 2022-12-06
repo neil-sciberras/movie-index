@@ -2,13 +2,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 
-namespace Movies.Server.Infrastructure.Authentication
+namespace Movies.Infrastructure.Authentication
 {
 	public class CustomAuthenticationHandler : AuthenticationHandler<JwtBearerOptions>
 	{

@@ -1,4 +1,4 @@
-namespace Movies.Server.Infrastructure.Authentication;
+namespace Movies.Infrastructure.Authentication;
 
 public class AuthModel
 {
