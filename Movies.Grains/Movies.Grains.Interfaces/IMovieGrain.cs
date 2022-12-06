@@ -6,7 +6,7 @@ namespace Movies.Grains.Interfaces
 {
 	public interface IMovieGrain : IGrainWithIntegerKey
 	{
-		Task<Movie> Get(int id);
-		Task Set(Movie movie);
+		Task<Movie> GetAsync();
+		Task SetAsync(Movie movie);
 	}
 }

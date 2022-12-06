@@ -1,9 +1,7 @@
 ﻿using Movies.Contracts.Models;
 using Movies.Grains.Interfaces;
-using Movies.Infrastructure.FileSystem;
 using Orleans;
 using Orleans.Runtime;
-using System;
 using System.Threading.Tasks;
 
 namespace Movies.Grains
@@ -17,9 +15,16 @@ namespace Movies.Grains
 			_state = state;
 		}
 
-		public Task<Movie> Get(int id) => throw new NotImplementedException();
+		public Task<Movie> GetAsync()
+		{
+			return Task.FromResult(_state.State);
+		}
 
-		public Task Set(Movie movie) => throw new NotImplementedException();
+		public Task SetAsync(Movie movie)
+		{
+			_state.State = movie;
+			return Task.CompletedTask;
+		}
 		
 		
 	}

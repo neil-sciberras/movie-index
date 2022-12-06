@@ -1,5 +1,7 @@
 ﻿using Movies.AppInfo;
+using Movies.Contracts.Grains;
 using Movies.Extensions;
+using Movies.Infrastructure.Orleans.StorageProviders;
 using Orleans.Configuration;
 using Orleans.Hosting;
 using System;
@@ -19,16 +21,20 @@ namespace Movies.Infrastructure.Orleans.Silo
 
 			siloHost
 				.AddMemoryGrainStorageAsDefault()
+				.UseStorage(
+					storeProviderName: GrainStorageNames.FileStorage, 
+					appInfo: context.AppInfo, 
+					storageProvider: StorageProviderType.File, 
+					storeName: context.SiloOptions.StorageFileName)
 				.Configure<ClusterOptions>(options =>
 				{
 					options.ClusterId = appInfo.ClusterId;
 					options.ServiceId = appInfo.Name;
 				});
 
-			siloHost.UseDevelopment(context);
-			siloHost.UseDevelopmentClustering(context);
-
-			return siloHost;
+			return siloHost
+				.UseDevelopment(context)
+				.UseDevelopmentClustering(context);
 		}
 
 		private static ISiloBuilder UseDevelopment(this ISiloBuilder siloHost, AppSiloBuilderContext context)
@@ -52,7 +58,7 @@ namespace Movies.Infrastructure.Orleans.Silo
 					.UseLocalhostClustering(siloPort: siloPort, gatewayPort: gatewayPort);
 		}
 
-		public static ISiloBuilder UseStorage(this ISiloBuilder siloBuilder, string storeProviderName, IAppInfo appInfo, StorageProviderType? storageProvider = null, string storeName = null)
+		private static ISiloBuilder UseStorage(this ISiloBuilder siloBuilder, string storeProviderName, IAppInfo appInfo, StorageProviderType? storageProvider = null, string storeName = null)
 		{
 			storeName = storeName.IfNullOrEmptyReturn(storeProviderName);
 			storageProvider ??= _defaultProviderType;
@@ -62,6 +68,15 @@ namespace Movies.Infrastructure.Orleans.Silo
 				case StorageProviderType.Memory:
 					siloBuilder.AddMemoryGrainStorage(storeProviderName);
 					break;
+
+				case StorageProviderType.File:
+					siloBuilder.AddFileGrainStorage(storeProviderName, options =>
+					{
+						options.RootDirectory = "../../../..";
+						options.FileName = storeName;
+					});
+					break;
+
 				default:
 					throw new ArgumentOutOfRangeException(nameof(storageProvider), $"Storage provider '{storageProvider}' is not supported.");
 			}

@@ -93,13 +93,9 @@ namespace Movies.Server
 							SiloOptions = new AppSiloOptions
 							{
 								SiloPort = GetAvailablePort(11111, 12000),
-								GatewayPort = 30001
+								GatewayPort = 30001,
+								StorageFileName = ctx.Configuration.GetSection("moviesFileName").Value
 							}
-						})
-						.AddFileGrainStorage(providerName: "File", options =>
-						{
-							options.RootDirectory = "../../../..";
-							options.FileName = ctx.Configuration.GetSection("moviesFileName").Value;
 						})
 						.ConfigureApplicationParts(parts => parts
 							.AddApplicationPart(typeof(SampleGrain).Assembly).WithReferences()

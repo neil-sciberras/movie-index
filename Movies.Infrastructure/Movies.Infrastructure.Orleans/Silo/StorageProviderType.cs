@@ -2,6 +2,7 @@ namespace Movies.Infrastructure.Orleans.Silo
 {
 	public enum StorageProviderType
 	{
-		Memory
+		Memory,
+		File
 	}
 }

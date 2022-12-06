@@ -10,5 +10,6 @@ namespace Movies.Infrastructure.Orleans.Silo
 		public int GatewayPort { get; set; } = 30000;
 		public int SiloPort { get; set; } = 11111;
 		public StorageProviderType? StorageProviderType { get; set; }
+		public string StorageFileName { get; set; } 
 	}
 }

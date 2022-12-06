@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Movies.AppInfo\Movies.AppInfo.csproj" />
+    <ProjectReference Include="..\..\Movies.Contracts\Movies.Contracts.csproj" />
     <ProjectReference Include="..\..\Movies.Utils\Movies.Utils.csproj" />
   </ItemGroup>
 
