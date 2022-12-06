@@ -1,6 +1,6 @@
 ﻿using GraphQL.Types;
 
-namespace Movies.Server.Gql.App
+namespace Movies.GraphQL.App
 {
 	public class AppGraphMutation : ObjectGraphType
 	{

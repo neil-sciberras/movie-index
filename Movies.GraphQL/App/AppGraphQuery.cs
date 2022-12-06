@@ -1,8 +1,8 @@
 ﻿using GraphQL.Types;
 using Movies.Contracts;
-using Movies.Server.Gql.Types;
+using Movies.GraphQL.Types;
 
-namespace Movies.Server.Gql.App
+namespace Movies.GraphQL.App
 {
 	public class AppGraphQuery : ObjectGraphType
 	{

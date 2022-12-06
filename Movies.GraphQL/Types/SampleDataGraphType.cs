@@ -1,7 +1,7 @@
 ﻿using GraphQL.Types;
 using Movies.Contracts;
 
-namespace Movies.Server.Gql.Types
+namespace Movies.GraphQL.Types
 {
 	public class SampleDataGraphType : ObjectGraphType<SampleDataModel>
 	{

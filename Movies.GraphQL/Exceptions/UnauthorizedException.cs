@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Movies.Server.Gql
+namespace Movies.GraphQL.Exceptions
 {
 	public class UnauthorizedException : Exception
 	{

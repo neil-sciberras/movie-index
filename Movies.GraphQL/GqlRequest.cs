@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace Movies.Server.Gql
+namespace Movies.GraphQL
 {
 	public class GqlRequest
 	{

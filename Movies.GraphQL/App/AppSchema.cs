@@ -1,8 +1,8 @@
-﻿using System;
-using GraphQL.Types;
+﻿using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
-namespace Movies.Server.Gql.App
+namespace Movies.GraphQL.App
 {
 	public class AppSchema : Schema
 	{

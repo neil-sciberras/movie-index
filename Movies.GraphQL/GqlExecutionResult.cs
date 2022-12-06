@@ -1,11 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using GraphQL;
+﻿using GraphQL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Threading.Tasks;
 
-namespace Movies.Server.Gql
+namespace Movies.GraphQL
 {
 	public class GqlExecutionResult : ActionResult
 	{

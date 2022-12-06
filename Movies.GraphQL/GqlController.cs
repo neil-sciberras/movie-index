@@ -1,15 +1,15 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using GraphQL;
+﻿using GraphQL;
 using GraphQL.NewtonsoftJson;
 using GraphQL.Types;
 using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Movies.Server.Gql
+namespace Movies.GraphQL
 {
 	[Route("api/graphql")]
 	[Route("graphql")]

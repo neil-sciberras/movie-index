@@ -1,12 +1,13 @@
-﻿using System.Net;
-using GraphQL;
+﻿using GraphQL;
 using GraphQL.Types;
 using GraphQL.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Movies.Extensions;
+using Movies.GraphQL.Exceptions;
+using System.Net;
 
-namespace Movies.Server.Gql
+namespace Movies.GraphQL
 {
 	/// <summary>
 	/// GraphQL extensions.

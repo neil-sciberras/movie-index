@@ -1,9 +1,9 @@
 ﻿using GraphQL.Server;
 using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
-using Movies.Server.Gql.Types;
+using Movies.GraphQL.Types;
 
-namespace Movies.Server.Gql.App
+namespace Movies.GraphQL.App
 {
 	public static class ServiceCollectionExtensions
 	{
