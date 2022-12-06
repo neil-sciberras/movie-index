@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Movies.Server.Infrastructure.Client
+namespace Movies.Infrastructure.Orleans.Client
 {
 	public static class ClientBuilderExtensions
 	{

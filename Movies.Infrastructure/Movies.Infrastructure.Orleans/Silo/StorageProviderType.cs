@@ -1,4 +1,4 @@
-namespace Movies.Server.Infrastructure.Silo
+namespace Movies.Infrastructure.Orleans.Silo
 {
 	public enum StorageProviderType
 	{

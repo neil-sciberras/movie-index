@@ -11,9 +11,9 @@ using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Movies.Grains;
-using Movies.Server.Filters;
+using Movies.Infrastructure.Orleans.Filters;
 using Movies.Server.ApiHostedService;
-using Movies.Server.Infrastructure.Silo;
+using Movies.Infrastructure.Orleans.Silo;
 
 namespace Movies.Server
 {

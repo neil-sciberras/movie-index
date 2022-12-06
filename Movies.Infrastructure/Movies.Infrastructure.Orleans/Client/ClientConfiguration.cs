@@ -1,4 +1,4 @@
-﻿namespace Movies.Server.Infrastructure.Client
+﻿namespace Movies.Infrastructure.Orleans.Client
 {
 	public class ClientConfiguration
 	{

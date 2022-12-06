@@ -60,6 +60,7 @@
     <ProjectReference Include="..\Movies.Grains\Movies.Grains.csproj" />
     <ProjectReference Include="..\Movies.GraphQL\Movies.GraphQL.csproj" />
     <ProjectReference Include="..\Movies.Infrastructure\Movies.Infrastructure.Authentication\Movies.Infrastructure.Authentication.csproj" />
+    <ProjectReference Include="..\Movies.Infrastructure\Movies.Infrastructure.Orleans\Movies.Infrastructure.Orleans.csproj" />
     <ProjectReference Include="..\Movies.Utils\Movies.Utils.csproj" />
   </ItemGroup>
 

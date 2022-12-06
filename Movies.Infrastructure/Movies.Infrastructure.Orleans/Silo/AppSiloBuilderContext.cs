@@ -1,7 +1,7 @@
 using Movies.AppInfo;
 using HostBuilderContext = Microsoft.Extensions.Hosting.HostBuilderContext;
 
-namespace Movies.Server.Infrastructure.Silo
+namespace Movies.Infrastructure.Orleans.Silo
 {
 	public class AppSiloBuilderContext
 	{

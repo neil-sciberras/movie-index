@@ -5,7 +5,7 @@ using Orleans.Hosting;
 using System;
 using System.Net;
 
-namespace Movies.Server.Infrastructure.Silo
+namespace Movies.Infrastructure.Orleans.Silo
 {
 	public static class SiloBuilderExtensions
 	{

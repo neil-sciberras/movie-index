@@ -4,7 +4,7 @@ using Movies.AppInfo;
 using Orleans;
 using System;
 
-namespace Movies.Server.Infrastructure.Client
+namespace Movies.Infrastructure.Orleans.Client
 {
 	public class ClientBuilderContext
 	{

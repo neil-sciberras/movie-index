@@ -5,7 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Movies.Server.Filters
+namespace Movies.Infrastructure.Orleans.Filters
 {
 	public class LoggingIncomingCallFilter : IIncomingGrainCallFilter
 	{

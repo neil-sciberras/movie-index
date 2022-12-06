@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace Movies.Server.Infrastructure.Silo
+namespace Movies.Infrastructure.Orleans.Silo
 {
 	[DebuggerDisplay("{DebuggerDisplay,nq}")]
 	public class AppSiloOptions
