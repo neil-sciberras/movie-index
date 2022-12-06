@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Movies.Infrastructure.Orleans.Filters;
 using Movies.Server.ApiHostedService;
 using Movies.Infrastructure.Orleans.Silo;
+using Movies.Infrastructure.Orleans.StorageProviders;
 
 namespace Movies.Server
 {
@@ -94,6 +95,11 @@ namespace Movies.Server
 								SiloPort = GetAvailablePort(11111, 12000),
 								GatewayPort = 30001
 							}
+						})
+						.AddFileGrainStorage(providerName: "File", options =>
+						{
+							options.RootDirectory = "../../../..";
+							options.FileName = ctx.Configuration.GetSection("moviesFileName").Value;
 						})
 						.ConfigureApplicationParts(parts => parts
 							.AddApplicationPart(typeof(SampleGrain).Assembly).WithReferences()
