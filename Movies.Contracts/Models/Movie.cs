@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Movies.Contracts
+namespace Movies.Contracts.Models
 {
 	public class Movie
 	{

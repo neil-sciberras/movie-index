@@ -1,4 +1,5 @@
-﻿using Movies.Contracts;
+﻿using Movies.Contracts.Models;
+using Movies.Grains.Interfaces;
 using Orleans;
 using System.Threading.Tasks;
 

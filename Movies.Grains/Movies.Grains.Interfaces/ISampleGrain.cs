@@ -1,7 +1,8 @@
-﻿using Orleans;
+﻿using Movies.Contracts.Models;
+using Orleans;
 using System.Threading.Tasks;
 
-namespace Movies.Contracts
+namespace Movies.Grains.Interfaces
 {
 	public interface ISampleGrain : IGrainWithStringKey
 	{

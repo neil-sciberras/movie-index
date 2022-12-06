@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Movies.Contracts;
+using Movies.Contracts.Models;
+using Movies.GrainClients;
 using System.Threading.Tasks;
 
 namespace Movies.Server.Controllers

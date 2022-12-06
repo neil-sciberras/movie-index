@@ -1,4 +1,4 @@
-﻿namespace Movies.Contracts
+﻿namespace Movies.Contracts.Models
 {
 	public class SampleDataModel
 	{

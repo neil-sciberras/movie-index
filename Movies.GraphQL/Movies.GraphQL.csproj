@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Movies.Contracts\Movies.Contracts.csproj" />
     <ProjectReference Include="..\Movies.Extensions\Movies.Extensions.csproj" />
+    <ProjectReference Include="..\Movies.Grains\Movies.GrainClients\Movies.GrainClients.csproj" />
   </ItemGroup>
 
 </Project>

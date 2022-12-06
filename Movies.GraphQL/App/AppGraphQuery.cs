@@ -1,5 +1,5 @@
 ﻿using GraphQL.Types;
-using Movies.Contracts;
+using Movies.GrainClients;
 using Movies.GraphQL.Types;
 
 namespace Movies.GraphQL.App
