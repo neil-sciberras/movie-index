@@ -30,7 +30,9 @@ namespace Movies.Infrastructure.Orleans.Filters
 
 			string primaryKey = null;
 			if (context.Grain is Grain grain)
+			{
 				primaryKey = grain.GetPrimaryKeyAny();
+			}
 
 			var stopwatch = Stopwatch.StartNew();
 

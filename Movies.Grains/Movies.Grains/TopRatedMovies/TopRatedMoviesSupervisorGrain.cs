@@ -11,7 +11,7 @@ namespace Movies.Grains.TopRatedMovies
 	/// <summary>
 	/// This enables the resetting of all <see cref="ITopRatedMoviesGrain"/> states on the event of a file reload.
 	/// </summary>
-	public class TopRatedMoviesSupervisorGrain : ITopRatedMoviesSupervisorGrain
+	public class TopRatedMoviesSupervisorGrain : Grain, ITopRatedMoviesSupervisorGrain
 	{
 		private readonly IPersistentState<IEnumerable<ITopRatedMoviesGrain>> _supervisorState;
 		private readonly IGrainFactory _grainFactory;

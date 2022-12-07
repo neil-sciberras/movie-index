@@ -81,7 +81,7 @@ namespace Movies.Infrastructure.Orleans.StorageProviders
 			_jsonSerializerSettings = OrleansJsonSerializer.UpdateSerializerSettings(
 				settings: OrleansJsonSerializer.GetDefaultSerializerSettings(_typeResolver, _grainFactory),
 				useFullAssemblyNames: false,
-				indentJson: false,
+				indentJson: true,
 				typeNameHandling: null);
 
 			_fileInfo = new FileInfo(_fileGrainStorageOptions.FullFileName);

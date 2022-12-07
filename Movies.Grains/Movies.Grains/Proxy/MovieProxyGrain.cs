@@ -2,6 +2,7 @@
 using Movies.Contracts.Models;
 using Movies.Grains.Interfaces;
 using Orleans;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -48,14 +49,24 @@ namespace Movies.Grains.Proxy
 
 		public override async Task OnActivateAsync()
 		{
-			await base.OnActivateAsync();
-			
-			var movieList = await MovieListGrain.GetAllMoviesAsync();
-			
-			foreach (var movie in movieList)
+			try
 			{
-				await SetMovieGrainStateAsync(movie);
+				await base.OnActivateAsync();
+
+				var movieListGrain = _grainFactory.GetGrain<IMovieListGrain>(GrainIds.MovieListGrainId);
+				var movieList = await movieListGrain.GetAllMoviesAsync();
+
+				foreach (var movie in movieList)
+				{
+					await SetMovieGrainStateAsync(movie);
+				}
 			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+			
 		}
 
 		private async Task SetMovieGrainStateAsync(Movie movie)
