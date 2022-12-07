@@ -6,8 +6,8 @@
 
   <!-- Set common properties regarding assembly information and nuget packages -->
   <PropertyGroup>
-    <Authors>River Tech</Authors>
-    <Product>Orleans Sample</Product>
+    <Authors>Neil Sciberras</Authors>
+    <Product>Orleans and GraphQL Sample</Product>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Orleans Cloud-Computing Actor-Model Actors Distributed-Systems C# .NET Sample</PackageTags>
   </PropertyGroup>

@@ -25,7 +25,7 @@ namespace Movies.GraphQL.Schema
 					return await movieProxyGrainClient.GetMovieAsync(id);
 				});
 
-			Field<ListGraphType<MovieGraphType>, IEnumerable<Movie>>(name: "top rated movies")
+			Field<ListGraphType<MovieGraphType>, IEnumerable<Movie>>(name: "topRatedMovies")
 				.Description("Top rated movies")
 				.Argument<IntGraphType>("Amount", "The amount of movies to return from top of the list")
 				.ResolveAsync(async context =>

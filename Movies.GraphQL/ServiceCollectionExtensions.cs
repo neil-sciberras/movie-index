@@ -1,9 +1,10 @@
 ﻿using GraphQL.Server;
 using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
+using Movies.GraphQL.Schema;
 using Movies.GraphQL.Types;
 
-namespace Movies.GraphQL.Schema
+namespace Movies.GraphQL
 {
 	public static class ServiceCollectionExtensions
 	{
@@ -21,6 +22,8 @@ namespace Movies.GraphQL.Schema
 			services.AddSingleton<AppGraphMutation>();
 
 			services.AddSingleton<SampleDataGraphType>();
+			services.AddSingleton<GenreGraphType>();
+			services.AddSingleton<MovieGraphType>();
 		}
 	}
 }

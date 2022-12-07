@@ -9,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Movies.AppInfo;
 using Movies.Grains.Clients;
-using Movies.GraphQL.Schema;
+using Movies.GraphQL;
 using Movies.Infrastructure.Authentication;
 
 namespace Movies.Server
