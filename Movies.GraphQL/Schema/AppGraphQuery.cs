@@ -1,14 +1,38 @@
-﻿using GraphQL.Types;
-using Movies.GrainClients;
+﻿using GraphQL;
+using GraphQL.Types;
+using Movies.Contracts.Models;
+using Movies.Grains.Clients.Interfaces;
 using Movies.GraphQL.Types;
+using System.Collections.Generic;
 
 namespace Movies.GraphQL.Schema
 {
 	public class AppGraphQuery : ObjectGraphType
 	{
-		public AppGraphQuery(ISampleGrainClient sampleClient)
+		public AppGraphQuery(
+			ISampleGrainClient sampleClient, 
+			IMovieGrainClient movieGrainClient, 
+			ITopRatedMoviesGrainClient topRatedMoviesGrainClient)
 		{
 			Name = "AppQueries";
+
+			Field<MovieGraphType, Movie>(name: "movie")
+				.Description("A movie")
+				.Argument<IntGraphType>("Id", "Unique movie Id")
+				.ResolveAsync(async context =>
+				{
+					var id = context.GetArgument<int>("Id");
+					return await movieGrainClient.GetMovieAsync(id);
+				});
+
+			Field<ListGraphType<MovieGraphType>, IEnumerable<Movie>>(name: "top rated movies")
+				.Description("Top rated movies")
+				.Argument<IntGraphType>("Amount", "The amount of movies to return from top of the list")
+				.ResolveAsync(async context =>
+				{
+					var amount = context.GetArgument<int>("Amount");
+					return await topRatedMoviesGrainClient.GetTopRatedMovies(amount);
+				});
 
 			Field<SampleDataGraphType>("sample",
 				arguments: new QueryArguments(new QueryArgument<StringGraphType>

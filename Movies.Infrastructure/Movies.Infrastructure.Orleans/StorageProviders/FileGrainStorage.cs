@@ -65,7 +65,10 @@ namespace Movies.Infrastructure.Orleans.StorageProviders
 			grainState.ETag = _fileInfo.LastWriteTimeUtc.ToString(CultureInfo.InvariantCulture);
 		}
 
-		public Task ClearStateAsync(string grainType, GrainReference grainReference, IGrainState grainState) => throw new NotImplementedException();
+		public Task ClearStateAsync(string grainType, GrainReference grainReference, IGrainState grainState)
+		{
+			throw new NotImplementedException();
+		}
 
 		public void Participate(ISiloLifecycle lifecycle) 
 			=> lifecycle.Subscribe(

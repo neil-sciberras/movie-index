@@ -4,7 +4,6 @@ using Microsoft.Extensions.Hosting;
 using Movies.AppInfo;
 using Movies.Extensions;
 using Movies.Grains;
-using Movies.Grains.Interfaces;
 using Orleans;
 using Orleans.Hosting;
 using Serilog;
@@ -15,7 +14,6 @@ using System.Threading.Tasks;
 using Movies.Infrastructure.Orleans.Filters;
 using Movies.Server.ApiHostedService;
 using Movies.Infrastructure.Orleans.Silo;
-using Movies.Infrastructure.Orleans.StorageProviders;
 
 namespace Movies.Server
 {

@@ -1,9 +1,10 @@
 ﻿using Movies.Contracts.Models;
+using Movies.Grains.Clients.Interfaces;
 using Movies.Grains.Interfaces;
 using Orleans;
 using System.Threading.Tasks;
 
-namespace Movies.GrainClients
+namespace Movies.Grains.Clients
 {
 	public class SampleGrainClient : ISampleGrainClient
 	{

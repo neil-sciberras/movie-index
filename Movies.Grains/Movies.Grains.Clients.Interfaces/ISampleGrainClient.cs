@@ -1,7 +1,7 @@
 ﻿using Movies.Contracts.Models;
 using System.Threading.Tasks;
 
-namespace Movies.GrainClients
+namespace Movies.Grains.Clients.Interfaces
 {
 	public interface ISampleGrainClient
 	{

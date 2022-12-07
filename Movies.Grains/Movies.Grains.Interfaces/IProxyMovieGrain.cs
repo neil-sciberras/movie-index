@@ -2,7 +2,7 @@
 
 namespace Movies.Grains.Interfaces
 {
-	public interface IProxyGrain
+	public interface IProxyMovieGrain
 	{
 		Task<IMovieGrain> GetMovieGrainAsync(int id);
 	}
