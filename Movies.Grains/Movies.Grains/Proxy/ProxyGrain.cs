@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace Movies.Grains.Proxy
 {
+	/// <summary>
+	/// A grain with persistent state set as all the movies (json file as persistent store). Provides one public method; <see cref="GetMovieGrainAsync"/>.
+	/// Before it returns the <see cref="MovieGrain"/>, it checks if the grain has state, and if not searches for the movie from <see cref="_state"/> and sets it.
+	/// (Inspired by: <see href='https://github.com/dotnet/orleans/issues/3462')></see>
+	/// </summary>
 	public class ProxyGrain : Grain, IProxyGrain
 	{
 		private readonly IPersistentState<ProxyState> _state;

@@ -86,7 +86,7 @@ namespace Movies.Server
 				.UseOrleans((ctx, builder) =>
 				{
 					builder
-						.UseAppConfiguration(new AppSiloBuilderContext
+						.ConfigureSilo(new AppSiloBuilderContext
 						{
 							AppInfo = appInfo,
 							HostBuilderContext = ctx,

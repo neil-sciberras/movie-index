@@ -85,7 +85,7 @@ namespace Movies.Infrastructure.Orleans.StorageProviders
 
 			if (!_fileInfo.Exists)
 			{
-				throw new FileNotFoundException($"File '{_fileGrainStorageOptions.FullFileName}' does not exist");
+				throw new FileNotFoundException($"File '{_fileInfo.FullName}' does not exist");
 			}
 
 			return Task.CompletedTask;

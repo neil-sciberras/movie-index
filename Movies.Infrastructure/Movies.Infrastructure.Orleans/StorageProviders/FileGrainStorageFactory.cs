@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Orleans;
 using Orleans.Configuration.Overrides;
+using Orleans.Runtime;
 using Orleans.Storage;
 using System;
 
@@ -19,7 +21,7 @@ namespace Movies.Infrastructure.Orleans.StorageProviders
 				provider: serviceProvider,
 				name,
 				optionsSnapshot.Get(name),
-				serviceProvider.GetProviderClusterOptions(name));
+				serviceProvider.GetProviderClusterOptions(name).Value);
 		}
 	}
 }

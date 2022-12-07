@@ -13,7 +13,7 @@ namespace Movies.Infrastructure.Orleans.Silo
 	{
 		private static StorageProviderType _defaultProviderType;
 
-		public static ISiloBuilder UseAppConfiguration(this ISiloBuilder siloHost, AppSiloBuilderContext context)
+		public static ISiloBuilder ConfigureSilo(this ISiloBuilder siloHost, AppSiloBuilderContext context)
 		{
 			_defaultProviderType = context.SiloOptions.StorageProviderType ?? StorageProviderType.Memory;
 
@@ -72,7 +72,7 @@ namespace Movies.Infrastructure.Orleans.Silo
 				case StorageProviderType.File:
 					siloBuilder.AddFileGrainStorage(storeProviderName, options =>
 					{
-						options.RootDirectory = "../../../..";
+						options.RootDirectory = "../";
 						options.FileName = storeName;
 					});
 					break;
