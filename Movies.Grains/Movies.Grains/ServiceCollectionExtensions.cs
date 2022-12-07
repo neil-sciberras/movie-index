@@ -9,15 +9,5 @@ namespace Movies.Grains
 		{
 			return services;
 		}
-
-		public static IServiceCollection AddAppHotsGrains(this IServiceCollection services)
-		{
-			return services;
-		}
-
-		public static IServiceCollection AddAppLoLGrains(this IServiceCollection services)
-		{
-			return services;
-		}
 	}
 }

@@ -15,9 +15,9 @@ namespace Movies.Grains.Clients
 			_grainFactory = grainFactory;
 		}
 
-		public async Task<Movie> GetMovieAsync(int id)
+		public async Task SetAsync(Movie movie)
 		{
-			return await _grainFactory.GetGrain<IMovieGrain>(id).GetAsync();
+			await _grainFactory.GetGrain<IMovieGrain>(movie.Id).SetAsync(movie);
 		}
 	}
 }

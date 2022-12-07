@@ -48,7 +48,7 @@ namespace Movies.Server
 				options.AllowSynchronousIO = true;
 			});
 
-			services.AddAppClients();
+			services.AddGrainClients();
 			services.AddAppGraphQL();
 			services.AddControllers().AddNewtonsoftJson();
 			services.AddSwaggerGen();

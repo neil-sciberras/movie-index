@@ -12,24 +12,24 @@ namespace Movies.Grains.Proxy
 	/// (provided by <see cref="IMovieListGrain"/> and sets it.
 	/// (Inspired by: <see href='https://github.com/dotnet/orleans/issues/3462'></see>)
 	/// </summary>
-	public class ProxyMovieGrain : Grain, IProxyMovieGrain
+	public class MovieProxyGrain : Grain, IMovieProxyGrain
 	{
 		private readonly IGrainFactory _grainFactory;
 		private IMovieListGrain MovieListGrain => _grainFactory.GetGrain<IMovieListGrain>(GrainIds.MovieListGrainId);
 
-		public ProxyMovieGrain(IGrainFactory grainFactory)
+		public MovieProxyGrain(IGrainFactory grainFactory)
 		{
 			_grainFactory = grainFactory;
 		}
 
-		public async Task<IMovieGrain> GetMovieGrainAsync(int id)
+		public async Task<Movie> GetMovieAsync(int id)
 		{
 			var movieGrain = _grainFactory.GetGrain<IMovieGrain>(id);
 			var movieGrainState = await movieGrain.GetAsync();
 
 			if (movieGrainState != null)
 			{
-				return movieGrain;
+				return await movieGrain.GetAsync();
 			}
 
 			var movieList = await MovieListGrain.GetAllMovies();
@@ -43,7 +43,7 @@ namespace Movies.Grains.Proxy
 
 			await SetMovieGrainStateAsync(movie);
 
-			return movieGrain;
+			return await movieGrain.GetAsync();
 		}
 
 		public override async Task OnActivateAsync()

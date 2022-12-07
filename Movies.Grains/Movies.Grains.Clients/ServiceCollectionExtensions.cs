@@ -5,9 +5,13 @@ namespace Movies.Grains.Clients
 {
 	public static class ServiceCollectionExtensions
 	{
-		public static void AddAppClients(this IServiceCollection services)
+		public static void AddGrainClients(this IServiceCollection services)
 		{
-			services.AddSingleton<ISampleGrainClient, SampleGrainClient>();
+			services
+				.AddSingleton<ISampleGrainClient, SampleGrainClient>()
+				.AddSingleton<IMovieGrainClient, MovieGrainClient>()
+				.AddSingleton<IMovieProxyGrainClient, MovieProxyGrainClient>()
+				.AddSingleton<ITopRatedMoviesGrainClient, TopRatedMoviesGrainClient>();
 		}
 	}
 }

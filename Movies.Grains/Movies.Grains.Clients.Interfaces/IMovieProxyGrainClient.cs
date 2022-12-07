@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace Movies.Grains.Clients.Interfaces
 {
-	public interface IMovieGrainClient
+	public interface IMovieProxyGrainClient
 	{
-		Task SetAsync(Movie movie);
+		Task<Movie> GetMovieAsync(int id);
 	}
 }
