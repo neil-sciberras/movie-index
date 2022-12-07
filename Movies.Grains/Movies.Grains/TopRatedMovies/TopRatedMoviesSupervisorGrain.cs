@@ -31,19 +31,19 @@ namespace Movies.Grains.TopRatedMovies
 			}
 		}
 
-		public void RegisterNewGrain(int amountOfMovies)
+		public ITopRatedMoviesGrain RegisterNewGrain(int amountOfMovies)
 		{
-			List<ITopRatedMoviesGrain> grainList;
-
-			grainList = _supervisorState?.State == null 
-				? new List<ITopRatedMoviesGrain>() 
-				: _supervisorState!.State!.ToList();
+			var grainList = _supervisorState?.State != null 
+				? _supervisorState!.State!.ToList()
+				: new List<ITopRatedMoviesGrain>();
 
 			var newGrain = _grainFactory.GetGrain<ITopRatedMoviesGrain>(amountOfMovies);
 
 			grainList.Add(newGrain);
 
 			_supervisorState.State = grainList;
+
+			return newGrain;
 		}
 	}
 }
