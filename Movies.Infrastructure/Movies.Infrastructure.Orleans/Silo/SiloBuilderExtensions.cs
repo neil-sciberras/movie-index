@@ -20,7 +20,10 @@ namespace Movies.Infrastructure.Orleans.Silo
 			var appInfo = context.AppInfo;
 
 			siloHost
-				.AddMemoryGrainStorageAsDefault()
+				.UseStorage(
+					storeProviderName: GrainStorageNames.MemoryStorage, 
+					appInfo: context.AppInfo, 
+					storageProvider: StorageProviderType.Memory)
 				.UseStorage(
 					storeProviderName: GrainStorageNames.FileStorage, 
 					appInfo: context.AppInfo, 

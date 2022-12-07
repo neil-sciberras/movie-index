@@ -1,19 +1,26 @@
-﻿using Movies.Contracts.Models;
+﻿using Movies.Contracts.Grains;
+using Movies.Contracts.Models;
 using Movies.Grains.Interfaces;
 using Orleans;
-using Orleans.Providers;
+using Orleans.Runtime;
 using System.Threading.Tasks;
 
 namespace Movies.Grains
 {
-	[StorageProvider(ProviderName = "Default")]
-	public class SampleGrain : Grain<SampleDataModel>, ISampleGrain
+	public class SampleGrain : Grain, ISampleGrain
 	{
-		public Task<SampleDataModel> Get() => Task.FromResult(State);
+		private readonly IPersistentState<SampleDataModel> _state;
+
+		public SampleGrain([PersistentState(stateName: "SampleDataModel", storageName: GrainStorageNames.MemoryStorage)]IPersistentState<SampleDataModel> state)
+		{
+			_state = state;
+		}
+
+		public Task<SampleDataModel> Get() => Task.FromResult(_state.State);
 
 		public Task Set(string name)
 		{
-			State = new SampleDataModel { Id = this.GetPrimaryKeyString(), Name = name };
+			_state.State = new SampleDataModel { Id = this.GetPrimaryKeyString(), Name = name };
 			return Task.CompletedTask;
 		}
 	}

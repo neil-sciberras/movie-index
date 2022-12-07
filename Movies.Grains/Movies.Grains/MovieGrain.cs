@@ -1,4 +1,5 @@
-﻿using Movies.Contracts.Models;
+﻿using Movies.Contracts.Grains;
+using Movies.Contracts.Models;
 using Movies.Grains.Interfaces;
 using Orleans;
 using Orleans.Runtime;
@@ -10,7 +11,7 @@ namespace Movies.Grains
 	{
 		private readonly IPersistentState<Movie> _state;
 
-		public MovieGrain(IPersistentState<Movie> state)
+		public MovieGrain([PersistentState(stateName: "Movie", storageName: GrainStorageNames.MemoryStorage)]IPersistentState<Movie> state)
 		{
 			_state = state;
 		}
@@ -25,7 +26,5 @@ namespace Movies.Grains
 			_state.State = movie;
 			return Task.CompletedTask;
 		}
-		
-		
 	}
 }
