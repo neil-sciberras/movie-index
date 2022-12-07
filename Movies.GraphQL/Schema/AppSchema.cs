@@ -1,10 +1,9 @@
-﻿using GraphQL.Types;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Movies.GraphQL.App
+namespace Movies.GraphQL.Schema
 {
-	public class AppSchema : Schema
+	public class AppSchema : global::GraphQL.Types.Schema
 	{
 		public AppSchema(IServiceProvider provider) : base(provider)
 		{

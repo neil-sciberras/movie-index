@@ -3,7 +3,7 @@ using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
 using Movies.GraphQL.Types;
 
-namespace Movies.GraphQL.App
+namespace Movies.GraphQL.Schema
 {
 	public static class ServiceCollectionExtensions
 	{
