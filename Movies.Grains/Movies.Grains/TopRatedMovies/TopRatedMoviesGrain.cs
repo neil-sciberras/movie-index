@@ -24,18 +24,6 @@ namespace Movies.Grains.TopRatedMovies
 			_topRatedMoviesState = state;
 		}
 
-		public override async Task OnActivateAsync()
-		{
-			await base.OnActivateAsync();
-			await FetchAndSetStateAsync();
-		}
-
-		public override async Task OnDeactivateAsync()
-		{
-			await base.OnDeactivateAsync();
-			ResetState();
-		}
-
 		public async Task<IEnumerable<Movie>> GetMovies()
 		{
 			//TODO: Test that if the source database changes, and there is a new top list, then the correct list is returned
@@ -50,6 +38,18 @@ namespace Movies.Grains.TopRatedMovies
 		public void ResetState()
 		{
 			_topRatedMoviesState.State = null;
+		}
+
+		public override async Task OnActivateAsync()
+		{
+			await base.OnActivateAsync();
+			await FetchAndSetStateAsync();
+		}
+
+		public override async Task OnDeactivateAsync()
+		{
+			await base.OnDeactivateAsync();
+			ResetState();
 		}
 
 		private async Task FetchAndSetStateAsync()
