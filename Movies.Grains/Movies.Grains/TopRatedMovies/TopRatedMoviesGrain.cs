@@ -35,9 +35,10 @@ namespace Movies.Grains.TopRatedMovies
 			return _topRatedMoviesState.State;
 		}
 
-		public void ResetState()
+		public Task ResetStateAsync()
 		{
 			_topRatedMoviesState.State = null;
+			return Task.CompletedTask;
 		}
 
 		public override async Task OnActivateAsync()
@@ -49,14 +50,14 @@ namespace Movies.Grains.TopRatedMovies
 		public override async Task OnDeactivateAsync()
 		{
 			await base.OnDeactivateAsync();
-			ResetState();
+			await ResetStateAsync();
 		}
 
 		private async Task FetchAndSetStateAsync()
 		{
 			var amount = this.GetPrimaryKeyLong();
 			var movieListGrain = _grainFactory.GetGrain<IMovieListGrain>(GrainIds.MovieListGrainId);
-			var allMovies = await movieListGrain.GetAllMovies();
+			var allMovies = await movieListGrain.GetAllMoviesAsync();
 
 			_topRatedMoviesState.State = allMovies.OrderBy(m => m.Rate).Take((int)amount);
 		}

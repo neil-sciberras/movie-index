@@ -25,21 +25,19 @@ namespace Movies.Grains
 			_grainFactory = grainFactory;
 		}
 
-		public Task<IEnumerable<Movie>> GetAllMovies()
+		public Task<IEnumerable<Movie>> GetAllMoviesAsync()
 		{
 			return Task.FromResult(_movieListState.State);
 		}
 
-		public Task SetMovieList(IEnumerable<Movie> movies)
+		public async Task SetMovieListAsync(IEnumerable<Movie> movies)
 		{
 			_movieListState.State = movies;
 			
 			var topRatedMoviesSupervisorGrain = _grainFactory.GetGrain<ITopRatedMoviesSupervisorGrain>(GrainIds.TopRatedMoviesSuperVisorGrainId);
-			topRatedMoviesSupervisorGrain.ResetAll();
-			
-			_movieListState.WriteStateAsync();
+			await topRatedMoviesSupervisorGrain.ResetAllAsync();
 
-			return Task.CompletedTask;
+			await _movieListState.WriteStateAsync();
 		}
 	}
 }

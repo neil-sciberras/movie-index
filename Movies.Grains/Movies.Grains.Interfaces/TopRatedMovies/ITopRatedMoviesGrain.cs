@@ -11,6 +11,6 @@ namespace Movies.Grains.Interfaces.TopRatedMovies
 	public interface ITopRatedMoviesGrain : IGrainWithIntegerKey
 	{
 		Task<IEnumerable<Movie>> GetMoviesAsync();
-		void ResetState();
+		Task ResetStateAsync();
 	}
 }

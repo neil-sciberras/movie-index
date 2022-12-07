@@ -6,6 +6,6 @@ namespace Movies.Grains.Clients.Interfaces
 {
 	public interface ITopRatedMoviesGrainClient
 	{
-		Task<IEnumerable<Movie>> GetTopRatedMovies(int amount);
+		Task<IEnumerable<Movie>> GetTopRatedMoviesAsync(int amount);
 	}
 }

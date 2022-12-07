@@ -7,7 +7,7 @@ namespace Movies.Grains.Interfaces
 {
 	public interface IMovieListGrain : IGrainWithStringKey
 	{
-		Task<IEnumerable<Movie>> GetAllMovies();
-		Task SetMovieList(IEnumerable<Movie> movies);
+		Task<IEnumerable<Movie>> GetAllMoviesAsync();
+		Task SetMovieListAsync(IEnumerable<Movie> movies);
 	}
 }

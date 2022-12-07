@@ -4,6 +4,7 @@ using Orleans;
 using Orleans.Runtime;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Movies.Grains.TopRatedMovies
 {
@@ -23,15 +24,17 @@ namespace Movies.Grains.TopRatedMovies
 			_grainFactory = grainFactory;
 		}
 
-		public void ResetAll()
+		public Task ResetAllAsync()
 		{
 			foreach (var topRatedMoviesGrain in _supervisorState.State)
 			{
-				topRatedMoviesGrain.ResetState();
+				topRatedMoviesGrain.ResetStateAsync();
 			}
+
+			return Task.CompletedTask;
 		}
 
-		public ITopRatedMoviesGrain RegisterNewGrain(int amountOfMovies)
+		public Task<ITopRatedMoviesGrain> RegisterNewGrainAsync(int amountOfMovies)
 		{
 			var grainList = _supervisorState?.State != null 
 				? _supervisorState!.State!.ToList()
@@ -43,7 +46,7 @@ namespace Movies.Grains.TopRatedMovies
 
 			_supervisorState.State = grainList;
 
-			return newGrain;
+			return Task.FromResult(newGrain);
 		}
 	}
 }

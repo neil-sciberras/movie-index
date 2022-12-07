@@ -31,7 +31,7 @@ namespace Movies.GraphQL.Schema
 				.ResolveAsync(async context =>
 				{
 					var amount = context.GetArgument<int>("Amount");
-					return await topRatedMoviesGrainClient.GetTopRatedMovies(amount);
+					return await topRatedMoviesGrainClient.GetTopRatedMoviesAsync(amount);
 				});
 
 			Field<SampleDataGraphType>("sample",

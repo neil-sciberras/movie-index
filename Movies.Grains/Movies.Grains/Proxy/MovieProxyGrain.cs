@@ -32,7 +32,7 @@ namespace Movies.Grains.Proxy
 				return await movieGrain.GetAsync();
 			}
 
-			var movieList = await MovieListGrain.GetAllMovies();
+			var movieList = await MovieListGrain.GetAllMoviesAsync();
 
 			var movie = movieList.SingleOrDefault(movie => movie.Id == id);
 
@@ -50,7 +50,7 @@ namespace Movies.Grains.Proxy
 		{
 			await base.OnActivateAsync();
 			
-			var movieList = await MovieListGrain.GetAllMovies();
+			var movieList = await MovieListGrain.GetAllMoviesAsync();
 			
 			foreach (var movie in movieList)
 			{

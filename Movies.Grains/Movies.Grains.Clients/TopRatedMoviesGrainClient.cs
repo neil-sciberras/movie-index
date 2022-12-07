@@ -17,10 +17,10 @@ namespace Movies.Grains.Clients
 			_grainFactory = grainFactory;
 		}
 
-		public async Task<IEnumerable<Movie>> GetTopRatedMovies(int amount)
+		public async Task<IEnumerable<Movie>> GetTopRatedMoviesAsync(int amount)
 		{
 			var supervisor = _grainFactory.GetGrain<ITopRatedMoviesSupervisorGrain>(GrainIds.TopRatedMoviesSuperVisorGrainId);
-			var grain = supervisor.RegisterNewGrain(amount);
+			var grain = await supervisor.RegisterNewGrainAsync(amount);
 
 			return await grain.GetMoviesAsync();
 		}
