@@ -1,7 +1,6 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
 using Movies.Grains.Interfaces;
-using Movies.Grains.Interfaces.TopRatedMovies;
 using Movies.Grains.MovieList;
 using Orleans;
 using Orleans.Runtime;

@@ -1,7 +1,7 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
 using Movies.Grains.Interfaces;
-using Movies.Grains.Interfaces.TopRatedMovies;
+using Movies.Grains.Interfaces.Supervisors;
 using Orleans;
 using Orleans.Runtime;
 using System.Collections.Generic;
@@ -34,7 +34,7 @@ namespace Movies.Grains.MovieList
 		{
 			_movieListState.State.Movies = movies;
 
-			var topRatedMoviesSupervisorGrain = _grainFactory.GetGrain<ITopRatedMoviesSupervisorGrain>(GrainIds.TopRatedMoviesSupervisorGrainId);
+			var topRatedMoviesSupervisorGrain = _grainFactory.GetGrain<ISupervisorGrain<ITopRatedMoviesGrain>>(GrainIds.TopRatedMoviesSupervisorGrainId);
 			await topRatedMoviesSupervisorGrain.ResetAllAsync();
 
 			await _movieListState.WriteStateAsync();

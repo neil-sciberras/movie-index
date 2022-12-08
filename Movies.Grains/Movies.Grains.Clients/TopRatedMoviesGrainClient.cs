@@ -1,7 +1,8 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
 using Movies.Grains.Clients.Interfaces;
-using Movies.Grains.Interfaces.TopRatedMovies;
+using Movies.Grains.Interfaces;
+using Movies.Grains.Interfaces.Supervisors;
 using Orleans;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -19,8 +20,8 @@ namespace Movies.Grains.Clients
 
 		public async Task<IEnumerable<Movie>> GetTopRatedMoviesAsync(int amount)
 		{
-			var supervisor = _grainFactory.GetGrain<ITopRatedMoviesSupervisorGrain>(GrainIds.TopRatedMoviesSupervisorGrainId);
-			var grain = await supervisor.GetTopRatedMoviesGrainAsync(amount);
+			var supervisor = _grainFactory.GetGrain<ISupervisorGrain<ITopRatedMoviesGrain>>(GrainIds.TopRatedMoviesSupervisorGrainId);
+			var grain = await supervisor.GetSupervisedGrainAsync(amount);
 
 			return await grain.GetMoviesAsync();
 		}

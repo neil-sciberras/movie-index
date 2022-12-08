@@ -33,6 +33,15 @@ namespace Movies.GraphQL.Schema
 				.Description("List of all movies")
 				.ResolveAsync(async _ => await movieListGrainClient.GetListAsync());
 
+			Field<ListGraphType<MovieGraphType>, IEnumerable<Movie>>(name: "moviesWithGenre")
+				.Description("List of movies with a given genre")
+				.Argument<IntGraphType>(Genre, "The genre to filter by")
+				.ResolveAsync(async context =>
+				{
+					var genre = context.GetArgument<int>(Genre);
+					
+				});
+
 			Field<ListGraphType<MovieGraphType>, IEnumerable<Movie>>(name: "topRatedMovies")
 				.Description("Top rated movies")
 				.Argument<IntGraphType>(Amount, "The amount of movies to return from top of the list")
