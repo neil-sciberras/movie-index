@@ -12,12 +12,12 @@ namespace Movies.Grains.MovieList
 	/// <summary>
 	/// The grain responsible for maintaining the whole list of movies. It reads and writes to/from the file data source.
 	/// </summary>
-	public class MovieListGrain : Grain, IMovieListGrain
+	public class AllMoviesGrain : Grain, IAllMoviesGrain
 	{
 		private readonly IPersistentState<MovieListState> _movieListState;
 		private readonly IGrainFactory _grainFactory;
 
-		public MovieListGrain(
+		public AllMoviesGrain(
 			[PersistentState(stateName: "movieListState", storageName: GrainStorageNames.FileStorage)] IPersistentState<MovieListState> movieListState,
 			IGrainFactory grainFactory)
 		{

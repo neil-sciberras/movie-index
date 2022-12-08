@@ -10,13 +10,13 @@ namespace Movies.Grains.Proxy
 {
 	/// <summary>
 	/// Before it returns the <see cref="MovieGrain"/>, it checks if the movie grain has state, and if not searches for the movie from list of movies
-	/// (provided by <see cref="IMovieListGrain"/> and sets it.
+	/// (provided by <see cref="IAllMoviesGrain"/> and sets it.
 	/// (Inspired by: <see href='https://github.com/dotnet/orleans/issues/3462'></see>)
 	/// </summary>
 	public class MovieProxyGrain : Grain, IMovieProxyGrain
 	{
 		private readonly IGrainFactory _grainFactory;
-		private IMovieListGrain MovieListGrain => _grainFactory.GetGrain<IMovieListGrain>(GrainIds.MovieListGrainId);
+		private IAllMoviesGrain DataSourceGrain => _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
 
 		public MovieProxyGrain(IGrainFactory grainFactory)
 		{
@@ -33,7 +33,7 @@ namespace Movies.Grains.Proxy
 				return await movieGrain.GetAsync();
 			}
 
-			var movieList = await MovieListGrain.GetAllMoviesAsync();
+			var movieList = await DataSourceGrain.GetAllMoviesAsync();
 
 			var movie = movieList.SingleOrDefault(movie => movie.Id == id);
 
@@ -53,8 +53,8 @@ namespace Movies.Grains.Proxy
 			{
 				await base.OnActivateAsync();
 
-				var movieListGrain = _grainFactory.GetGrain<IMovieListGrain>(GrainIds.MovieListGrainId);
-				var movieList = await movieListGrain.GetAllMoviesAsync();
+				var allMoviesGrain = _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
+				var movieList = await allMoviesGrain.GetAllMoviesAsync();
 
 				foreach (var movie in movieList)
 				{

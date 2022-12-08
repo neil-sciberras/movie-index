@@ -56,8 +56,8 @@ namespace Movies.Grains.TopRatedMovies
 		private async Task FetchAndSetStateAsync()
 		{
 			var amount = this.GetPrimaryKeyLong();
-			var movieListGrain = _grainFactory.GetGrain<IMovieListGrain>(GrainIds.MovieListGrainId);
-			var allMovies = await movieListGrain.GetAllMoviesAsync();
+			var allMoviesGrain = _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
+			var allMovies = await allMoviesGrain.GetAllMoviesAsync();
 
 			_topRatedMoviesState.State.Movies = allMovies.OrderByDescending(m => m.Rate).ToList().Take((int)amount);
 		}

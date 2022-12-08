@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Movies.Grains.Interfaces
 {
-	public interface IMovieListGrain : IGrainWithStringKey
+	public interface IAllMoviesGrain : IGrainWithStringKey
 	{
 		Task<IEnumerable<Movie>> GetAllMoviesAsync();
 		Task SetMovieListAsync(IEnumerable<Movie> movies);

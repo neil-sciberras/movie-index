@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Movies.Grains.Clients
 {
-	public class MovieListGrainClient : IMovieListGrainClient
+	public class AllMoviesGrainClient : IAllMoviesGrainClient
 	{
 		private readonly IGrainFactory _grainFactory;
 
-		public MovieListGrainClient(IGrainFactory grainFactory)
+		public AllMoviesGrainClient(IGrainFactory grainFactory)
 		{
 			_grainFactory = grainFactory;
 		}
@@ -20,7 +20,7 @@ namespace Movies.Grains.Clients
 		//TODO: Check if it's necessary to await here (and other similar places), or simply return the original task
 		public async Task<IEnumerable<Movie>> GetListAsync()
 		{
-			return await _grainFactory.GetGrain<IMovieListGrain>(GrainIds.MovieListGrainId).GetAllMoviesAsync();
+			return await _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId).GetAllMoviesAsync();
 		}
 	}
 }

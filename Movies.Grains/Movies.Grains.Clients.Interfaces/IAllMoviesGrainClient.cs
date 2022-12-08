@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Movies.Grains.Clients.Interfaces
 {
-	public interface IMovieListGrainClient
+	public interface IAllMoviesGrainClient
 	{
 		Task<IEnumerable<Movie>> GetListAsync();
 	}

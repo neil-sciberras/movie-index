@@ -36,7 +36,7 @@ namespace Movies.Grains
 			}
 
 			var genre = (Genre)primaryKey;
-			var moviesListGrain = _grainFactory.GetGrain<IMovieListGrain>(GrainIds.MovieListGrainId);
+			var moviesListGrain = _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
 			var allMovies = await moviesListGrain.GetAllMoviesAsync();
 			
 			return allMovies?.Where(m => m.Genres != null && m.Genres.Contains(genre)) ?? new List<Movie>();

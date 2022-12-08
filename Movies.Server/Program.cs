@@ -100,7 +100,7 @@ namespace Movies.Server
 						})
 						.ConfigureApplicationParts(parts => parts
 							.AddApplicationPart(typeof(MovieGrain).Assembly).WithReferences()
-							.AddApplicationPart(typeof(MovieListGrain).Assembly).WithReferences()
+							.AddApplicationPart(typeof(AllMoviesGrain).Assembly).WithReferences()
 							.AddApplicationPart(typeof(MovieProxyGrain).Assembly).WithReferences()
 							.AddApplicationPart(typeof(TopRatedMoviesGrain).Assembly).WithReferences()
 						)

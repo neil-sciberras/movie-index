@@ -15,7 +15,7 @@ namespace Movies.GraphQL.Schema
 
 		public AppGraphQuery(
 			IMovieProxyGrainClient movieProxyGrainClient,
-			IMovieListGrainClient movieListGrainClient,
+			IAllMoviesGrainClient allMoviesGrainClient,
 			ITopRatedMoviesGrainClient topRatedMoviesGrainClient)
 		{
 			Name = "AppQueries";
@@ -31,7 +31,7 @@ namespace Movies.GraphQL.Schema
 
 			Field<ListGraphType<MovieGraphType>, IEnumerable<Movie>>(name: "moviesList")
 				.Description("List of all movies")
-				.ResolveAsync(async _ => await movieListGrainClient.GetListAsync());
+				.ResolveAsync(async _ => await allMoviesGrainClient.GetListAsync());
 
 			Field<ListGraphType<MovieGraphType>, IEnumerable<Movie>>(name: "moviesWithGenre")
 				.Description("List of movies with a given genre")
