@@ -18,7 +18,6 @@ namespace Movies.Grains.Proxy
 	public class MovieProxyGrain : Grain, IMovieProxyGrain
 	{
 		private readonly IGrainFactory _grainFactory;
-		private IAllMoviesGrain DataSourceGrain => _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
 
 		public MovieProxyGrain(IGrainFactory grainFactory)
 		{
@@ -28,16 +27,17 @@ namespace Movies.Grains.Proxy
 		public async Task<Movie> GetMovieAsync(int id)
 		{
 			var movieGrain = _grainFactory.GetGrain<IMovieGrain>(id);
-			var movieGrainState = await movieGrain.GetAsync();
+			var movie = await movieGrain.GetAsync();
 
-			if (movieGrainState != null)
+			if (movie != null)
 			{
 				return await movieGrain.GetAsync();
 			}
 
-			var movieList = await DataSourceGrain.GetMoviesAsync();
+			var allMoviesGrain = _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
+			var allMovies = await allMoviesGrain.GetMoviesAsync();
 
-			var movie = movieList.SingleOrDefault(movie => movie.Id == id);
+			movie = allMovies.SingleOrDefault(m => m.Id == id);
 
 			if (movie == null)
 			{
@@ -51,24 +51,15 @@ namespace Movies.Grains.Proxy
 
 		public override async Task OnActivateAsync()
 		{
-			try
-			{
-				await base.OnActivateAsync();
+			await base.OnActivateAsync();
 
-				var allMoviesGrain = _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
-				var movieList = await allMoviesGrain.GetMoviesAsync();
+			var allMoviesGrain = _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
+			var movieList = await allMoviesGrain.GetMoviesAsync();
 
-				foreach (var movie in movieList)
-				{
-					await SetMovieGrainStateAsync(movie);
-				}
-			}
-			catch (Exception e)
+			foreach (var movie in movieList)
 			{
-				Console.WriteLine(e);
-				throw;
+				await SetMovieGrainStateAsync(movie);
 			}
-			
 		}
 
 		private async Task SetMovieGrainStateAsync(Movie movie)

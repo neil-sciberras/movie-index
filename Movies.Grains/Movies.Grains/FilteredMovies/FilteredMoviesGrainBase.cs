@@ -59,7 +59,6 @@ namespace Movies.Grains.FilteredMovies
 
 		private async Task FetchAndSetStateAsync()
 		{
-			var primaryKey = this.GetPrimaryKeyLong();
 			var allMoviesGrain = _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
 			var allMovies = await allMoviesGrain.GetMoviesAsync();
 
