@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Movies.Grains.Proxy
+namespace Movies.Grains.Interfaces.Exceptions
 {
 	public class MovieNotFoundException : Exception
 	{

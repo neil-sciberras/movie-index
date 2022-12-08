@@ -1,6 +1,7 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
 using Movies.Grains.Interfaces;
+using Movies.Grains.Interfaces.Exceptions;
 using Orleans;
 using System;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Movies.Grains.Proxy
 {
+	//TODO: refactor to reuse the filtered grain base
 	/// <summary>
 	/// Before it returns the <see cref="MovieGrain"/>, it checks if the movie grain has state, and if not searches for the movie from list of movies
 	/// (provided by <see cref="IAllMoviesGrain"/> and sets it.

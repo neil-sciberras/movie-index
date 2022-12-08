@@ -10,19 +10,15 @@ using System.Threading.Tasks;
 namespace Movies.Grains.Supervisors
 {
 	/// <summary>
-	/// This enables the resetting of all <see cref="ITopRatedMoviesGrain"/> states on the event of a file reload.
+	/// This enables the resetting of all the supervised grains' states on the event of a file reload.
 	/// </summary>
-	public abstract class SupervisorGrainBase<TSupervisedGrainInterface> : 
-		Grain, ISupervisorGrain<TSupervisedGrainInterface> 
-		where TSupervisedGrainInterface : IResettableGrain, IGrainWithIntegerKey
+	public abstract class SupervisorGrainBase<TSupervisedGrainInterface> : Grain, 
+		ISupervisorGrain<TSupervisedGrainInterface> where TSupervisedGrainInterface : IResettableGrain, IGrainWithIntegerKey
 	{
 		private readonly IPersistentState<SupervisorState> _supervisorState;
 		private readonly IGrainFactory _grainFactory;
 
-		protected SupervisorGrainBase(
-			[PersistentState(stateName: "supervisorState", storageName: GrainStorageNames.MemoryStorage)] 
-			IPersistentState<SupervisorState> supervisorState, 
-			IGrainFactory grainFactory)
+		protected SupervisorGrainBase(IPersistentState<SupervisorState> supervisorState, IGrainFactory grainFactory)
 		{
 			_supervisorState = supervisorState;
 			_grainFactory = grainFactory;

@@ -8,7 +8,7 @@ namespace Movies.Grains.Interfaces
 	/// <summary>
 	/// A grain which returns a list of movies. Used for multiple use cases; e.g. top rated movies, all movies list, filtered movies
 	/// </summary>
-	public interface IMoviesListGrain : IResettableGrain, IGrainWithIntegerKey
+	public interface IMovieListGrain : IResettableGrain, IGrainWithIntegerKey
 	{
 		Task<IEnumerable<Movie>> GetMoviesAsync();
 	}

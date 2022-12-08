@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Movies.AppInfo;
 using Movies.Extensions;
 using Movies.Grains;
+using Movies.Grains.FilteredMovies;
 using Movies.Grains.Proxy;
 using Orleans;
 using Orleans.Hosting;
@@ -16,6 +17,7 @@ using Movies.Infrastructure.Orleans.Filters;
 using Movies.Server.ApiHostedService;
 using Movies.Infrastructure.Orleans.Silo;
 using Movies.Grains.MovieList;
+using Movies.Grains.Supervisors;
 
 namespace Movies.Server
 {
@@ -102,6 +104,7 @@ namespace Movies.Server
 							.AddApplicationPart(typeof(AllMoviesGrain).Assembly).WithReferences()
 							.AddApplicationPart(typeof(MovieProxyGrain).Assembly).WithReferences()
 							.AddApplicationPart(typeof(TopRatedMoviesGrain).Assembly).WithReferences()
+							.AddApplicationPart(typeof(TopRatedMoviesSupervisorGrain).Assembly).WithReferences()
 						)
 						.AddIncomingGrainCallFilter<LoggingIncomingCallFilter>()
 						.AddOutgoingGrainCallFilter<LoggingOutgoingCallFilter>();

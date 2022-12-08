@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Movies.Grains.GenreFilter
+namespace Movies.Grains.Interfaces.Exceptions
 {
 	public class InvalidGenreException : Exception
 	{
