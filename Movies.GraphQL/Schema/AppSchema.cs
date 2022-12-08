@@ -8,7 +8,7 @@ namespace Movies.GraphQL.Schema
 		public AppSchema(IServiceProvider provider) : base(provider)
 		{
 			Query = provider.GetRequiredService<AppGraphQuery>();
-			//Mutation = provider.GetRequiredService<AppGraphMutation>();
+			Mutation = provider.GetRequiredService<AppGraphMutation>();
 		}
 	}
 }

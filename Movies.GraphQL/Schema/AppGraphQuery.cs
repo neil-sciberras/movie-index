@@ -19,7 +19,7 @@ namespace Movies.GraphQL.Schema
 			IGenreFilterGrainClient genreFilterGrainClient,
 			ITopRatedMoviesGrainClient topRatedMoviesGrainClient)
 		{
-			Name = "AppQueries";
+			Name = "MovieQueries";
 
 			Field<MovieType, Movie>(name: "movie")
 				.Description("A movie with the given Id")

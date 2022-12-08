@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Movies.Grains.Supervisors
+namespace Movies.Grains.DataQueries.Supervisors
 {
 	public class SupervisorState
 	{

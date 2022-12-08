@@ -7,7 +7,7 @@ using Orleans.Runtime;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Movies.Grains.FilteredMovies
+namespace Movies.Grains.DataQueries.FilteredMovies
 {
 	/// <summary>
 	/// This type of grain is 'cached' on the state. If the state is not null, it will return the list of movies in the state.

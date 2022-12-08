@@ -7,7 +7,7 @@ using Orleans.Runtime;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Movies.Grains.FilteredMovies
+namespace Movies.Grains.DataQueries.FilteredMovies
 {
 	/// <summary>
 	/// <inheritdoc cref="FilteredMoviesGrainBase"/>
@@ -18,7 +18,7 @@ namespace Movies.Grains.FilteredMovies
 	{
 		public MovieSearchGrain(
 			[PersistentState(stateName: "movieSearchState", storageName: GrainStorageNames.MemoryStorage)]
-			IPersistentState<MovieListState> filteredMoviesState, 
+			IPersistentState<MovieListState> filteredMoviesState,
 			IGrainFactory grainFactory) : base(filteredMoviesState, grainFactory)
 		{
 		}

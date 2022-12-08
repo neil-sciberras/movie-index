@@ -7,7 +7,7 @@ using Orleans.Runtime;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Movies.Grains.FilteredMovies
+namespace Movies.Grains.DataQueries.FilteredMovies
 {
 	/// <summary>
 	/// <inheritdoc cref="FilteredMoviesGrainBase"/>

@@ -33,11 +33,12 @@ namespace Movies.Grains.MovieList
 		public async Task SetMovieListAsync(IEnumerable<Movie> movies)
 		{
 			_movieListState.State.Movies = movies;
-
-			var topRatedMoviesSupervisorGrain = _grainFactory.GetGrain<ISupervisorGrain<IMovieListGrain>>(GrainIds.TopRatedMoviesSupervisorGrainId);
-			await topRatedMoviesSupervisorGrain.ResetAllAsync();
-
 			await _movieListState.WriteStateAsync();
+			
+			//TODO: maintain a list of supervisors here
+			await _grainFactory.GetGrain<ITopRatedMoviesSupervisorGrain>(GrainIds.TopRatedMoviesSupervisorGrainId).ResetAllAsync();
+			await _grainFactory.GetGrain<IGenreFilterSupervisorGrain>(GrainIds.GenreFilterSupervisorGrainId).ResetAllAsync();
+			
 		}
 	}
 }

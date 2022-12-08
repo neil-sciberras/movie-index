@@ -3,6 +3,7 @@ using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
 using Movies.GraphQL.Schema;
 using Movies.GraphQL.Types;
+using Movies.GraphQL.Types.Input;
 
 namespace Movies.GraphQL
 {
@@ -23,6 +24,7 @@ namespace Movies.GraphQL
 			
 			services.AddSingleton<GenreType>();
 			services.AddSingleton<MovieType>();
+			services.AddSingleton<NewMovieInputType>();
 		}
 	}
 }

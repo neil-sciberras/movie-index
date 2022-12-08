@@ -11,7 +11,8 @@ namespace Movies.Grains.Clients
 				.AddSingleton<IAllMoviesGrainClient, AllMoviesGrainClient>()
 				.AddSingleton<IMovieSearchGrainClient, MovieSearchGrainClient>()
 				.AddSingleton<IGenreFilterGrainClient, GenreFilterGrainClient>()
-				.AddSingleton<ITopRatedMoviesGrainClient, TopRatedMoviesGrainClient>();
+				.AddSingleton<ITopRatedMoviesGrainClient, TopRatedMoviesGrainClient>()
+				.AddSingleton<IAddMovieGrainClient, AddMovieGrainClient>();
 		}
 	}
 }

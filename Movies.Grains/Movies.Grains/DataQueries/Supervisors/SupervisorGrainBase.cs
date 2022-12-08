@@ -7,12 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Movies.Grains.Supervisors
+namespace Movies.Grains.DataQueries.Supervisors
 {
 	/// <summary>
 	/// This enables the resetting of all the supervised grains' states on the event of a file reload.
 	/// </summary>
-	public abstract class SupervisorGrainBase<TSupervisedGrainInterface> : Grain, 
+	public abstract class SupervisorGrainBase<TSupervisedGrainInterface> : Grain,
 		ISupervisorGrain<TSupervisedGrainInterface> where TSupervisedGrainInterface : IResettableGrain, IGrainWithIntegerKey
 	{
 		private readonly IPersistentState<SupervisorState> _supervisorState;
