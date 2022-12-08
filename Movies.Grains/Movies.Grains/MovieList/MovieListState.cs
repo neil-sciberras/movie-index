@@ -12,6 +12,6 @@ namespace Movies.Grains.MovieList
 		public MovieListState() { }
 
 		[JsonProperty(propertyName: "movies")]
-		public IEnumerable<Movie> Movies { get; set; } = new List<Movie>();
+		public IEnumerable<Movie> Movies { get; set; }
 	}
 }

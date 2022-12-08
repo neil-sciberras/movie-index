@@ -37,11 +37,25 @@ namespace Movies.Infrastructure.Orleans.StorageProviders
 
 		public async Task ReadStateAsync(string grainType, GrainReference grainReference, IGrainState grainState)
 		{
-			using var stream = _fileInfo.OpenText();
-			var storedData = await stream.ReadToEndAsync();
-			grainState.State = JsonConvert.DeserializeObject(storedData, _jsonSerializerSettings);
+				using var stream = _fileInfo.OpenText();
+				var storedData = await stream.ReadToEndAsync();
 
-			grainState.ETag = _fileInfo.LastWriteTimeUtc.ToString(CultureInfo.InvariantCulture);
+				SetState(grainState, storedData);
+
+				grainState.ETag = _fileInfo.LastWriteTimeUtc.ToString(CultureInfo.InvariantCulture);
+		}
+
+		/// <summary>
+		/// This is implemented as a work around to the InvalidCastException being thrown when deserializing the json text using the <see cref="_jsonSerializerSettings"/>.
+		/// </summary>
+		private static void SetState(IGrainState grainState, string storedData)
+		{
+			//grainState.State = JsonConvert.DeserializeObject(storedData, _jsonSerializerSettings);
+
+			// TODO: fix the commented line above, and remove this hack. The above line is the suggested way from
+			// https://learn.microsoft.com/en-us/dotnet/orleans/tutorials-and-samples/custom-grain-storage#read-state
+
+			grainState.State = JsonConvert.DeserializeObject(storedData, grainState.Type);
 		}
 
 		public async Task WriteStateAsync(string grainType, GrainReference grainReference, IGrainState grainState)
@@ -70,11 +84,13 @@ namespace Movies.Infrastructure.Orleans.StorageProviders
 			throw new NotImplementedException();
 		}
 
-		public void Participate(ISiloLifecycle lifecycle) 
-			=> lifecycle.Subscribe(
-				observerName: OptionFormattingUtilities.Name<FileGrainStorage>(_storageName), 
+		public void Participate(ISiloLifecycle lifecycle)
+		{
+			lifecycle.Subscribe(
+				observerName: OptionFormattingUtilities.Name<FileGrainStorage>(_storageName),
 				stage: ServiceLifecycleStage.ApplicationServices,
 				onStart: Init);
+		}
 
 		private Task Init(CancellationToken ct)
 		{

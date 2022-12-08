@@ -13,7 +13,12 @@ namespace Movies.Infrastructure.Orleans.StorageProviders
 	public static class FileSiloBuilderExtensions
 	{
 		public static ISiloBuilder AddFileGrainStorage(this ISiloBuilder builder, string providerName, Action<FileGrainStorageOptions> options)
-			=> builder.ConfigureServices(services => services.AddFileGrainStorage(providerName, options));
+		{
+			return builder.ConfigureServices(services =>
+				{
+					services.AddFileGrainStorage(providerName, options);
+				});
+		}
 
 		private static IServiceCollection AddFileGrainStorage(this IServiceCollection services, string providerName, Action<FileGrainStorageOptions> options)
 		{
