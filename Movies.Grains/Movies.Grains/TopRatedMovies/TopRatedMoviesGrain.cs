@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Movies.Grains.TopRatedMovies
 {
 	//TODO: implement a check, where this grain checks whether the list of movies has changed from the last time it was called
-	public class TopRatedMoviesGrain : Grain, ITopRatedMoviesGrain
+	public class TopRatedMoviesGrain : Grain, IGrainWithIntegerKey, IResettableGrain, IMoviesListGrain
 	{
 		private readonly IPersistentState<MovieListState> _topRatedMoviesState;
 		private readonly IGrainFactory _grainFactory;
@@ -57,7 +57,7 @@ namespace Movies.Grains.TopRatedMovies
 		{
 			var amount = this.GetPrimaryKeyLong();
 			var allMoviesGrain = _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
-			var allMovies = await allMoviesGrain.GetAllMoviesAsync();
+			var allMovies = await allMoviesGrain.GetMoviesAsync();
 
 			_topRatedMoviesState.State.Movies = allMovies.OrderByDescending(m => m.Rate).ToList().Take((int)amount);
 		}

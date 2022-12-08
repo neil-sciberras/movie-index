@@ -20,7 +20,7 @@ namespace Movies.Grains.Clients
 		//TODO: Check if it's necessary to await here (and other similar places), or simply return the original task
 		public async Task<IEnumerable<Movie>> GetListAsync()
 		{
-			return await _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId).GetAllMoviesAsync();
+			return await _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId).GetMoviesAsync();
 		}
 	}
 }

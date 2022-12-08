@@ -25,7 +25,7 @@ namespace Movies.Grains.MovieList
 			_grainFactory = grainFactory;
 		}
 
-		public Task<IEnumerable<Movie>> GetAllMoviesAsync()
+		public Task<IEnumerable<Movie>> GetMoviesAsync()
 		{
 			return Task.FromResult(_movieListState.State.Movies);
 		}
@@ -34,7 +34,7 @@ namespace Movies.Grains.MovieList
 		{
 			_movieListState.State.Movies = movies;
 
-			var topRatedMoviesSupervisorGrain = _grainFactory.GetGrain<ISupervisorGrain<ITopRatedMoviesGrain>>(GrainIds.TopRatedMoviesSupervisorGrainId);
+			var topRatedMoviesSupervisorGrain = _grainFactory.GetGrain<ISupervisorGrain<IMoviesListGrain>>(GrainIds.TopRatedMoviesSupervisorGrainId);
 			await topRatedMoviesSupervisorGrain.ResetAllAsync();
 
 			await _movieListState.WriteStateAsync();

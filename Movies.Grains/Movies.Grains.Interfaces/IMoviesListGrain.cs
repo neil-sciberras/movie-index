@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 namespace Movies.Grains.Interfaces
 {
 	/// <summary>
-	/// Top-rated-movies grain, keyed on the number of movies to return.
+	/// A grain which returns a list of movies. Used for multiple use cases; e.g. top rated movies, all movies list, filtered movies
 	/// </summary>
-	public interface ITopRatedMoviesGrain : IGrainWithIntegerKey, IResettableGrain
+	public interface IMoviesListGrain : IResettableGrain, IGrainWithIntegerKey
 	{
 		Task<IEnumerable<Movie>> GetMoviesAsync();
 	}

@@ -33,7 +33,7 @@ namespace Movies.Grains.Proxy
 				return await movieGrain.GetAsync();
 			}
 
-			var movieList = await DataSourceGrain.GetAllMoviesAsync();
+			var movieList = await DataSourceGrain.GetMoviesAsync();
 
 			var movie = movieList.SingleOrDefault(movie => movie.Id == id);
 
@@ -54,7 +54,7 @@ namespace Movies.Grains.Proxy
 				await base.OnActivateAsync();
 
 				var allMoviesGrain = _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
-				var movieList = await allMoviesGrain.GetAllMoviesAsync();
+				var movieList = await allMoviesGrain.GetMoviesAsync();
 
 				foreach (var movie in movieList)
 				{

@@ -20,7 +20,7 @@ namespace Movies.Grains.Clients
 
 		public async Task<IEnumerable<Movie>> GetTopRatedMoviesAsync(int amount)
 		{
-			var supervisor = _grainFactory.GetGrain<ISupervisorGrain<ITopRatedMoviesGrain>>(GrainIds.TopRatedMoviesSupervisorGrainId);
+			var supervisor = _grainFactory.GetGrain<ISupervisorGrain<IMoviesListGrain>>(GrainIds.TopRatedMoviesSupervisorGrainId);
 			var grain = await supervisor.GetSupervisedGrainAsync(amount);
 
 			return await grain.GetMoviesAsync();
