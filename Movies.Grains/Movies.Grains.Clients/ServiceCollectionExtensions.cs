@@ -8,7 +8,6 @@ namespace Movies.Grains.Clients
 		public static void AddGrainClients(this IServiceCollection services)
 		{
 			services
-				.AddSingleton<IMovieGrainClient, MovieGrainClient>()
 				.AddSingleton<IAllMoviesGrainClient, AllMoviesGrainClient>()
 				.AddSingleton<IMovieSearchGrainClient, MovieSearchGrainClient>()
 				.AddSingleton<IGenreFilterGrainClient, GenreFilterGrainClient>()
