@@ -5,7 +5,6 @@ using Movies.AppInfo;
 using Movies.Extensions;
 using Movies.Grains;
 using Movies.Grains.Proxy;
-using Movies.Grains.TopRatedMovies;
 using Orleans;
 using Orleans.Hosting;
 using Serilog;

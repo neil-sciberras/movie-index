@@ -8,10 +8,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Movies.Grains.TopRatedMovies
+namespace Movies.Grains
 {
 	//TODO: implement a check, where this grain checks whether the list of movies has changed from the last time it was called
-	public class TopRatedMoviesGrain : Grain, IGrainWithIntegerKey, IResettableGrain, IMoviesListGrain
+	public class TopRatedMoviesGrain : Grain, IMoviesListGrain
 	{
 		private readonly IPersistentState<MovieListState> _topRatedMoviesState;
 		private readonly IGrainFactory _grainFactory;
