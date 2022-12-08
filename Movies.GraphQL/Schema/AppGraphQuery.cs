@@ -21,7 +21,7 @@ namespace Movies.GraphQL.Schema
 		{
 			Name = "AppQueries";
 
-			Field<MovieGraphType, Movie>(name: "movie")
+			Field<MovieType, Movie>(name: "movie")
 				.Description("A movie with the given Id")
 				.Argument<IntGraphType>(Id, "Unique movie Id")
 				.ResolveAsync(async context =>
@@ -30,20 +30,20 @@ namespace Movies.GraphQL.Schema
 					return await movieSearchGrain.GetMovie(id);
 				});
 
-			Field<ListGraphType<MovieGraphType>, IEnumerable<Movie>>(name: "moviesList")
+			Field<ListGraphType<MovieType>, IEnumerable<Movie>>(name: "moviesList")
 				.Description("List of all movies")
 				.ResolveAsync(async _ => await allMoviesGrainClient.GetListAsync());
 
-			Field<ListGraphType<MovieGraphType>, IEnumerable<Movie>>(name: "moviesWithGenre")
+			Field<ListGraphType<MovieType>, IEnumerable<Movie>>(name: "moviesWithGenre")
 				.Description("List of movies with a given genre")
-				.Argument<GenreGraphType>(Genre, "The genre to filter by")
+				.Argument<GenreType>(Genre, "The genre to filter by")
 				.ResolveAsync(async context =>
 				{
 					var genre = context.GetArgument<Genre>(Genre);
 					return await genreFilterGrainClient.GetMoviesAsync((int)genre);
 				});
 
-			Field<ListGraphType<MovieGraphType>, IEnumerable<Movie>>(name: "topRatedMovies")
+			Field<ListGraphType<MovieType>, IEnumerable<Movie>>(name: "topRatedMovies")
 				.Description("Top rated movies")
 				.Argument<IntGraphType>(Amount, "The amount of movies to return from top of the list")
 				.ResolveAsync(async context =>

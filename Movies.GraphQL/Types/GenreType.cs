@@ -3,7 +3,7 @@ using Movies.Contracts.Models;
 
 namespace Movies.GraphQL.Types
 {
-	public class GenreGraphType : EnumerationGraphType<Genre>
+	public class GenreType : EnumerationGraphType<Genre>
 	{
 	}
 }

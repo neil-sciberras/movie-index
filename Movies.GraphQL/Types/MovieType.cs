@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace Movies.GraphQL.Types
 {
-	public class MovieGraphType : ObjectGraphType<Movie>
+	public class MovieType : ObjectGraphType<Movie>
 	{
-		public MovieGraphType()
+		public MovieType()
 		{
 			Name = "Movie";
 			Description = "A movie in the database";
@@ -19,7 +19,7 @@ namespace Movies.GraphQL.Types
 			Field(d => d.Length).Description("The movie's length");
 			Field(d => d.Image).Description("The movie's image file name");
 			
-			Field<ListGraphType<GenreGraphType>, IEnumerable<Genre>>("Genres")
+			Field<ListGraphType<GenreType>, IEnumerable<Genre>>("Genres")
 				.Resolve(ctx => ctx.Source.Genres)
 				.Description("The genres of the movie");
 		}
