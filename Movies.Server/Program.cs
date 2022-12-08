@@ -5,7 +5,6 @@ using Movies.AppInfo;
 using Movies.Extensions;
 using Movies.Grains;
 using Movies.Grains.FilteredMovies;
-using Movies.Grains.Proxy;
 using Orleans;
 using Orleans.Hosting;
 using Serilog;
@@ -102,7 +101,6 @@ namespace Movies.Server
 						.ConfigureApplicationParts(parts => parts
 							.AddApplicationPart(typeof(MovieGrain).Assembly).WithReferences()
 							.AddApplicationPart(typeof(AllMoviesGrain).Assembly).WithReferences()
-							.AddApplicationPart(typeof(MovieProxyGrain).Assembly).WithReferences()
 							.AddApplicationPart(typeof(TopRatedMoviesGrain).Assembly).WithReferences()
 							.AddApplicationPart(typeof(TopRatedMoviesSupervisorGrain).Assembly).WithReferences()
 						)

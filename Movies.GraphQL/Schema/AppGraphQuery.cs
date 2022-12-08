@@ -14,7 +14,6 @@ namespace Movies.GraphQL.Schema
 		private const string Amount = "Amount";
 
 		public AppGraphQuery(
-			IMovieProxyGrainClient movieProxyGrainClient,
 			IMovieSearchGrainClient movieSearchGrain,
 			IAllMoviesGrainClient allMoviesGrainClient,
 			IGenreFilterGrainClient genreFilterGrainClient,
@@ -23,15 +22,6 @@ namespace Movies.GraphQL.Schema
 			Name = "AppQueries";
 
 			Field<MovieGraphType, Movie>(name: "movie")
-				.Description("A movie")
-				.Argument<IntGraphType>(Id, "Unique movie Id")
-				.ResolveAsync(async context =>
-				{
-					var id = context.GetArgument<int>(Id);
-					return await movieProxyGrainClient.GetMovieAsync(id);
-				});
-
-			Field<MovieGraphType, Movie>(name: "movieSearch")
 				.Description("A movie with the given Id")
 				.Argument<IntGraphType>(Id, "Unique movie Id")
 				.ResolveAsync(async context =>
