@@ -9,27 +9,36 @@ namespace Movies.GraphQL.Schema
 {
 	public class AppGraphQuery : ObjectGraphType
 	{
+		private const string Id = "Id";
+		private const string Genre = "Genre";
+		private const string Amount = "Amount";
+
 		public AppGraphQuery(
-			IMovieProxyGrainClient movieProxyGrainClient, 
+			IMovieProxyGrainClient movieProxyGrainClient,
+			IMovieListGrainClient movieListGrainClient,
 			ITopRatedMoviesGrainClient topRatedMoviesGrainClient)
 		{
 			Name = "AppQueries";
 
 			Field<MovieGraphType, Movie>(name: "movie")
 				.Description("A movie")
-				.Argument<IntGraphType>("Id", "Unique movie Id")
+				.Argument<IntGraphType>(Id, "Unique movie Id")
 				.ResolveAsync(async context =>
 				{
-					var id = context.GetArgument<int>("Id");
+					var id = context.GetArgument<int>(Id);
 					return await movieProxyGrainClient.GetMovieAsync(id);
 				});
 
+			Field<ListGraphType<MovieGraphType>, IEnumerable<Movie>>(name: "moviesList")
+				.Description("List of all movies")
+				.ResolveAsync(async _ => await movieListGrainClient.GetListAsync());
+
 			Field<ListGraphType<MovieGraphType>, IEnumerable<Movie>>(name: "topRatedMovies")
 				.Description("Top rated movies")
-				.Argument<IntGraphType>("Amount", "The amount of movies to return from top of the list")
+				.Argument<IntGraphType>(Amount, "The amount of movies to return from top of the list")
 				.ResolveAsync(async context =>
 				{
-					var amount = context.GetArgument<int>("Amount");
+					var amount = context.GetArgument<int>(Amount);
 					return await topRatedMoviesGrainClient.GetTopRatedMoviesAsync(amount);
 				});
 		}
