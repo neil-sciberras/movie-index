@@ -34,7 +34,7 @@ namespace Movies.Grains.MovieList
 		{
 			_movieListState.State.Movies = movies;
 
-			var topRatedMoviesSupervisorGrain = _grainFactory.GetGrain<ITopRatedMoviesSupervisorGrain>(GrainIds.TopRatedMoviesSuperVisorGrainId);
+			var topRatedMoviesSupervisorGrain = _grainFactory.GetGrain<ITopRatedMoviesSupervisorGrain>(GrainIds.TopRatedMoviesSupervisorGrainId);
 			await topRatedMoviesSupervisorGrain.ResetAllAsync();
 
 			await _movieListState.WriteStateAsync();

@@ -6,6 +6,6 @@ namespace Movies.Grains.Interfaces.TopRatedMovies
 	public interface ITopRatedMoviesSupervisorGrain : IGrainWithStringKey
 	{
 		Task ResetAllAsync();
-		Task<ITopRatedMoviesGrain> RegisterNewGrainAsync(int amountOfMovies);
+		Task<ITopRatedMoviesGrain> GetTopRatedMoviesGrainAsync(int amountOfMovies);
 	}
 }

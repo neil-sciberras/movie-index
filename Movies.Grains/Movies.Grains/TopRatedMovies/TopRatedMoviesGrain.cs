@@ -2,6 +2,7 @@
 using Movies.Contracts.Models;
 using Movies.Grains.Interfaces;
 using Movies.Grains.Interfaces.TopRatedMovies;
+using Movies.Grains.MovieList;
 using Orleans;
 using Orleans.Runtime;
 using System.Collections.Generic;
@@ -13,11 +14,11 @@ namespace Movies.Grains.TopRatedMovies
 	//TODO: implement a check, where this grain checks whether the list of movies has changed from the last time it was called
 	public class TopRatedMoviesGrain : Grain, ITopRatedMoviesGrain
 	{
-		private readonly IPersistentState<IEnumerable<Movie>> _topRatedMoviesState;
+		private readonly IPersistentState<MovieListState> _topRatedMoviesState;
 		private readonly IGrainFactory _grainFactory;
 
 		public TopRatedMoviesGrain(
-			[PersistentState(stateName: "topRatedMoviesState", storageName: GrainStorageNames.FileStorage)] IPersistentState<IEnumerable<Movie>> state,
+			[PersistentState(stateName: "topRatedMoviesState", storageName: GrainStorageNames.FileStorage)] IPersistentState<MovieListState> state,
 			IGrainFactory grainFactory)
 		{
 			_grainFactory = grainFactory;
@@ -32,7 +33,7 @@ namespace Movies.Grains.TopRatedMovies
 				await FetchAndSetStateAsync();
 			}
 
-			return _topRatedMoviesState.State;
+			return _topRatedMoviesState.State!.Movies;
 		}
 
 		public Task ResetStateAsync()
@@ -59,7 +60,7 @@ namespace Movies.Grains.TopRatedMovies
 			var movieListGrain = _grainFactory.GetGrain<IMovieListGrain>(GrainIds.MovieListGrainId);
 			var allMovies = await movieListGrain.GetAllMoviesAsync();
 
-			_topRatedMoviesState.State = allMovies.OrderBy(m => m.Rate).Take((int)amount);
+			_topRatedMoviesState.State.Movies = allMovies.OrderByDescending(m => m.Rate).ToList().Take((int)amount);
 		}
 	}
 }

@@ -13,40 +13,41 @@ namespace Movies.Grains.TopRatedMovies
 	/// </summary>
 	public class TopRatedMoviesSupervisorGrain : Grain, ITopRatedMoviesSupervisorGrain
 	{
-		private readonly IPersistentState<IEnumerable<ITopRatedMoviesGrain>> _supervisorState;
+		private readonly IPersistentState<TopRatedMoviesSupervisorState> _supervisorState;
 		private readonly IGrainFactory _grainFactory;
 
 		public TopRatedMoviesSupervisorGrain(
-			[PersistentState(stateName: "supervisorState", storageName: GrainStorageNames.MemoryStorage)] IPersistentState<IEnumerable<ITopRatedMoviesGrain>> supervisorState, 
+			[PersistentState(stateName: "supervisorState", storageName: GrainStorageNames.MemoryStorage)] IPersistentState<TopRatedMoviesSupervisorState> supervisorState, 
 			IGrainFactory grainFactory)
 		{
 			_supervisorState = supervisorState;
 			_grainFactory = grainFactory;
 		}
 
-		public Task ResetAllAsync()
+		public async Task ResetAllAsync()
 		{
-			foreach (var topRatedMoviesGrain in _supervisorState.State)
-			{
-				topRatedMoviesGrain.ResetStateAsync();
-			}
+			var resetTasks = _supervisorState.State.TopRatedMovieGrainPrimaryKeys
+				.Select(pk => _grainFactory.GetGrain<ITopRatedMoviesGrain>(pk).ResetStateAsync()).ToList();
 
-			return Task.CompletedTask;
+			await Task.WhenAll(resetTasks);
 		}
 
-		public Task<ITopRatedMoviesGrain> RegisterNewGrainAsync(int amountOfMovies)
+		public Task<ITopRatedMoviesGrain> GetTopRatedMoviesGrainAsync(int amountOfMovies)
 		{
-			var grainList = _supervisorState?.State != null 
-				? _supervisorState!.State!.ToList()
-				: new List<ITopRatedMoviesGrain>();
+			_supervisorState.State.TopRatedMovieGrainPrimaryKeys.Add(amountOfMovies);
 
-			var newGrain = _grainFactory.GetGrain<ITopRatedMoviesGrain>(amountOfMovies);
+			var topRatedMoviesGrain = _grainFactory.GetGrain<ITopRatedMoviesGrain>(amountOfMovies);
 
-			grainList.Add(newGrain);
+			return Task.FromResult(topRatedMoviesGrain);
+		}
 
-			_supervisorState.State = grainList;
+		public override Task OnActivateAsync()
+		{
+			base.OnActivateAsync();
 
-			return Task.FromResult(newGrain);
+			_supervisorState.State.TopRatedMovieGrainPrimaryKeys ??= new HashSet<int>();
+
+			return Task.CompletedTask;
 		}
 	}
 }
