@@ -20,8 +20,7 @@ namespace Movies.GraphQL
 			services.AddSingleton<ISchema, AppSchema>();
 			services.AddSingleton<AppGraphQuery>();
 			services.AddSingleton<AppGraphMutation>();
-
-			services.AddSingleton<SampleDataGraphType>();
+			
 			services.AddSingleton<GenreGraphType>();
 			services.AddSingleton<MovieGraphType>();
 		}

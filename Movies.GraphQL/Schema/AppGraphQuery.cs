@@ -10,7 +10,6 @@ namespace Movies.GraphQL.Schema
 	public class AppGraphQuery : ObjectGraphType
 	{
 		public AppGraphQuery(
-			ISampleGrainClient sampleClient, 
 			IMovieProxyGrainClient movieProxyGrainClient, 
 			ITopRatedMoviesGrainClient topRatedMoviesGrainClient)
 		{
@@ -33,14 +32,6 @@ namespace Movies.GraphQL.Schema
 					var amount = context.GetArgument<int>("Amount");
 					return await topRatedMoviesGrainClient.GetTopRatedMoviesAsync(amount);
 				});
-
-			Field<SampleDataGraphType>("sample",
-				arguments: new QueryArguments(new QueryArgument<StringGraphType>
-				{
-					Name = "id"
-				}),
-				resolve: ctx => sampleClient.Get(ctx.Arguments["id"].ToString())
-			);
 		}
 	}
 }
