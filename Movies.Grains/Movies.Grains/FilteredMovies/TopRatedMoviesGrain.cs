@@ -27,7 +27,7 @@ namespace Movies.Grains.FilteredMovies
 		{
 			var amount = (int)this.GetPrimaryKeyLong();
 
-			return allMovies.OrderByDescending(m => m.Rate).ToList().Take(amount);
+			return allMovies?.OrderByDescending(m => m.Rate).ToList().Take(amount);
 		}
 	}
 }

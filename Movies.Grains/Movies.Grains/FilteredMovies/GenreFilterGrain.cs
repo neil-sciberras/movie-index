@@ -11,7 +11,6 @@ using System.Linq;
 
 namespace Movies.Grains.FilteredMovies
 {
-
 	/// <summary>
 	/// <inheritdoc cref="FilteredMoviesGrainBase"/>
 	/// <para />
@@ -28,16 +27,16 @@ namespace Movies.Grains.FilteredMovies
 
 		protected override IEnumerable<Movie> FilterMovies(IEnumerable<Movie> allMovies)
 		{
-			var primaryKey = (int)this.GetPrimaryKeyLong();
+			var genreIntValue = (int)this.GetPrimaryKeyLong();
 
-			if (!Enum.IsDefined(typeof(Genre), primaryKey))
+			if (!Enum.IsDefined(typeof(Genre), genreIntValue))
 			{
-				throw new InvalidGenreException($"{primaryKey} is not defined as a Genre");
+				throw new InvalidGenreException($"{genreIntValue} is not defined as a Genre");
 			}
 
-			var genre = (Genre)primaryKey;
+			var genre = (Genre)genreIntValue;
 
-			return allMovies?.Where(m => m.Genres != null && m.Genres.Contains(genre)).ToList() ?? new List<Movie>();
+			return allMovies?.Where(m => m.Genres != null && m.Genres.Contains(genre)).ToList();
 		}
 	}
 }

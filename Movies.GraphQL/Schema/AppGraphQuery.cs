@@ -15,6 +15,7 @@ namespace Movies.GraphQL.Schema
 
 		public AppGraphQuery(
 			IMovieProxyGrainClient movieProxyGrainClient,
+			IMovieSearchGrainClient movieSearchGrain,
 			IAllMoviesGrainClient allMoviesGrainClient,
 			IGenreFilterGrainClient genreFilterGrainClient,
 			ITopRatedMoviesGrainClient topRatedMoviesGrainClient)
@@ -28,6 +29,15 @@ namespace Movies.GraphQL.Schema
 				{
 					var id = context.GetArgument<int>(Id);
 					return await movieProxyGrainClient.GetMovieAsync(id);
+				});
+
+			Field<MovieGraphType, Movie>(name: "movieSearch")
+				.Description("A movie with the given Id")
+				.Argument<IntGraphType>(Id, "Unique movie Id")
+				.ResolveAsync(async context =>
+				{
+					var id = context.GetArgument<int>(Id);
+					return await movieSearchGrain.GetMovie(id);
 				});
 
 			Field<ListGraphType<MovieGraphType>, IEnumerable<Movie>>(name: "moviesList")

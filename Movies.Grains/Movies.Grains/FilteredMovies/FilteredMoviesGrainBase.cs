@@ -62,7 +62,7 @@ namespace Movies.Grains.FilteredMovies
 			var allMoviesGrain = _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
 			var allMovies = await allMoviesGrain.GetMoviesAsync();
 
-			_filteredMoviesState.State.Movies = FilterMovies(allMovies);
+			_filteredMoviesState.State.Movies = FilterMovies(allMovies) ?? new List<Movie>();
 		}
 	}
 }
