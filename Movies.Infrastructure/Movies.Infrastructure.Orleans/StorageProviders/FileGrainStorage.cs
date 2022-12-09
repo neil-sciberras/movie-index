@@ -37,11 +37,15 @@ namespace Movies.Infrastructure.Orleans.StorageProviders
 
 		public async Task ReadStateAsync(string grainType, GrainReference grainReference, IGrainState grainState)
 		{
-				using var stream = _fileInfo.OpenText();
-				var storedData = await stream.ReadToEndAsync();
+			string storedData;
 
-				grainState.State = JsonConvert.DeserializeObject(storedData, grainState.Type);
-				grainState.ETag = _fileInfo.LastWriteTimeUtc.ToString(CultureInfo.InvariantCulture);
+			using (var stream = _fileInfo.OpenText())
+			{
+				storedData = await stream.ReadToEndAsync();
+			}
+
+			grainState.State = JsonConvert.DeserializeObject(storedData, grainState.Type);
+			grainState.ETag = _fileInfo.LastWriteTimeUtc.ToString(CultureInfo.InvariantCulture);
 		}
 
 		public async Task WriteStateAsync(string grainType, GrainReference grainReference, IGrainState grainState)
@@ -58,8 +62,10 @@ namespace Movies.Infrastructure.Orleans.StorageProviders
 					$"GrainReference={grainReference.ToKeyString()}.");
 			}
 
-			using var streamWriter = new StreamWriter(_fileInfo.Open(FileMode.Create, FileAccess.Write));
-			await streamWriter.WriteAsync(serializedState);
+			using (var streamWriter = new StreamWriter(_fileInfo.Open(FileMode.Create, FileAccess.Write)))
+			{
+				await streamWriter.WriteAsync(serializedState);
+			}
 
 			_fileInfo.Refresh();
 			grainState.ETag = _fileInfo.LastWriteTimeUtc.ToString(CultureInfo.InvariantCulture);
