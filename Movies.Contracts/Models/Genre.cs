@@ -1,5 +1,9 @@
-﻿namespace Movies.Contracts.Models
+﻿using Newtonsoft.Json.Converters;
+using Newtonsoft.Json;
+
+namespace Movies.Contracts.Models
 {
+	[JsonConverter(typeof(StringEnumConverter))]
 	public enum Genre
 	{
 		Action,

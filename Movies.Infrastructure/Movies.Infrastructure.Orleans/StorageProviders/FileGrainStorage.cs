@@ -13,26 +13,26 @@ using System.Threading.Tasks;
 namespace Movies.Infrastructure.Orleans.StorageProviders
 {
 	/// <summary>
-	/// <see href="https://learn.microsoft.com/en-us/dotnet/orleans/tutorials-and-samples/custom-grain-storage"/>
+	/// From: <see href="https://learn.microsoft.com/en-us/dotnet/orleans/tutorials-and-samples/custom-grain-storage"/>.
+	/// <para></para>
+	/// The only difference is that this does not use <see cref="JsonSerializerSettings"/> from <see cref="OrleansJsonSerializer"/>.
+	/// It passes no settings object to <see cref="JsonConvert.SerializeObject"/> and <see cref="JsonConvert.DeserializeObject"/>.
+	/// <para></para>
+	/// An <see cref="InvalidCastException"/> was being thrown when deserializing the json text using the <see cref="JsonSerializerSettings"/> from Orleans.
 	/// </summary>
 	public class FileGrainStorage : IGrainStorage, ILifecycleParticipant<ISiloLifecycle>
 	{
 		private readonly string _storageName;
 		private readonly FileGrainStorageOptions _fileGrainStorageOptions;
 		private readonly ClusterOptions _clusterOptions;
-		private readonly IGrainFactory _grainFactory;
-		private readonly ITypeResolver _typeResolver;
-		private JsonSerializerSettings _jsonSerializerSettings;
 
 		private FileInfo _fileInfo;
 
-		public FileGrainStorage(string storageName, FileGrainStorageOptions fileGrainStorageOptions, ClusterOptions clusterOptions, IGrainFactory grainFactory, ITypeResolver typeResolver)
+		public FileGrainStorage(string storageName, FileGrainStorageOptions fileGrainStorageOptions, ClusterOptions clusterOptions)
 		{
 			_storageName = storageName;
 			_fileGrainStorageOptions = fileGrainStorageOptions;
 			_clusterOptions = clusterOptions;
-			_grainFactory = grainFactory;
-			_typeResolver = typeResolver;
 		}
 
 		public async Task ReadStateAsync(string grainType, GrainReference grainReference, IGrainState grainState)
@@ -40,27 +40,13 @@ namespace Movies.Infrastructure.Orleans.StorageProviders
 				using var stream = _fileInfo.OpenText();
 				var storedData = await stream.ReadToEndAsync();
 
-				SetState(grainState, storedData);
-
+				grainState.State = JsonConvert.DeserializeObject(storedData, grainState.Type);
 				grainState.ETag = _fileInfo.LastWriteTimeUtc.ToString(CultureInfo.InvariantCulture);
-		}
-
-		/// <summary>
-		/// This is implemented as a work around to the InvalidCastException being thrown when deserializing the json text using the <see cref="_jsonSerializerSettings"/>.
-		/// </summary>
-		private static void SetState(IGrainState grainState, string storedData)
-		{
-			//grainState.State = JsonConvert.DeserializeObject(storedData, _jsonSerializerSettings);
-
-			// TODO: fix the commented line above, and remove this hack. The above line is the suggested way from
-			// https://learn.microsoft.com/en-us/dotnet/orleans/tutorials-and-samples/custom-grain-storage#read-state
-
-			grainState.State = JsonConvert.DeserializeObject(storedData, grainState.Type);
 		}
 
 		public async Task WriteStateAsync(string grainType, GrainReference grainReference, IGrainState grainState)
 		{
-			var serializedState = JsonConvert.SerializeObject(grainState.State, _jsonSerializerSettings);
+			var serializedState = JsonConvert.SerializeObject(grainState.State, Formatting.Indented);
 
 			if (_fileInfo.Exists && _fileInfo.LastWriteTimeUtc.ToString(CultureInfo.InvariantCulture) != grainState.ETag)
 			{
@@ -94,12 +80,6 @@ namespace Movies.Infrastructure.Orleans.StorageProviders
 
 		private Task Init(CancellationToken ct)
 		{
-			_jsonSerializerSettings = OrleansJsonSerializer.UpdateSerializerSettings(
-				settings: OrleansJsonSerializer.GetDefaultSerializerSettings(_typeResolver, _grainFactory),
-				useFullAssemblyNames: false,
-				indentJson: true,
-				typeNameHandling: null);
-
 			_fileInfo = new FileInfo(_fileGrainStorageOptions.FullFileName);
 
 			if (!_fileInfo.Exists)
