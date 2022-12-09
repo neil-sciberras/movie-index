@@ -1,5 +1,4 @@
-﻿using Movies.Contracts.Grains;
-using Movies.Grains.Interfaces;
+﻿using Movies.Grains.Interfaces.DataQueries;
 using Movies.Grains.Interfaces.DataQueries.Supervisors;
 using Orleans;
 using Orleans.Runtime;
@@ -13,7 +12,7 @@ namespace Movies.Grains.DataQueries.Supervisors
 	/// This enables the resetting of all the supervised grains' states on the event of a file reload.
 	/// </summary>
 	public abstract class SupervisorGrainBase<TSupervisedGrainInterface> : Grain,
-		ISupervisorGrain<TSupervisedGrainInterface> where TSupervisedGrainInterface : IResettableGrain, IGrainWithIntegerKey
+		ISupervisorGrain<TSupervisedGrainInterface> where TSupervisedGrainInterface : IResettableGrain
 	{
 		private readonly IPersistentState<SupervisorState> _supervisorState;
 		private readonly IGrainFactory _grainFactory;

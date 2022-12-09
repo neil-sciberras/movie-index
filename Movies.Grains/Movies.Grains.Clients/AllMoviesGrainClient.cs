@@ -17,7 +17,6 @@ namespace Movies.Grains.Clients
 			_grainFactory = grainFactory;
 		}
 
-		//TODO: Check if it's necessary to await here (and other similar places), or simply return the original task
 		public async Task<IEnumerable<Movie>> GetListAsync()
 		{
 			return await _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId).GetMoviesAsync();

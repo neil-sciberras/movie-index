@@ -34,7 +34,7 @@ namespace Movies.Grains.MovieList
 		{
 			_movieListState.State.Movies = movies;
 			await _movieListState.WriteStateAsync();
-			
+
 			//TODO: maintain a list of supervisors here
 			await _grainFactory.GetGrain<ITopRatedMoviesSupervisorGrain>(GrainIds.TopRatedMoviesSupervisorGrainId).ResetAllAsync();
 			await _grainFactory.GetGrain<IGenreFilterSupervisorGrain>(GrainIds.GenreFilterSupervisorGrainId).ResetAllAsync();

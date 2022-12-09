@@ -1,9 +1,9 @@
 ﻿using Orleans;
 using System.Threading.Tasks;
 
-namespace Movies.Grains.Interfaces
+namespace Movies.Grains.Interfaces.DataQueries
 {
-	public interface IResettableGrain : IGrain
+	public interface IResettableGrain : IGrainWithIntegerKey
 	{
 		Task ResetStateAsync();
 	}

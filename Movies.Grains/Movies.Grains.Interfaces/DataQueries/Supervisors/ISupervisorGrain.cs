@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Movies.Grains.Interfaces.DataQueries.Supervisors
 {
 	public interface ISupervisorGrain<TSupervisedGrainInterface> : IGrainWithStringKey
-		where TSupervisedGrainInterface : IResettableGrain, IGrainWithIntegerKey
+		where TSupervisedGrainInterface : IResettableGrain
 	{
 		Task ResetAllAsync();
 		Task<TSupervisedGrainInterface> GetSupervisedGrainAsync(int primaryKey);
