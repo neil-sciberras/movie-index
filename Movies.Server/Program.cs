@@ -16,6 +16,7 @@ using Movies.Infrastructure.Orleans.Silo;
 using Movies.Grains.MovieList;
 using Movies.Grains.DataQueries.FilteredMovies;
 using Movies.Grains.DataQueries.Supervisors;
+using Movies.Server.CommandLineArgs;
 
 namespace Movies.Server
 {
@@ -24,6 +25,7 @@ namespace Movies.Server
 		public static Task Main(string[] args)
 		{
 			var hostBuilder = new HostBuilder();
+			var commandLineArguments = CommandLineArgHelper.ParseArguments(args);
 			
 			IAppInfo appInfo = null;
 
@@ -94,7 +96,8 @@ namespace Movies.Server
 							{
 								SiloPort = GetAvailablePort(11111, 12000),
 								GatewayPort = 30001,
-								StorageFileName = ctx.Configuration.GetSection("moviesFileName").Value
+								StorageFileName = ctx.Configuration.GetSection("moviesFileName").Value,
+								StorageFileDirectory = commandLineArguments.StorageDir
 							}
 						})
 						.ConfigureApplicationParts(parts => parts

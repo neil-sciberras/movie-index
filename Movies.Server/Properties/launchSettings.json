@@ -2,12 +2,14 @@
   "profiles": {
     "Silo Local": {
       "commandName": "Project",
+      "commandLineArgs": "-storageDir ..",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "Docker": {
       "commandName": "Docker",
+      "commandLineArgs": "-storageDir .",
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "publishAllPorts": true
     }

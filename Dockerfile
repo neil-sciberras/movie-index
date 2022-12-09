@@ -34,4 +34,4 @@ ENV DOCKER true
 COPY ["movies.json", "."]
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Movies.Server.dll"]
+ENTRYPOINT ["dotnet", "Movies.Server.dll", "-storageDir", "."]

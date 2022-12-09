@@ -26,7 +26,8 @@ namespace Movies.Infrastructure.Orleans.Silo
 				.UseStorage(
 					storeProviderName: GrainStorageNames.FileStorage, 
 					storageProvider: StorageProviderType.File, 
-					storeName: context.SiloOptions.StorageFileName)
+					storeName: context.SiloOptions.StorageFileName,
+					storeDirectory: context.SiloOptions.StorageFileDirectory)
 				.Configure<ClusterOptions>(options =>
 				{
 					options.ClusterId = appInfo.ClusterId;
@@ -59,7 +60,11 @@ namespace Movies.Infrastructure.Orleans.Silo
 					.UseLocalhostClustering(siloPort: siloPort, gatewayPort: gatewayPort);
 		}
 
-		private static ISiloBuilder UseStorage(this ISiloBuilder siloBuilder, string storeProviderName, StorageProviderType? storageProvider = null, string storeName = null)
+		private static ISiloBuilder UseStorage(this ISiloBuilder siloBuilder, 
+			string storeProviderName, 
+			StorageProviderType? storageProvider = null, 
+			string storeName = null,
+			string storeDirectory = ".")
 		{
 			storeName = storeName.IfNullOrEmptyReturn(storeProviderName);
 			storageProvider ??= _defaultProviderType;
@@ -73,7 +78,7 @@ namespace Movies.Infrastructure.Orleans.Silo
 				case StorageProviderType.File:
 					siloBuilder.AddFileGrainStorage(storeProviderName, options =>
 					{
-						options.RootDirectory = "../";
+						options.RootDirectory = storeDirectory;
 						options.FileName = storeName;
 					});
 					break;
