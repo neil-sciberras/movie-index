@@ -1,6 +1,10 @@
 # Docker
-- build Dockerfile (form the root directory)
-`docker build .`
+- start docker desktop
+- build the image from the Dockerfile (form the root directory)
+`docker build . -t movies-server`
+- run the image as a container
+`docker run --publish 6600:6600 movies-server`
+
 
 # Sample GraphQL query/mutations:
 
