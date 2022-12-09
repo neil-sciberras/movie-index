@@ -1,7 +1,7 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
+using Movies.Grains.Interfaces.DataQueries.FilteredMovies;
 using Movies.Grains.Interfaces.Exceptions;
-using Movies.Grains.Interfaces.FilteredMovies;
 using Movies.Grains.MovieList;
 using Orleans;
 using Orleans.Runtime;

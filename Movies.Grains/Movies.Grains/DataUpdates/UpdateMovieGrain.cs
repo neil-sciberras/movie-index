@@ -1,6 +1,7 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
 using Movies.Grains.Interfaces;
+using Movies.Grains.Interfaces.DataQueries.Supervisors;
 using Movies.Grains.Interfaces.DataUpdates;
 using Movies.Grains.Interfaces.Exceptions;
 using Orleans;
@@ -12,23 +13,27 @@ namespace Movies.Grains.DataUpdates
 {
 	public class UpdateMovieGrain : Grain, IUpdateMovieGrain
 	{
+		private readonly IMovieSearchSupervisorGrain _movieSearchSupervisorGrain;
 		private readonly IAllMoviesGrain _allMoviesGrain;
 
 		public UpdateMovieGrain(IGrainFactory grainFactory)
 		{
+			_movieSearchSupervisorGrain = grainFactory.GetGrain<IMovieSearchSupervisorGrain>(GrainIds.MovieSearchSupervisorGrainId);
 			_allMoviesGrain = grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
 		}
 
 		public async Task<Movie> UpdateAsync(Movie movieUpdate)
 		{
-			var allMovies = (await _allMoviesGrain.GetMoviesAsync()).ToList();
+			var movieSearchGrain = await _movieSearchSupervisorGrain.GetSupervisedGrainAsync(movieUpdate.Id);
 
-			var existingMovie = allMovies.SingleOrDefault(m => m.Id == movieUpdate.Id);
+			var existingMovie = (await movieSearchGrain.GetMoviesAsync()).SingleOrDefault();
 
 			if (existingMovie == null)
 			{
 				throw new MovieNotFoundException($"Movie with Id '{movieUpdate.Id}' was not found in the database");
 			}
+
+			var allMovies = (await _allMoviesGrain.GetMoviesAsync()).ToList();
 
 			return await UpdateAndGetUpdatedMovieAsync(allMovies, existingMovie: existingMovie, movieUpdate: movieUpdate);
 		}

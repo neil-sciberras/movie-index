@@ -8,21 +8,21 @@ using System.Threading.Tasks;
 
 namespace Movies.Grains.Clients
 {
-	public class UpdateMovieGrainClient : IUpdateMovieGrainClient
+	public class DeleteMovieGrainClient : IDeleteMovieGrainClient
 	{
 		private readonly IGrainFactory _grainFactory;
 
-		public UpdateMovieGrainClient(IGrainFactory grainFactory)
+		public DeleteMovieGrainClient(IGrainFactory grainFactory)
 		{
 			_grainFactory = grainFactory;
 		}
 
-		public async Task<Movie> UpdateMovieAsync(Movie movie)
+		public async Task<Movie> DeleteMovieAsync(int id)
 		{
 			try
 			{
-				var updateMovieGrain = _grainFactory.GetGrain<IUpdateMovieGrain>(GrainIds.UpdateMovieGrainId);
-				return await updateMovieGrain.UpdateAsync(movie);
+				var deleteMovieGrain = _grainFactory.GetGrain<IDeleteMovieGrain>(GrainIds.DeleteMovieGrainId);
+				return await deleteMovieGrain.DeleteMovieAsync(id);
 			}
 			catch (MovieNotFoundException)
 			{

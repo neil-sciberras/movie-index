@@ -454,23 +454,6 @@
         "rate": "6.8",
         "length": "1hr 59mins",
         "img": "bad-boys.jpg"
-      },
-      {
-        "$id": "26",
-        "$type": "Movies.Contracts.Models.Movie, Movies.Contracts",
-        "id": 24,
-        "key": "test-movie",
-        "name": "Test Movie",
-        "description": "Updated description 3",
-        "genres": {
-          "$type": "System.Collections.Generic.List`1[[Movies.Contracts.Models.Genre, Movies.Contracts]], System.Private.CoreLib",
-          "$values": [
-            6
-          ]
-        },
-        "rate": "9.1",
-        "length": "1hr 40mins",
-        "img": "n/a"
       }
     ]
   }

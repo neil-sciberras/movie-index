@@ -3,7 +3,7 @@ using Orleans;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Movies.Grains.Interfaces
+namespace Movies.Grains.Interfaces.DataQueries
 {
 	/// <summary>
 	/// A grain which returns a list of movies. Used for multiple use cases; e.g. top rated movies, all movies list, filtered movies

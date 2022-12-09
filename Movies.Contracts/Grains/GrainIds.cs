@@ -10,5 +10,6 @@
 		
 		public const string AddMovieGrainId = nameof(AddMovieGrainId);
 		public const string UpdateMovieGrainId = nameof(UpdateMovieGrainId);
+		public const string DeleteMovieGrainId = nameof(DeleteMovieGrainId);
 	}
 }

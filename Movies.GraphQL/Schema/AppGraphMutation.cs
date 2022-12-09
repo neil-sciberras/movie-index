@@ -11,8 +11,9 @@ namespace Movies.GraphQL.Schema
 	{
 		private const string NewMovie = "NewMovie";
 		private const string MovieUpdate = "MovieUpdate";
+		private const string MovieId = "MovieId";
 
-		public AppGraphMutation(IAddMovieGrainClient addMovieGrainClient, IUpdateMovieGrainClient updateMovieGrainClient)
+		public AppGraphMutation(IAddMovieGrainClient addMovieGrainClient, IUpdateMovieGrainClient updateMovieGrainClient, IDeleteMovieGrainClient deleteMovieGrainClient)
 		{
 			Name = "MovieMutations";
 
@@ -32,6 +33,15 @@ namespace Movies.GraphQL.Schema
 				{
 					var movie = context.GetArgument<Movie>(MovieUpdate);
 					return await updateMovieGrainClient.UpdateMovieAsync(movie);
+				});
+
+			Field<MovieType, Movie>(name: "deleteMovie")
+				.Description("Delete a movie from the list")
+				.Argument<IntGraphType>(MovieId, "The movie's Id")
+				.ResolveAsync(async context =>
+				{
+					var movieId = context.GetArgument<int>(MovieId);
+					return await deleteMovieGrainClient.DeleteMovieAsync(movieId);
 				});
 		}
 	}
