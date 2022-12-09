@@ -35,10 +35,14 @@ namespace Movies.Grains.MovieList
 			_movieListState.State.Movies = movies;
 			await _movieListState.WriteStateAsync();
 
-			//TODO: maintain a list of supervisors here
-			await _grainFactory.GetGrain<ITopRatedMoviesSupervisorGrain>(GrainIds.TopRatedMoviesSupervisorGrainId).ResetAllAsync();
-			await _grainFactory.GetGrain<IGenreFilterSupervisorGrain>(GrainIds.GenreFilterSupervisorGrainId).ResetAllAsync();
-			await _grainFactory.GetGrain<IMovieSearchSupervisorGrain>(GrainIds.MovieSearchSupervisorGrainId).ResetAllAsync();
+			var resetTasks = new List<Task>
+			{
+				_grainFactory.GetGrain<ITopRatedMoviesSupervisorGrain>(GrainIds.TopRatedMoviesSupervisorGrainId).ResetAllAsync(),
+				_grainFactory.GetGrain<IGenreFilterSupervisorGrain>(GrainIds.GenreFilterSupervisorGrainId).ResetAllAsync(),
+				_grainFactory.GetGrain<IMovieSearchSupervisorGrain>(GrainIds.MovieSearchSupervisorGrainId).ResetAllAsync()
+			};
+
+			await Task.WhenAll(resetTasks);
 		}
 	}
 }
