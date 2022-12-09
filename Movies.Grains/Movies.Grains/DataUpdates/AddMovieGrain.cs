@@ -11,25 +11,23 @@ namespace Movies.Grains.DataUpdates
 {
 	public class AddMovieGrain : Grain, IAddMovieGrain
 	{
-		private readonly IGrainFactory _grainFactory;
+		private readonly IAllMoviesGrain _allMoviesGrain;
 
 		public AddMovieGrain(IGrainFactory grainFactory)
 		{
-			_grainFactory = grainFactory;
+			_allMoviesGrain = grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
 		}
 
 		public async Task<Movie> AddMovieAsync(NewMovie newMovie)
 		{
-			var allMoviesGrain = _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
-
-			var movies = (await allMoviesGrain.GetMoviesAsync()).ToList();
+			var movies = (await _allMoviesGrain.GetMoviesAsync()).ToList();
 
 			var nextAvailableId = movies.Max(m => m.Id) + 1;
 
 			var movie = newMovie.ConvertToMovie(nextAvailableId);
 			movies.Add(movie);
 
-			await allMoviesGrain.SetMovieListAsync(movies);
+			await _allMoviesGrain.SetMovieListAsync(movies);
 
 			return movie;
 		}
