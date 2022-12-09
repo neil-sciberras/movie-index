@@ -23,12 +23,4 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
-  <!-- Shared Package Versions -->
-  <PropertyGroup>
-    <!-- vendors -->
-    <OrleansVersion>3.2.0</OrleansVersion>
-    <MicrosoftExtensionsVersion>3.1.4</MicrosoftExtensionsVersion>
-    <NewtonsoftJsonVersion>12.0.1</NewtonsoftJsonVersion>
-  </PropertyGroup>
 </Project>
