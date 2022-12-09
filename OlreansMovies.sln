@@ -6,7 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{C5911799-6F6D-4CDA-B2AB-EEFD9D54A473}"
 	ProjectSection(SolutionItems) = preProject
 		app-info.json = app-info.json
-		Directory.Build.props = Directory.Build.props
 		NuGet.Config = NuGet.Config
 		readme.md = readme.md
 	EndProjectSection
@@ -37,11 +36,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Grains", "Movies.Gra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Grains.Interfaces", "Movies.Grains\Movies.Grains.Interfaces\Movies.Grains.Interfaces.csproj", "{0C7FDEB6-924C-4701-B1B4-CB3C526E522F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Grains.Clients.Interfaces", "Movies.Grains\Movies.Grains.Clients.Interfaces\Movies.Grains.Clients.Interfaces.csproj", "{2D0B8B06-3930-4162-A5E9-71015BB46465}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Grains.Clients.Interfaces", "Movies.Grains\Movies.Grains.Clients.Interfaces\Movies.Grains.Clients.Interfaces.csproj", "{2D0B8B06-3930-4162-A5E9-71015BB46465}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Grains.Clients", "Movies.Grains\Movies.Grains.Clients\Movies.Grains.Clients.csproj", "{5E18F1D7-467B-4370-BEC7-0277E39B9C51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Grains.Clients", "Movies.Grains\Movies.Grains.Clients\Movies.Grains.Clients.csproj", "{5E18F1D7-467B-4370-BEC7-0277E39B9C51}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{B7EF3670-4004-4397-95D3-889396D22C1D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7AFE0543-07B0-4F32-AA9D-23007CDC9E30}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
