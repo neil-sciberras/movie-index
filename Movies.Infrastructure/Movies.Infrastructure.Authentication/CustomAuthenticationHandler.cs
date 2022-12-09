@@ -2,8 +2,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace Movies.Infrastructure.Authentication
 {
@@ -27,11 +30,16 @@ namespace Movies.Infrastructure.Authentication
 				: Request.Query[Authorization];
 
 			if (string.IsNullOrEmpty(token))
+			{
 				return AuthenticateResult.NoResult();
+			}
 
 			var provider = await GetByKey(token);
+			
 			if (provider == null)
+			{
 				return AuthenticateResult.Fail(TokenInvalid);
+			}
 
 			var claims = new List<Claim>
 			{
