@@ -1,5 +1,6 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
+using Movies.Grains.DataUpdates.ContractExtensions;
 using Movies.Grains.Interfaces;
 using Movies.Grains.Interfaces.DataQueries.Supervisors;
 using Movies.Grains.Interfaces.DataUpdates;
@@ -35,24 +36,14 @@ namespace Movies.Grains.DataUpdates
 
 			var allMovies = (await _allMoviesGrain.GetMoviesAsync()).ToList();
 
-			return await UpdateAndGetUpdatedMovieAsync(allMovies, existingMovie: existingMovie, movieUpdate: movieUpdate);
+			return await UpdateAndGetUpdatedMovieAsync(allMovies, existingMovie: existingMovie, changes: movieUpdate);
 		}
 
-		private async Task<Movie> UpdateAndGetUpdatedMovieAsync(ICollection<Movie> movieList, Movie existingMovie, Movie movieUpdate)
+		private async Task<Movie> UpdateAndGetUpdatedMovieAsync(ICollection<Movie> movieList, Movie existingMovie, Movie changes)
 		{
-			movieList = movieList.Where(m => m.Id != movieUpdate.Id).ToList();
+			movieList = movieList.Where(m => m.Id != changes.Id).ToList();
 
-			var movieToInsert = new Movie
-			{
-				Id = movieUpdate.Id,
-				Key = movieUpdate.Key ?? existingMovie.Key,
-				Name = movieUpdate.Name ?? existingMovie.Name,
-				Description = movieUpdate.Description ?? existingMovie.Description,
-				Genres = movieUpdate.Genres ?? existingMovie.Genres,
-				Rate = movieUpdate.Rate ?? existingMovie.Rate,
-				Length = movieUpdate.Length ?? existingMovie.Length,
-				Image = movieUpdate.Image ?? existingMovie.Image
-			};
+			var movieToInsert = existingMovie.UpdateMovie(changes);
 
 			movieList.Add(movieToInsert);
 

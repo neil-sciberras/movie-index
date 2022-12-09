@@ -37,7 +37,6 @@ namespace Movies.Grains.DataQueries.FilteredMovies
 
 		public async Task<IEnumerable<Movie>> GetMoviesAsync()
 		{
-			//TODO: Test that if the source database changes, and there is a new list that should be returned, then the correct list is returned
 			if (_filteredMoviesState.State.Movies == null)
 			{
 				await FetchAndSetStateAsync();

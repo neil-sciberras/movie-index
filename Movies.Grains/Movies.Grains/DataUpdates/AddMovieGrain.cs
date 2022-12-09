@@ -1,5 +1,6 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
+using Movies.Grains.DataUpdates.ContractExtensions;
 using Movies.Grains.Interfaces;
 using Movies.Grains.Interfaces.DataUpdates;
 using Orleans;
@@ -25,28 +26,12 @@ namespace Movies.Grains.DataUpdates
 
 			var nextAvailableId = movies.Max(m => m.Id) + 1;
 
-			var movie = ConvertToMovie(newMovie, nextAvailableId);
+			var movie = newMovie.ConvertToMovie(nextAvailableId);
 			movies.Add(movie);
 
 			await allMoviesGrain.SetMovieListAsync(movies);
 
 			return movie;
-		}
-
-		//TODO: replace with automapper
-		private static Movie ConvertToMovie(NewMovie newMovie, int newId)
-		{
-			return new Movie
-			{
-				Id = newId,
-				Key = newMovie.Key,
-				Name = newMovie.Name,
-				Description = newMovie.Description,
-				Genres = newMovie.Genres,
-				Rate = newMovie.Rate,
-				Length = newMovie.Length,
-				Image = newMovie.Image
-			};
 		}
 	}
 }
