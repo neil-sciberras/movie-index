@@ -24,7 +24,9 @@ namespace Movies.GraphQL
 			
 			services.AddSingleton<GenreType>();
 			services.AddSingleton<MovieType>();
+			
 			services.AddSingleton<NewMovieInputType>();
+			services.AddSingleton<MovieUpdateInputType>();
 		}
 	}
 }

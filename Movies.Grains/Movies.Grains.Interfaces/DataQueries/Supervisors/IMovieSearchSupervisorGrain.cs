@@ -2,7 +2,7 @@
 
 namespace Movies.Grains.Interfaces.DataQueries.Supervisors
 {
-	public interface ITopRatedMoviesSupervisorGrain : ISupervisorGrain<ITopRatedMoviesGrain>
+	public interface IMovieSearchSupervisorGrain : ISupervisorGrain<IMovieSearchGrain>
 	{
 	}
 }

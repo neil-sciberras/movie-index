@@ -9,7 +9,7 @@ namespace Movies.GraphQL.Types.Input
 		public NewMovieInputType()
 		{
 			Name = "NewMovie";
-			Description = "A movie to be added/updated in the database";
+			Description = "A movie to be added in the database";
 
 			Field(d => d.Key).Description("A key representing the movie");
 			Field(d => d.Name).Description("The movie's name");

@@ -1,7 +1,7 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
 using Movies.Grains.Interfaces;
-using Movies.Grains.Interfaces.Supervisors;
+using Movies.Grains.Interfaces.DataQueries.Supervisors;
 using Orleans;
 using Orleans.Runtime;
 using System.Collections.Generic;
@@ -38,7 +38,7 @@ namespace Movies.Grains.MovieList
 			//TODO: maintain a list of supervisors here
 			await _grainFactory.GetGrain<ITopRatedMoviesSupervisorGrain>(GrainIds.TopRatedMoviesSupervisorGrainId).ResetAllAsync();
 			await _grainFactory.GetGrain<IGenreFilterSupervisorGrain>(GrainIds.GenreFilterSupervisorGrainId).ResetAllAsync();
-			
+			await _grainFactory.GetGrain<IMovieSearchSupervisorGrain>(GrainIds.MovieSearchSupervisorGrainId).ResetAllAsync();
 		}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿using Movies.Contracts.Grains;
+using Movies.Grains.Interfaces.DataQueries.Supervisors;
 using Movies.Grains.Interfaces.FilteredMovies;
-using Movies.Grains.Interfaces.Supervisors;
 using Orleans;
 using Orleans.Runtime;
 

@@ -461,15 +461,14 @@
         "id": 24,
         "key": "test-movie",
         "name": "Test Movie",
-        "description": "Test movie added while testing",
+        "description": "Updated description 3",
         "genres": {
           "$type": "System.Collections.Generic.List`1[[Movies.Contracts.Models.Genre, Movies.Contracts]], System.Private.CoreLib",
           "$values": [
-            8,
-            0
+            6
           ]
         },
-        "rate": "1.2",
+        "rate": "9.1",
         "length": "1hr 40mins",
         "img": "n/a"
       }

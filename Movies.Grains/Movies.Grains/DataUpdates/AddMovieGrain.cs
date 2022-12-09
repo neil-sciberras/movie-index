@@ -34,7 +34,7 @@ namespace Movies.Grains.DataUpdates
 		}
 
 		//TODO: replace with automapper
-		private Movie ConvertToMovie(NewMovie newMovie, int newId)
+		private static Movie ConvertToMovie(NewMovie newMovie, int newId)
 		{
 			return new Movie
 			{

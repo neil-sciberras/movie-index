@@ -1,6 +1,7 @@
-﻿using Movies.Contracts.Models;
+﻿using Movies.Contracts.Grains;
+using Movies.Contracts.Models;
 using Movies.Grains.Clients.Interfaces;
-using Movies.Grains.Interfaces.FilteredMovies;
+using Movies.Grains.Interfaces.DataQueries.Supervisors;
 using Orleans;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,8 +19,10 @@ namespace Movies.Grains.Clients
 
 		public async Task<Movie> GetMovie(int id)
 		{
-			var movieSearchGrain = _grainFactory.GetGrain<IMovieSearchGrain>(id);
-			return (await movieSearchGrain.GetMoviesAsync()).SingleOrDefault();
+			var supervisor = _grainFactory.GetGrain<IMovieSearchSupervisorGrain>(GrainIds.MovieSearchSupervisorGrainId);
+			var grain = await supervisor.GetSupervisedGrainAsync(id);
+
+			return (await grain.GetMoviesAsync()).SingleOrDefault();
 		}
 	}
 }
