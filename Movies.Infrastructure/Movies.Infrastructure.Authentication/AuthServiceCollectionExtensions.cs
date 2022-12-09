@@ -1,24 +1,25 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Movies.Infrastructure.Authentication;
-
-public static class AuthServiceCollectionExtensions
+namespace Movies.Infrastructure.Authentication
 {
-	public static void AddCustomAuthentication(this IServiceCollection services)
+	public static class AuthServiceCollectionExtensions
 	{
-		services
-			.AddAuthentication(CustomAuthenticationHandler.SecretKey)
-			.AddScheme<JwtBearerOptions, CustomAuthenticationHandler>(CustomAuthenticationHandler.SecretKey, null);
-
-		services.AddAuthorization(auth =>
+		public static void AddCustomAuthentication(this IServiceCollection services)
 		{
-			auth.AddPolicy(CustomAuthenticationHandler.SecretKey, builder =>
+			services
+				.AddAuthentication(CustomAuthenticationHandler.SecretKey)
+				.AddScheme<JwtBearerOptions, CustomAuthenticationHandler>(CustomAuthenticationHandler.SecretKey, null);
+
+			services.AddAuthorization(auth =>
 			{
-				builder
-					.AddAuthenticationSchemes(CustomAuthenticationHandler.SecretKey)
-					.RequireAuthenticatedUser();
+				auth.AddPolicy(CustomAuthenticationHandler.SecretKey, builder =>
+				{
+					builder
+						.AddAuthenticationSchemes(CustomAuthenticationHandler.SecretKey)
+						.RequireAuthenticatedUser();
+				});
 			});
-		});
+		}
 	}
 }

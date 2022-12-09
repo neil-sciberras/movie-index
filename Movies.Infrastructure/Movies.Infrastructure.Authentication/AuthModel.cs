@@ -1,8 +1,9 @@
-namespace Movies.Infrastructure.Authentication;
-
-public class AuthModel
+namespace Movies.Infrastructure.Authentication
 {
-	public string Id { get; set; }
-	public string Name { get; set; }
-	public string Key { get; set; }
+	public class AuthModel
+	{
+		public string Id { get; set; }
+		public string Name { get; set; }
+		public string Key { get; set; }
+	}
 }
