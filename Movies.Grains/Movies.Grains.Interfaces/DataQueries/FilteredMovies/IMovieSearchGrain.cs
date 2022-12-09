@@ -1,6 +1,11 @@
-﻿namespace Movies.Grains.Interfaces.DataQueries.FilteredMovies
+﻿using Movies.Contracts.Models;
+using Orleans;
+using System.Threading.Tasks;
+
+namespace Movies.Grains.Interfaces.DataQueries.FilteredMovies
 {
-	public interface IMovieSearchGrain : IMovieListGrain
+	public interface IMovieSearchGrain : IResettableGrain, IGrainWithIntegerKey
 	{
+		Task<Movie> GetMovieAsync();
 	}
 }

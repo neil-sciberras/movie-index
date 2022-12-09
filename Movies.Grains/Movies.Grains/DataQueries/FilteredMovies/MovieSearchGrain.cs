@@ -6,6 +6,7 @@ using Orleans;
 using Orleans.Runtime;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Movies.Grains.DataQueries.FilteredMovies
 {
@@ -26,7 +27,20 @@ namespace Movies.Grains.DataQueries.FilteredMovies
 		protected override IEnumerable<Movie> FilterMovies(IEnumerable<Movie> allMovies)
 		{
 			var movieId = this.GetPrimaryKeyLong();
-			return new List<Movie> { allMovies.SingleOrDefault(m => m.Id == movieId) };
+			var movie = allMovies.SingleOrDefault(m => m.Id == movieId);
+
+			return movie != null 
+				? new List<Movie> { movie }
+				: new List<Movie>();
+		}
+
+		public async Task<Movie> GetMovieAsync()
+		{
+			var underlyingList = (await GetMoviesAsync()).ToList();
+
+			return underlyingList.Any()
+				? underlyingList.Single()
+				: null;
 		}
 	}
 }

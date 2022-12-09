@@ -26,7 +26,7 @@ namespace Movies.Grains.DataUpdates
 		{
 			var movieSearchGrain = await _movieSearchSupervisorGrain.GetSupervisedGrainAsync(movieUpdate.Id);
 
-			var existingMovie = (await movieSearchGrain.GetMoviesAsync()).SingleOrDefault();
+			var existingMovie = await movieSearchGrain.GetMovieAsync();
 
 			if (existingMovie == null)
 			{
@@ -40,7 +40,7 @@ namespace Movies.Grains.DataUpdates
 
 		private async Task<Movie> UpdateAndGetUpdatedMovieAsync(ICollection<Movie> movieList, Movie existingMovie, Movie movieUpdate)
 		{
-			movieList.Remove(existingMovie);
+			movieList = movieList.Where(m => m.Id != movieUpdate.Id).ToList();
 
 			var movieToInsert = new Movie
 			{

@@ -16,7 +16,7 @@ namespace Movies.Grains.DataQueries.FilteredMovies
 	/// This allows derived grains, to avoid always having to fetch the full list of movies and applying the filtering logic
 	/// every time they're invoked.
 	/// </summary>
-	public abstract class FilteredMoviesGrainBase : Grain, IMovieListGrain
+	public abstract class FilteredMoviesGrainBase : Grain
 	{
 		private readonly IPersistentState<MovieListState> _filteredMoviesState;
 		private readonly IGrainFactory _grainFactory;

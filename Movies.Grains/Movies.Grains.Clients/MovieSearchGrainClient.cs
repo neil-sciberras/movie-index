@@ -22,7 +22,7 @@ namespace Movies.Grains.Clients
 			var supervisor = _grainFactory.GetGrain<IMovieSearchSupervisorGrain>(GrainIds.MovieSearchSupervisorGrainId);
 			var grain = await supervisor.GetSupervisedGrainAsync(id);
 
-			return (await grain.GetMoviesAsync()).SingleOrDefault();
+			return await grain.GetMovieAsync();
 		}
 	}
 }

@@ -24,7 +24,7 @@ namespace Movies.Grains.DataUpdates
 		public async Task<Movie> DeleteMovieAsync(int id)
 		{
 			var searchGrain = await _movieSearchSupervisorGrain.GetSupervisedGrainAsync(id);
-			var movie = (await searchGrain.GetMoviesAsync()).SingleOrDefault();
+			var movie = await searchGrain.GetMovieAsync();
 			
 			if (movie == null)
 			{
