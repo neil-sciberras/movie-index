@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Movies.AppInfo;
 using Movies.Extensions;
-using Movies.Grains;
 using Orleans;
 using Orleans.Hosting;
 using Serilog;
@@ -25,7 +24,7 @@ namespace Movies.Server
 		public static Task Main(string[] args)
 		{
 			var hostBuilder = new HostBuilder();
-
+			
 			IAppInfo appInfo = null;
 
 			hostBuilder

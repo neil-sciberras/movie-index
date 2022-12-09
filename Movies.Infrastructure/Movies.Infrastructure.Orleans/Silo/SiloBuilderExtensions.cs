@@ -1,10 +1,10 @@
-﻿using Movies.AppInfo;
-using Movies.Contracts.Grains;
+﻿using Movies.Contracts.Grains;
 using Movies.Extensions;
 using Movies.Infrastructure.Orleans.StorageProviders;
 using Orleans.Configuration;
 using Orleans.Hosting;
 using System;
+using System.IO;
 using System.Net;
 
 namespace Movies.Infrastructure.Orleans.Silo
@@ -22,11 +22,9 @@ namespace Movies.Infrastructure.Orleans.Silo
 			siloHost
 				.UseStorage(
 					storeProviderName: GrainStorageNames.MemoryStorage, 
-					appInfo: context.AppInfo, 
 					storageProvider: StorageProviderType.Memory)
 				.UseStorage(
 					storeProviderName: GrainStorageNames.FileStorage, 
-					appInfo: context.AppInfo, 
 					storageProvider: StorageProviderType.File, 
 					storeName: context.SiloOptions.StorageFileName)
 				.Configure<ClusterOptions>(options =>
@@ -61,7 +59,7 @@ namespace Movies.Infrastructure.Orleans.Silo
 					.UseLocalhostClustering(siloPort: siloPort, gatewayPort: gatewayPort);
 		}
 
-		private static ISiloBuilder UseStorage(this ISiloBuilder siloBuilder, string storeProviderName, IAppInfo appInfo, StorageProviderType? storageProvider = null, string storeName = null)
+		private static ISiloBuilder UseStorage(this ISiloBuilder siloBuilder, string storeProviderName, StorageProviderType? storageProvider = null, string storeName = null)
 		{
 			storeName = storeName.IfNullOrEmptyReturn(storeProviderName);
 			storageProvider ??= _defaultProviderType;
