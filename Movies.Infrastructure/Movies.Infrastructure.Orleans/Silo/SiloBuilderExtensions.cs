@@ -1,6 +1,7 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Extensions;
 using Movies.Infrastructure.Orleans.Storage.File;
+using Movies.Infrastructure.Orleans.Storage.Redis;
 using Orleans.Configuration;
 using Orleans.Hosting;
 using System;
@@ -13,28 +14,29 @@ namespace Movies.Infrastructure.Orleans.Silo
 	{
 		private static StorageProviderType _defaultProviderType;
 
-		public static ISiloBuilder ConfigureSilo(this ISiloBuilder siloHost, AppSiloBuilderContext context)
+		public static ISiloBuilder ConfigureSilo(this ISiloBuilder siloBuilder, AppSiloBuilderContext context)
 		{
 			_defaultProviderType = context.SiloOptions.StorageProviderType ?? StorageProviderType.Memory;
 
 			var appInfo = context.AppInfo;
 
-			siloHost
-				.UseStorage(
-					storeProviderName: GrainStorageNames.MemoryStorage, 
-					storageProvider: StorageProviderType.Memory)
-				.UseStorage(
-					storeProviderName: GrainStorageNames.FileStorage, 
-					storageProvider: StorageProviderType.File, 
-					storeName: context.SiloOptions.StorageFileName,
-					storeDirectory: context.SiloOptions.StorageFileDirectory)
-				.Configure<ClusterOptions>(options =>
+			siloBuilder.AddMemoryGrainStorage(GrainStorageNames.MemoryStorage);
+
+			siloBuilder.AddFileGrainStorage(GrainStorageNames.FileStorage, options =>
+				{
+					options.RootDirectory = context.SiloOptions.StorageFileDirectory;
+					options.FileName = context.SiloOptions.StorageFileName;
+				});
+
+			siloBuilder.AddRedisGrainStorage(GrainStorageNames.RedisStorage);
+
+			siloBuilder.Configure<ClusterOptions>(options =>
 				{
 					options.ClusterId = appInfo.ClusterId;
 					options.ServiceId = appInfo.Name;
 				});
 
-			return siloHost
+			return siloBuilder
 				.UseDevelopment(context)
 				.UseDevelopmentClustering(context);
 		}

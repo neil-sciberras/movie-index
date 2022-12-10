@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Infrastructure.File"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Infrastructure.Orleans.Storage.File", "Movies.Infrastructure\Movies.Infrastructure.Orleans.Storage.File\Movies.Infrastructure.Orleans.Storage.File.csproj", "{9F7E399C-B85E-43B6-AC8A-123429B938C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Infrastructure.Orleans.Storage.Redis", "Movies.Infrastructure\Movies.Infrastructure.Orleans.Storage.Redis\Movies.Infrastructure.Orleans.Storage.Redis.csproj", "{D4BEFD05-A156-44FB-B3FD-29F7AF7E0DEE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -121,6 +123,10 @@ Global
 		{9F7E399C-B85E-43B6-AC8A-123429B938C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F7E399C-B85E-43B6-AC8A-123429B938C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F7E399C-B85E-43B6-AC8A-123429B938C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4BEFD05-A156-44FB-B3FD-29F7AF7E0DEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4BEFD05-A156-44FB-B3FD-29F7AF7E0DEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4BEFD05-A156-44FB-B3FD-29F7AF7E0DEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4BEFD05-A156-44FB-B3FD-29F7AF7E0DEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -144,6 +150,7 @@ Global
 		{E158F6D6-1D49-466B-A037-BC37626145E7} = {092134EB-C57D-404B-9F59-B9E5673E39EA}
 		{41524442-7DA0-44E9-88AC-44C8FC5B00C0} = {092134EB-C57D-404B-9F59-B9E5673E39EA}
 		{9F7E399C-B85E-43B6-AC8A-123429B938C7} = {092134EB-C57D-404B-9F59-B9E5673E39EA}
+		{D4BEFD05-A156-44FB-B3FD-29F7AF7E0DEE} = {092134EB-C57D-404B-9F59-B9E5673E39EA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C8D162F0-CA39-495D-9796-16A8004BB075}

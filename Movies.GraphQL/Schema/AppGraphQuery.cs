@@ -17,10 +17,20 @@ namespace Movies.GraphQL.Schema
 			IMovieSearchGrainClient movieSearchGrain,
 			IAllMoviesGrainClient allMoviesGrainClient,
 			IGenreFilterGrainClient genreFilterGrainClient,
-			ITopRatedMoviesGrainClient topRatedMoviesGrainClient)
+			ITopRatedMoviesGrainClient topRatedMoviesGrainClient,
+			IMovieGrainClient movieGrainClient)
 		{
 			Name = "MovieQueries";
 
+			Field<MovieType, Movie>(name: "movieSearch")
+				.Description("A movie with the given Id (retrieved via Redis)")
+				.Argument<IntGraphType>(Id, "Unique movie Id")
+				.ResolveAsync(async context =>
+				{
+					var id = context.GetArgument<int>(Id);
+					return await movieGrainClient.GetMovieAsync(id);
+				});
+			
 			Field<MovieType, Movie>(name: "movie")
 				.Description("A movie with the given Id")
 				.Argument<IntGraphType>(Id, "Unique movie Id")

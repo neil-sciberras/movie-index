@@ -7,5 +7,6 @@ namespace Movies.Infrastructure.Redis
 	public interface IRedisReader
 	{
 		Task<IEnumerable<Movie>> ReadMoviesAsync();
+		Task<Movie> ReadMovieAsync(int id);
 	}
 }

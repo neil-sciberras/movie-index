@@ -10,7 +10,7 @@ namespace Movies.Infrastructure.Orleans.Storage.File
 	/// <summary>
 	/// <see href="https://learn.microsoft.com/en-us/dotnet/orleans/tutorials-and-samples/custom-grain-storage"/>
 	/// </summary>
-	public static class FileSiloBuilderExtensions
+	public static class SiloBuilderExtensions
 	{
 		public static ISiloBuilder AddFileGrainStorage(this ISiloBuilder builder, string providerName, Action<FileStorageOptions> options)
 		{

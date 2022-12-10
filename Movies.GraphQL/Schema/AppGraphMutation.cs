@@ -13,7 +13,11 @@ namespace Movies.GraphQL.Schema
 		private const string MovieUpdate = "MovieUpdate";
 		private const string MovieId = "MovieId";
 
-		public AppGraphMutation(IAddMovieGrainClient addMovieGrainClient, IUpdateMovieGrainClient updateMovieGrainClient, IDeleteMovieGrainClient deleteMovieGrainClient)
+		public AppGraphMutation(
+			IAddMovieGrainClient addMovieGrainClient, 
+			IUpdateMovieGrainClient updateMovieGrainClient, 
+			IDeleteMovieGrainClient deleteMovieGrainClient,
+			IMovieGrainClient movieGrainClient)
 		{
 			Name = "MovieMutations";
 

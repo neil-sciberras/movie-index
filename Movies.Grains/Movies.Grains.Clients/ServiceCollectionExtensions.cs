@@ -10,6 +10,7 @@ namespace Movies.Grains.Clients
 			services
 				.AddSingleton<IAllMoviesGrainClient, AllMoviesGrainClient>()
 				.AddSingleton<IMovieSearchGrainClient, MovieSearchGrainClient>()
+				.AddSingleton<IMovieGrainClient, MovieGrainClient>()
 				.AddSingleton<IGenreFilterGrainClient, GenreFilterGrainClient>()
 				.AddSingleton<ITopRatedMoviesGrainClient, TopRatedMoviesGrainClient>()
 				.AddSingleton<IAddMovieGrainClient, AddMovieGrainClient>()

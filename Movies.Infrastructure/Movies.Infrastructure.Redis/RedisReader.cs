@@ -27,13 +27,22 @@ namespace Movies.Infrastructure.Redis
 
 			foreach (var key in keys)
 			{
-				var serializedMovie = await db.StringGetAsync(key);
-				var movie = JsonConvert.DeserializeObject<Movie>(serializedMovie);
-				
-				movies.Add(movie);
+				movies.Add(await ReadMovieAsync(key, db));
 			}
 
 			return movies;
+		}
+
+		public async Task<Movie> ReadMovieAsync(int id)
+		{
+			var db = _redisConnection.GetDatabase();
+			return await ReadMovieAsync(id.ToString(), db);
+		}
+
+		private static async Task<Movie> ReadMovieAsync(string id, IDatabaseAsync database)
+		{
+			var serializedMovie = await database.StringGetAsync(id);
+			return JsonConvert.DeserializeObject<Movie>(serializedMovie);
 		}
 	}
 }
