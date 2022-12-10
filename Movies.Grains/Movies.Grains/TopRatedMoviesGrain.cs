@@ -1,27 +1,30 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
-using Movies.Grains.Interfaces.Redis;
+using Movies.Grains.Interfaces;
 using Orleans;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Movies.Grains.Redis
+namespace Movies.Grains
 {
-	public class GenreFilterGrain : Grain, IGenreFilterGrain
+	public class TopRatedMoviesGrain : Grain, ITopRatedMoviesGrain
 	{
 		private readonly IGrainFactory _grainFactory;
 
-		public GenreFilterGrain(IGrainFactory grainFactory)
+		public TopRatedMoviesGrain(IGrainFactory grainFactory)
 		{
 			_grainFactory = grainFactory;
 		}
 
-		public async Task<IEnumerable<Movie>> GetMoviesAsync(Genre genre)
+		public async Task<IEnumerable<Movie>> GetMoviesAsync(int amountOfMovies)
 		{
 			var allMovies = await _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId).GetAllMoviesAsync();
 
-			return allMovies.Where(m => m.Genres.Contains(genre)).ToList();
+			return allMovies
+				.OrderByDescending(m => m.Rate)
+				.Take(amountOfMovies)
+				.ToList();
 		}
 	}
 }

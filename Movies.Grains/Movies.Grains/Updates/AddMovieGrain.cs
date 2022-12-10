@@ -1,13 +1,13 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
 using Movies.Grains.ContractExtensions;
-using Movies.Grains.Interfaces.Redis;
-using Movies.Grains.Interfaces.Redis.Updates;
+using Movies.Grains.Interfaces;
+using Movies.Grains.Interfaces.Updates;
 using Orleans;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Movies.Grains.Redis.Updates
+namespace Movies.Grains.Updates
 {
 	public class AddMovieGrain : Grain, IAddMovieGrain
 	{

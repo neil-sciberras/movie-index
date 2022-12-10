@@ -1,7 +1,6 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
-using Movies.Grains.Interfaces.Redis;
-using Movies.Grains.MovieList;
+using Movies.Grains.Interfaces;
 using Movies.Infrastructure.Redis;
 using Orleans;
 using Orleans.Runtime;
@@ -9,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Movies.Grains.Redis
+namespace Movies.Grains
 {
 	public class AllMoviesGrain : Grain, IAllMoviesGrain
 	{
@@ -18,8 +17,8 @@ namespace Movies.Grains.Redis
 		private readonly IRedisReader _redisReader;
 
 		public AllMoviesGrain(
-			[PersistentState(stateName: "moviesState", storageName: GrainStorageNames.MemoryStorage)] IPersistentState<MovieListState> state, 
-			IRedisReader redisReader, 
+			[PersistentState(stateName: "moviesState", storageName: GrainStorageNames.MemoryStorage)] IPersistentState<MovieListState> state,
+			IRedisReader redisReader,
 			IGrainFactory grainFactory)
 		{
 			_state = state;

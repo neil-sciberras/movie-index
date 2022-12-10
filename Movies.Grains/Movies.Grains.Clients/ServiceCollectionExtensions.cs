@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Movies.Grains.Clients.Interfaces.Redis;
-using Movies.Grains.Clients.Redis;
+using Movies.Grains.Clients.Interfaces;
 
 namespace Movies.Grains.Clients
 {

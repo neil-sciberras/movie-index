@@ -1,11 +1,11 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
-using Movies.Grains.Interfaces.Redis;
+using Movies.Grains.Interfaces;
 using Orleans;
 using Orleans.Runtime;
 using System.Threading.Tasks;
 
-namespace Movies.Grains.Redis
+namespace Movies.Grains
 {
 	public class MovieGrain : Grain, IMovieGrain
 	{

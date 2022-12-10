@@ -1,7 +1,7 @@
 ﻿using GraphQL;
 using GraphQL.Types;
 using Movies.Contracts.Models;
-using Movies.Grains.Clients.Interfaces.Redis;
+using Movies.Grains.Clients.Interfaces;
 using Movies.GraphQL.Types;
 using System.Collections.Generic;
 

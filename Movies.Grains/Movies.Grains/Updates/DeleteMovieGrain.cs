@@ -1,11 +1,11 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
-using Movies.Grains.Interfaces.Redis;
-using Movies.Grains.Interfaces.Redis.Updates;
+using Movies.Grains.Interfaces;
+using Movies.Grains.Interfaces.Updates;
 using Orleans;
 using System.Threading.Tasks;
 
-namespace Movies.Grains.Redis.Updates
+namespace Movies.Grains.Updates
 {
 	public class DeleteMovieGrain : Grain, IDeleteMovieGrain
 	{
@@ -25,7 +25,7 @@ namespace Movies.Grains.Redis.Updates
 			{
 				return null;
 			}
-			
+
 			var allMovieGrain = _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
 
 			await movieGrain.DeleteMovieAsync();

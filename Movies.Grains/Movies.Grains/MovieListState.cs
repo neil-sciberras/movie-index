@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace Movies.Grains.MovieList
+namespace Movies.Grains
 {
 	[Serializable]
 	public class MovieListState

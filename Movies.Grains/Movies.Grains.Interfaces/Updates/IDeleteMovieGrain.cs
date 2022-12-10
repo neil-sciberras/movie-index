@@ -2,7 +2,7 @@
 using Orleans;
 using System.Threading.Tasks;
 
-namespace Movies.Grains.Interfaces.Redis.Updates
+namespace Movies.Grains.Interfaces.Updates
 {
 	public interface IDeleteMovieGrain : IGrainWithStringKey
 	{

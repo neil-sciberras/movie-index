@@ -2,7 +2,6 @@
 using GraphQL.Types;
 using Movies.Contracts.Models;
 using Movies.Grains.Clients.Interfaces;
-using Movies.Grains.Clients.Interfaces.Redis;
 using Movies.GraphQL.Types;
 using Movies.GraphQL.Types.Input;
 

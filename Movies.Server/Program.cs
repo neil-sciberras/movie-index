@@ -3,8 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Movies.AppInfo;
 using Movies.Extensions;
-using Movies.Grains.Redis;
-using Movies.Grains.Redis.Updates;
 using Orleans;
 using Orleans.Hosting;
 using Serilog;
@@ -17,6 +15,8 @@ using Movies.Server.ApiHostedService;
 using Movies.Infrastructure.Orleans.Silo;
 using Movies.Server.CommandLineArgs;
 using Movies.Server.DataSetup;
+using Movies.Grains;
+using Movies.Grains.Updates;
 
 namespace Movies.Server
 {

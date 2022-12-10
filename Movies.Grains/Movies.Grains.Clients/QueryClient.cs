@@ -1,12 +1,12 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
-using Movies.Grains.Clients.Interfaces.Redis;
-using Movies.Grains.Interfaces.Redis;
+using Movies.Grains.Clients.Interfaces;
+using Movies.Grains.Interfaces;
 using Orleans;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Movies.Grains.Clients.Redis
+namespace Movies.Grains.Clients
 {
 	public class QueryClient : IQueryClient
 	{

@@ -1,11 +1,11 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
-using Movies.Grains.Clients.Interfaces.Redis;
-using Movies.Grains.Interfaces.Redis.Updates;
+using Movies.Grains.Clients.Interfaces;
+using Movies.Grains.Interfaces.Updates;
 using Orleans;
 using System.Threading.Tasks;
 
-namespace Movies.Grains.Clients.Redis
+namespace Movies.Grains.Clients
 {
 	public class UpdateClient : IUpdateClient
 	{

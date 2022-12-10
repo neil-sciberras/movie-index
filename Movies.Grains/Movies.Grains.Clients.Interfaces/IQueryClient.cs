@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Movies.Grains.Clients.Interfaces.Redis
+namespace Movies.Grains.Clients.Interfaces
 {
 	public interface IQueryClient
 	{

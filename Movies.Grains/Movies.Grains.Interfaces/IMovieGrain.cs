@@ -2,7 +2,7 @@
 using Orleans;
 using System.Threading.Tasks;
 
-namespace Movies.Grains.Interfaces.Redis
+namespace Movies.Grains.Interfaces
 {
 	public interface IMovieGrain : IGrainWithIntegerKey
 	{

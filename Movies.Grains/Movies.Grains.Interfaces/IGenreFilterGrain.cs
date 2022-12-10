@@ -3,7 +3,7 @@ using Orleans;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Movies.Grains.Interfaces.Redis
+namespace Movies.Grains.Interfaces
 {
 	public interface IGenreFilterGrain : IGrainWithStringKey
 	{
