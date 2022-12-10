@@ -27,14 +27,14 @@ namespace Movies.Infrastructure.Orleans.Storage.Redis
 		{
 			var movieId = (int)grainReference.GetPrimaryKeyLong();
 			grainState.State = await _redisReader.ReadMovieAsync(movieId);
-			grainState.ETag = JsonConvert.SerializeObject(grainState.State);
+			grainState.ETag = grainState.State == null ? null : JsonConvert.SerializeObject(grainState.State);
 		}
 
 		public async Task WriteStateAsync(string grainType, GrainReference grainReference, IGrainState grainState)
 		{
 			var movieId = (int)grainReference.GetPrimaryKeyLong();
 			var currentMovie = await _redisReader.ReadMovieAsync(movieId);
-			var expectedEtag = JsonConvert.SerializeObject(currentMovie);
+			var expectedEtag = currentMovie == null ? null : JsonConvert.SerializeObject(currentMovie);
 
 			if (!string.Equals(grainState.ETag , expectedEtag))
 			{
@@ -46,7 +46,7 @@ namespace Movies.Infrastructure.Orleans.Storage.Redis
 					$"GrainReference={grainReference.ToKeyString()}.");
 			}
 
-			await _redisWriter.WriteMovieAsync(movieId.ToString(), grainState);
+			await _redisWriter.WriteMovieAsync(movieId.ToString(), grainState.State);
 		}
 
 		public async Task ClearStateAsync(string grainType, GrainReference grainReference, IGrainState grainState)
