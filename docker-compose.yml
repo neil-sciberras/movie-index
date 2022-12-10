@@ -1,0 +1,18 @@
+version: "3.4"
+
+services:
+    movies-server:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "6600:6600"
+        depends_on:
+            - redisdb
+
+    redisdb:
+        image: "redis:6.2-alpine"
+        ports:
+            - "6379:6379"
+        restart: always
+        command: redis-server --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
