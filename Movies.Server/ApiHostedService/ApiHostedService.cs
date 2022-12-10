@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Movies.AppInfo;
+using Movies.Server.DataSetup;
 using Orleans;
 using Serilog;
 using System.Diagnostics;
@@ -20,6 +21,7 @@ namespace Movies.Server.ApiHostedService
 		private readonly IAppInfo _appInfo;
 		private readonly ILogger _logger;
 		private readonly IWebHost _host;
+		private readonly IDataHelper _dataHelper;
 
 		public ApiHostedService(
 			IOptions<ApiHostedServiceOptions> options,
@@ -27,11 +29,12 @@ namespace Movies.Server.ApiHostedService
 			IGrainFactory grainFactory,
 			IConfiguration configuration,
 			IAppInfo appInfo,
-			ILogger<ApiHostedService> logger
-		)
+			ILogger<ApiHostedService> logger, 
+			IDataHelper dataHelper)
 		{
 			_appInfo = appInfo;
 			_logger = logger;
+			_dataHelper = dataHelper;
 
 			logger.LogInformation("Initializing api {appName} ({version}) [{env}] on port {apiPort}...",
 				appInfo.Name, appInfo.Version, appInfo.Environment, options.Value.Port);
@@ -59,14 +62,24 @@ namespace Movies.Server.ApiHostedService
 
 		public async Task StartAsync(CancellationToken cancellationToken)
 		{
-			_logger.LogInformation("App started successfully {appName} ({version}) [{env}]",
-				_appInfo.Name, _appInfo.Version, _appInfo.Environment);
+			_logger.LogInformation("Loading movies from file to Redis");
+
+			await _dataHelper.PreLoadRedisAsync();
+
+			_logger.LogInformation("App started successfully {appName} ({version}) [{env}]", _appInfo.Name, _appInfo.Version, _appInfo.Environment);
 
 			await _host.StartAsync(cancellationToken);
 			
 			ConsoleTitleBuilder.Append("- Api status: running 🚀");
 		}
 
-		public Task StopAsync(CancellationToken cancellationToken) => _host.StopAsync(cancellationToken);
+		public async Task StopAsync(CancellationToken cancellationToken)
+		{
+			_logger.LogInformation("Saving movies to file from Redis");
+
+			await _dataHelper.SaveRedisDataAsync();
+
+			await _host.StopAsync(cancellationToken);
+		}
 	}
 }

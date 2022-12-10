@@ -23,15 +23,15 @@ namespace Movies.Infrastructure.Orleans.StorageProviders
 	public class FileGrainStorage : IGrainStorage, ILifecycleParticipant<ISiloLifecycle>
 	{
 		private readonly string _storageName;
-		private readonly FileGrainStorageOptions _fileGrainStorageOptions;
+		private readonly FileStorageOptions _fileStorageOptions;
 		private readonly ClusterOptions _clusterOptions;
 
 		private FileInfo _fileInfo;
 
-		public FileGrainStorage(string storageName, FileGrainStorageOptions fileGrainStorageOptions, ClusterOptions clusterOptions)
+		public FileGrainStorage(string storageName, FileStorageOptions fileStorageOptions, ClusterOptions clusterOptions)
 		{
 			_storageName = storageName;
-			_fileGrainStorageOptions = fileGrainStorageOptions;
+			_fileStorageOptions = fileStorageOptions;
 			_clusterOptions = clusterOptions;
 		}
 
@@ -86,7 +86,7 @@ namespace Movies.Infrastructure.Orleans.StorageProviders
 
 		private Task Init(CancellationToken ct)
 		{
-			_fileInfo = new FileInfo(_fileGrainStorageOptions.FullFileName);
+			_fileInfo = new FileInfo(_fileStorageOptions.FullFileName);
 
 			if (!_fileInfo.Exists)
 			{

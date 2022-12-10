@@ -15,7 +15,7 @@ namespace Movies.Infrastructure.Orleans.StorageProviders
 	{
 		public static IGrainStorage Create(IServiceProvider serviceProvider, string name)
 		{
-			var optionsSnapshot = serviceProvider.GetRequiredService<IOptionsSnapshot<FileGrainStorageOptions>>();
+			var optionsSnapshot = serviceProvider.GetRequiredService<IOptionsSnapshot<FileStorageOptions>>();
 
 			return ActivatorUtilities.CreateInstance<FileGrainStorage>(
 				provider: serviceProvider,

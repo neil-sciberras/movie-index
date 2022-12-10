@@ -17,6 +17,7 @@ using Movies.Grains.MovieList;
 using Movies.Grains.DataQueries.FilteredMovies;
 using Movies.Grains.DataQueries.Supervisors;
 using Movies.Server.CommandLineArgs;
+using Movies.Server.DataSetup;
 
 namespace Movies.Server
 {
@@ -64,7 +65,10 @@ namespace Movies.Server
 
 					appInfo = new AppInfo.AppInfo(cfg.Build());
 
-					if (!appInfo.IsDockerized) return;
+					if (!appInfo.IsDockerized)
+					{
+						return;
+					}
 
 					cfg.Sources.Clear();
 
@@ -111,6 +115,7 @@ namespace Movies.Server
 				})
 				.ConfigureServices((ctx, services) =>
 				{
+					services.ConfigureDatabase(ctx.Configuration, appInfo, commandLineArguments);
 					services.AddHostedService<ApiHostedService.ApiHostedService>();
 				})
 				;

@@ -3,7 +3,6 @@ using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
@@ -16,15 +15,10 @@ namespace Movies.Server
 {
 	public class ApiStartup
 	{
-		private readonly IConfiguration _configuration;
 		private readonly IAppInfo _appInfo;
 
-		public ApiStartup(
-			IConfiguration configuration,
-			IAppInfo appInfo
-		)
+		public ApiStartup(IAppInfo appInfo)
 		{
-			_configuration = configuration;
 			_appInfo = appInfo;
 		}
 
@@ -56,7 +50,6 @@ namespace Movies.Server
 			{
 				opt.SwaggerDoc("v1", new OpenApiInfo { Version = _appInfo.Version, Title = _appInfo.Name });
 			});
-
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
