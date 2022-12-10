@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Movies.Contracts\Movies.Contracts.csproj" />
+    <ProjectReference Include="..\..\Movies.Infrastructure\Movies.Infrastructure.Redis\Movies.Infrastructure.Redis.csproj" />
     <ProjectReference Include="..\Movies.Grains.Interfaces\Movies.Grains.Interfaces.csproj" />
   </ItemGroup>
 

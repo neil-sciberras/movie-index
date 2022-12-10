@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Movies.Grains.Clients.Interfaces;
+using Movies.Grains.Clients.Interfaces.Redis;
+using Movies.Grains.Clients.Redis;
 
 namespace Movies.Grains.Clients
 {
@@ -10,12 +12,13 @@ namespace Movies.Grains.Clients
 			services
 				.AddSingleton<IAllMoviesGrainClient, AllMoviesGrainClient>()
 				.AddSingleton<IMovieSearchGrainClient, MovieSearchGrainClient>()
-				.AddSingleton<IMovieGrainClient, MovieGrainClient>()
 				.AddSingleton<IGenreFilterGrainClient, GenreFilterGrainClient>()
 				.AddSingleton<ITopRatedMoviesGrainClient, TopRatedMoviesGrainClient>()
 				.AddSingleton<IAddMovieGrainClient, AddMovieGrainClient>()
 				.AddSingleton<IUpdateMovieGrainClient, UpdateMovieGrainClient>()
-				.AddSingleton<IDeleteMovieGrainClient, DeleteMovieGrainClient>();
+				.AddSingleton<IDeleteMovieGrainClient, DeleteMovieGrainClient>()
+				.AddSingleton<IQueryClient, QueryClient>()
+				.AddSingleton<IUpdateClient, UpdateClient>();
 		}
 	}
 }

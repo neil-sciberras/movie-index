@@ -8,5 +8,6 @@ namespace Movies.Infrastructure.Redis
 	{
 		Task<IEnumerable<Movie>> ReadMoviesAsync();
 		Task<Movie> ReadMovieAsync(int id);
+		IEnumerable<int> GetAllIds();
 	}
 }

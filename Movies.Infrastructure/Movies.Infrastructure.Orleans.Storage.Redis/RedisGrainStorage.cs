@@ -1,4 +1,5 @@
 ﻿using Movies.Infrastructure.Redis;
+using Newtonsoft.Json;
 using Orleans;
 using Orleans.Configuration;
 using Orleans.Runtime;
@@ -26,15 +27,16 @@ namespace Movies.Infrastructure.Orleans.Storage.Redis
 		{
 			var movieId = (int)grainReference.GetPrimaryKeyLong();
 			grainState.State = await _redisReader.ReadMovieAsync(movieId);
-			grainState.ETag = grainState.GetHashCode().ToString();
+			grainState.ETag = JsonConvert.SerializeObject(grainState.State);
 		}
 
 		public async Task WriteStateAsync(string grainType, GrainReference grainReference, IGrainState grainState)
 		{
 			var movieId = (int)grainReference.GetPrimaryKeyLong();
 			var currentMovie = await _redisReader.ReadMovieAsync(movieId);
+			var expectedEtag = JsonConvert.SerializeObject(currentMovie);
 
-			if (!string.Equals(grainState.ETag , currentMovie.GetHashCode().ToString()))
+			if (!string.Equals(grainState.ETag , expectedEtag))
 			{
 				throw new InconsistentStateException(
 					"Version conflict (WriteState): " +

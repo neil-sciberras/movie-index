@@ -2,6 +2,7 @@
 using GraphQL.Types;
 using Movies.Contracts.Models;
 using Movies.Grains.Clients.Interfaces;
+using Movies.Grains.Clients.Interfaces.Redis;
 using Movies.GraphQL.Types;
 using Movies.GraphQL.Types.Input;
 
@@ -17,9 +18,18 @@ namespace Movies.GraphQL.Schema
 			IAddMovieGrainClient addMovieGrainClient, 
 			IUpdateMovieGrainClient updateMovieGrainClient, 
 			IDeleteMovieGrainClient deleteMovieGrainClient,
-			IMovieGrainClient movieGrainClient)
+			IUpdateClient updateClient)
 		{
 			Name = "MovieMutations";
+
+			Field<MovieType, Movie>(name: "addMovieRedis")
+				.Description("Add a new movie to the list (Redis)")
+				.Argument<NewMovieInputType>(NewMovie, "The new movie")
+				.ResolveAsync(async context =>
+				{
+					var newMovie = context.GetArgument<NewMovie>(NewMovie);
+					return await updateClient.AddMovieAsync(newMovie);
+				});
 
 			Field<MovieType, Movie>(name: "addMovie")
 				.Description("Add a new movie to the list")
@@ -30,6 +40,15 @@ namespace Movies.GraphQL.Schema
 					return await addMovieGrainClient.AddMovieAsync(newMovie);
 				});
 
+			Field<MovieType, Movie>(name: "updateMovieRedis")
+				.Description("Update a movie in the list (Redis)")
+				.Argument<MovieUpdateInputType>(MovieUpdate, "The new movie")
+				.ResolveAsync(async context =>
+				{
+					var movie = context.GetArgument<Movie>(MovieUpdate);
+					return await updateClient.UpdateMovieAsync(movie);
+				});
+
 			Field<MovieType, Movie>(name: "updateMovie")
 				.Description("Update a movie in the list")
 				.Argument<MovieUpdateInputType>(MovieUpdate, "The new movie")
@@ -37,6 +56,15 @@ namespace Movies.GraphQL.Schema
 				{
 					var movie = context.GetArgument<Movie>(MovieUpdate);
 					return await updateMovieGrainClient.UpdateMovieAsync(movie);
+				});
+
+			Field<MovieType, Movie>(name: "deleteMovieRedis")
+				.Description("Delete a movie from the list (Redis)")
+				.Argument<IntGraphType>(MovieId, "The movie's Id")
+				.ResolveAsync(async context =>
+				{
+					var movieId = context.GetArgument<int>(MovieId);
+					return await updateClient.DeleteMovieAsync(movieId);
 				});
 
 			Field<MovieType, Movie>(name: "deleteMovie")

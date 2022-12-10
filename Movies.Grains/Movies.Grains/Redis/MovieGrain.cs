@@ -1,11 +1,11 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
-using Movies.Grains.Interfaces;
+using Movies.Grains.Interfaces.Redis;
 using Orleans;
 using Orleans.Runtime;
 using System.Threading.Tasks;
 
-namespace Movies.Grains
+namespace Movies.Grains.Redis
 {
 	public class MovieGrain : Grain, IMovieGrain
 	{
@@ -27,6 +27,12 @@ namespace Movies.Grains
 		{
 			_state.State = movie;
 			await _state.WriteStateAsync();
+		}
+
+		public async Task DeleteMovieAsync()
+		{
+			_state.State = null;
+			await _state.ClearStateAsync();
 		}
 	}
 }

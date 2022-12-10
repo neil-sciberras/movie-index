@@ -1,6 +1,6 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
-using Movies.Grains.DataUpdates.ContractExtensions;
+using Movies.Grains.ContractExtensions;
 using Movies.Grains.Interfaces;
 using Movies.Grains.Interfaces.DataUpdates;
 using Orleans;

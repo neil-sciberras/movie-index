@@ -1,6 +1,6 @@
 ﻿using Movies.Contracts.Models;
 
-namespace Movies.Grains.DataUpdates.ContractExtensions
+namespace Movies.Grains.ContractExtensions
 {
 	public static class NewMovieExtensions
 	{
