@@ -1,8 +1,8 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Contracts.Models;
 using Movies.Grains.ContractExtensions;
-using Movies.Grains.Interfaces.DataUpdates;
 using Movies.Grains.Interfaces.Redis;
+using Movies.Grains.Interfaces.Redis.Updates;
 using Orleans;
 using System.Threading.Tasks;
 
@@ -17,7 +17,7 @@ namespace Movies.Grains.Redis.Updates
 			_grainFactory = grainFactory;
 		}
 
-		public async Task<Movie> UpdateAsync(Movie movieUpdate)
+		public async Task<Movie> UpdateMovieAsync(Movie movieUpdate)
 		{
 			var movieGrain = _grainFactory.GetGrain<IMovieGrain>(movieUpdate.Id);
 			var currentMovie = await movieGrain.GetMovieAsync();

@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Movies.AppInfo;
 using Movies.Extensions;
+using Movies.Grains.Redis;
+using Movies.Grains.Redis.Updates;
 using Orleans;
 using Orleans.Hosting;
 using Serilog;
@@ -13,9 +15,6 @@ using System.Threading.Tasks;
 using Movies.Infrastructure.Orleans.Filters;
 using Movies.Server.ApiHostedService;
 using Movies.Infrastructure.Orleans.Silo;
-using Movies.Grains.MovieList;
-using Movies.Grains.DataQueries.FilteredMovies;
-using Movies.Grains.DataQueries.Supervisors;
 using Movies.Server.CommandLineArgs;
 using Movies.Server.DataSetup;
 
@@ -105,9 +104,8 @@ namespace Movies.Server
 							}
 						})
 						.ConfigureApplicationParts(parts => parts
+							.AddApplicationPart(typeof(AddMovieGrain).Assembly).WithReferences()
 							.AddApplicationPart(typeof(AllMoviesGrain).Assembly).WithReferences()
-							.AddApplicationPart(typeof(TopRatedMoviesGrain).Assembly).WithReferences()
-							.AddApplicationPart(typeof(TopRatedMoviesSupervisorGrain).Assembly).WithReferences()
 						)
 						.AddIncomingGrainCallFilter<LoggingIncomingCallFilter>()
 						.AddOutgoingGrainCallFilter<LoggingOutgoingCallFilter>();
