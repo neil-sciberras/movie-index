@@ -10,7 +10,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Movies.Infrastructure.Orleans.StorageProviders
+namespace Movies.Infrastructure.Orleans.Storage.File
 {
 	/// <summary>
 	/// From: <see href="https://learn.microsoft.com/en-us/dotnet/orleans/tutorials-and-samples/custom-grain-storage"/>.

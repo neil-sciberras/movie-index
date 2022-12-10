@@ -18,6 +18,7 @@
     <ProjectReference Include="..\..\Movies.AppInfo\Movies.AppInfo.csproj" />
     <ProjectReference Include="..\..\Movies.Contracts\Movies.Contracts.csproj" />
     <ProjectReference Include="..\..\Movies.Utils\Movies.Utils.csproj" />
+    <ProjectReference Include="..\Movies.Infrastructure.Orleans.Storage.File\Movies.Infrastructure.Orleans.Storage.File.csproj" />
   </ItemGroup>
 
 </Project>

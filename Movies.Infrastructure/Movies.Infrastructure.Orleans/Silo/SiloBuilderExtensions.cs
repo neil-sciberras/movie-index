@@ -1,6 +1,6 @@
 ﻿using Movies.Contracts.Grains;
 using Movies.Extensions;
-using Movies.Infrastructure.Orleans.StorageProviders;
+using Movies.Infrastructure.Orleans.Storage.File;
 using Orleans.Configuration;
 using Orleans.Hosting;
 using System;

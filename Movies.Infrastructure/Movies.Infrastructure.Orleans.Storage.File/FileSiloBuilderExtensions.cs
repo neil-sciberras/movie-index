@@ -5,7 +5,7 @@ using Orleans.Runtime;
 using Orleans.Storage;
 using System;
 
-namespace Movies.Infrastructure.Orleans.StorageProviders
+namespace Movies.Infrastructure.Orleans.Storage.File
 {
 	/// <summary>
 	/// <see href="https://learn.microsoft.com/en-us/dotnet/orleans/tutorials-and-samples/custom-grain-storage"/>
