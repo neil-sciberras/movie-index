@@ -13,10 +13,9 @@ using System.Threading.Tasks;
 using Movies.Infrastructure.Orleans.Filters;
 using Movies.Server.ApiHostedService;
 using Movies.Infrastructure.Orleans.Silo;
-using Movies.Server.CommandLineArgs;
-using Movies.Server.DataSetup;
 using Movies.Grains;
 using Movies.Grains.Updates;
+using Movies.Server.RedisBootstrap;
 
 namespace Movies.Server
 {
@@ -25,7 +24,7 @@ namespace Movies.Server
 		public static Task Main(string[] args)
 		{
 			var hostBuilder = new HostBuilder();
-			var commandLineArguments = CommandLineArgHelper.ParseArguments(args);
+			Configuration configuration = null;
 			
 			IAppInfo appInfo = null;
 
@@ -71,7 +70,7 @@ namespace Movies.Server
 
 					cfg.Sources.Clear();
 
-					cfg.AddJsonFile("appsettings.json")
+					cfg.AddJsonFile("appsettings.docker.json")
 						.AddJsonFile($"appsettings.{shortEnvName}.json", optional: true)
 						.AddJsonFile("app-info.json")
 						.AddEnvironmentVariables()
@@ -90,6 +89,8 @@ namespace Movies.Server
 				})
 				.UseOrleans((ctx, builder) =>
 				{
+					configuration = new Configuration(ctx.Configuration);
+
 					builder
 						.ConfigureSilo(new AppSiloBuilderContext
 						{
@@ -99,8 +100,8 @@ namespace Movies.Server
 							{
 								SiloPort = GetAvailablePort(11111, 12000),
 								GatewayPort = 30001,
-								StorageFileName = ctx.Configuration.GetSection("moviesFileName").Value,
-								StorageFileDirectory = commandLineArguments.StorageDir
+								StorageFileName = configuration.FileStore.MoviesFileName,
+								StorageFileDirectory = configuration.FileStore.MoviesFileDirectory
 							}
 						})
 						.ConfigureApplicationParts(parts => parts
@@ -113,7 +114,7 @@ namespace Movies.Server
 				})
 				.ConfigureServices((ctx, services) =>
 				{
-					services.ConfigureDatabase(ctx.Configuration, appInfo, commandLineArguments);
+					services.ConfigureDatabase(configuration, appInfo);
 					services.AddHostedService<ApiHostedService.ApiHostedService>();
 				})
 				;

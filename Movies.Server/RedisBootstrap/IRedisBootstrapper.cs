@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace Movies.Server.DataSetup
+namespace Movies.Server.RedisBootstrap
 {
-	public interface IDataHelper
+	public interface IRedisBootstrapper
 	{
 		Task PreLoadRedisAsync();
 		Task SaveRedisDataAsync();

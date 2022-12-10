@@ -26,10 +26,10 @@ namespace Movies.Grains.Updates
 				return null;
 			}
 
-			var allMovieGrain = _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
+			var allMoviesGrain = _grainFactory.GetGrain<IAllMoviesGrain>(GrainIds.AllMoviesGrainId);
 
 			await movieGrain.DeleteMovieAsync();
-			await allMovieGrain.ResetAsync();
+			await allMoviesGrain.ResetAsync();
 
 			return movie;
 		}

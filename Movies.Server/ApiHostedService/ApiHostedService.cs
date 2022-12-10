@@ -6,7 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Movies.AppInfo;
-using Movies.Server.DataSetup;
+using Movies.Server.RedisBootstrap;
 using Orleans;
 using Serilog;
 using System.Diagnostics;
@@ -21,7 +21,7 @@ namespace Movies.Server.ApiHostedService
 		private readonly IAppInfo _appInfo;
 		private readonly ILogger _logger;
 		private readonly IWebHost _host;
-		private readonly IDataHelper _dataHelper;
+		private readonly IRedisBootstrapper _dataHelper;
 
 		public ApiHostedService(
 			IOptions<ApiHostedServiceOptions> options,
@@ -30,7 +30,7 @@ namespace Movies.Server.ApiHostedService
 			IConfiguration configuration,
 			IAppInfo appInfo,
 			ILogger<ApiHostedService> logger, 
-			IDataHelper dataHelper)
+			IRedisBootstrapper dataHelper)
 		{
 			_appInfo = appInfo;
 			_logger = logger;

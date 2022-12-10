@@ -1,4 +1,5 @@
-﻿using Movies.Infrastructure.Redis;
+﻿using Movies.Contracts.Models;
+using Movies.Infrastructure.Redis;
 using Newtonsoft.Json;
 using Orleans;
 using Orleans.Configuration;
@@ -27,14 +28,14 @@ namespace Movies.Infrastructure.Orleans.Storage.Redis
 		{
 			var movieId = (int)grainReference.GetPrimaryKeyLong();
 			grainState.State = await _redisReader.ReadMovieAsync(movieId);
-			grainState.ETag = grainState.State == null ? null : JsonConvert.SerializeObject(grainState.State);
+			grainState.ETag = GetETag(grainState.State);
 		}
 
 		public async Task WriteStateAsync(string grainType, GrainReference grainReference, IGrainState grainState)
 		{
 			var movieId = (int)grainReference.GetPrimaryKeyLong();
 			var currentMovie = await _redisReader.ReadMovieAsync(movieId);
-			var expectedEtag = currentMovie == null ? null : JsonConvert.SerializeObject(currentMovie);
+			var expectedEtag = GetETag(currentMovie);
 
 			if (!string.Equals(grainState.ETag , expectedEtag))
 			{
@@ -47,17 +48,24 @@ namespace Movies.Infrastructure.Orleans.Storage.Redis
 			}
 
 			await _redisWriter.WriteMovieAsync(movieId.ToString(), grainState.State);
+			grainState.ETag = GetETag(grainState.State);
 		}
 
 		public async Task ClearStateAsync(string grainType, GrainReference grainReference, IGrainState grainState)
 		{
 			var movieId = grainReference.GetPrimaryKeyLong();
 			await _redisWriter.DeleteAsync(movieId.ToString());
+			grainState.ETag = null;
 		}
 
 		public void Participate(ISiloLifecycle lifecycle)
 		{
 			
+		}
+
+		private string GetETag(object movie)
+		{
+			return movie == null ? null : JsonConvert.SerializeObject(movie);
 		}
 	}
 }

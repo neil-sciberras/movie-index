@@ -3,16 +3,16 @@ using Movies.Infrastructure.Redis;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Movies.Server.DataSetup
+namespace Movies.Server.RedisBootstrap
 {
-	public class DataHelper : IDataHelper
+	public class RedisBootstrapper : IRedisBootstrapper
 	{
 		private readonly IFileReader _fileReader;
 		private readonly IFileWriter _fileWriter;
 		private readonly IRedisReader _redisReader;
 		private readonly IRedisWriter _redisWriter;
 
-		public DataHelper(IFileReader fileReader, IFileWriter fileWriter, IRedisReader redisReader, IRedisWriter redisWriter)
+		public RedisBootstrapper(IFileReader fileReader, IFileWriter fileWriter, IRedisReader redisReader, IRedisWriter redisWriter)
 		{
 			_fileReader = fileReader;
 			_fileWriter = fileWriter;
