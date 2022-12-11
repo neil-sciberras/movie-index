@@ -33,7 +33,7 @@ The implementation for this alternative approach is maintained on a secondary br
 ![no-redis approach](./assets/grain-diagram-no-redis.drawio.png "no-redis approach")
 
 
-# Verdict
+## Verdict
 
 I am still not fully convinced on which one of the two approaches prove to be the more efficient. 
 
