@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Movies.AppInfo;
 using Movies.Grains.Clients;
 using Movies.GraphQL;
 using Movies.Infrastructure.Authentication;
@@ -14,13 +13,6 @@ namespace Movies.Server
 {
 	public class ApiStartup
 	{
-		private readonly IAppInfo _appInfo;
-
-		public ApiStartup(IAppInfo appInfo)
-		{
-			_appInfo = appInfo;
-		}
-
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
@@ -47,10 +39,7 @@ namespace Movies.Server
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(
-			IApplicationBuilder app,
-			IWebHostEnvironment env
-		)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			app.UseCors("TempCorsPolicy");
 
