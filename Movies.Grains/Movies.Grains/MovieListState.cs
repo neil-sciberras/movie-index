@@ -2,9 +2,11 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Movies.Grains
 {
+	[ExcludeFromCodeCoverage]
 	[Serializable]
 	public class MovieListState
 	{

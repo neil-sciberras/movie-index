@@ -49,13 +49,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Infrastructure.Redis", "Movies.Infrastructure\Movies.Infrastructure.Redis\Movies.Infrastructure.Redis.csproj", "{E158F6D6-1D49-466B-A037-BC37626145E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Infrastructure.Redis", "Movies.Infrastructure\Movies.Infrastructure.Redis\Movies.Infrastructure.Redis.csproj", "{E158F6D6-1D49-466B-A037-BC37626145E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Infrastructure.File", "Movies.Infrastructure\Movies.Infrastructure.File\Movies.Infrastructure.File.csproj", "{41524442-7DA0-44E9-88AC-44C8FC5B00C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Infrastructure.File", "Movies.Infrastructure\Movies.Infrastructure.File\Movies.Infrastructure.File.csproj", "{41524442-7DA0-44E9-88AC-44C8FC5B00C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Infrastructure.Orleans.Storage.File", "Movies.Infrastructure\Movies.Infrastructure.Orleans.Storage.File\Movies.Infrastructure.Orleans.Storage.File.csproj", "{9F7E399C-B85E-43B6-AC8A-123429B938C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Infrastructure.Orleans.Storage.File", "Movies.Infrastructure\Movies.Infrastructure.Orleans.Storage.File\Movies.Infrastructure.Orleans.Storage.File.csproj", "{9F7E399C-B85E-43B6-AC8A-123429B938C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Infrastructure.Orleans.Storage.Redis", "Movies.Infrastructure\Movies.Infrastructure.Orleans.Storage.Redis\Movies.Infrastructure.Orleans.Storage.Redis.csproj", "{D4BEFD05-A156-44FB-B3FD-29F7AF7E0DEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Infrastructure.Orleans.Storage.Redis", "Movies.Infrastructure\Movies.Infrastructure.Orleans.Storage.Redis\Movies.Infrastructure.Orleans.Storage.Redis.csproj", "{D4BEFD05-A156-44FB-B3FD-29F7AF7E0DEE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{00CB0449-F208-4B73-821F-699713B0B856}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Movies.Grains", "Movies.Grains", "{2BA11ABB-A425-403F-9E7C-F6E30D22CFAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Grains.Tests", "tests\Movies.Grains\Movies.Grains.Tests\Movies.Grains.Tests.csproj", "{BF3B724B-56C5-4EFB-9147-BB0E25AB9A4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,6 +133,10 @@ Global
 		{D4BEFD05-A156-44FB-B3FD-29F7AF7E0DEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4BEFD05-A156-44FB-B3FD-29F7AF7E0DEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4BEFD05-A156-44FB-B3FD-29F7AF7E0DEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF3B724B-56C5-4EFB-9147-BB0E25AB9A4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF3B724B-56C5-4EFB-9147-BB0E25AB9A4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF3B724B-56C5-4EFB-9147-BB0E25AB9A4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF3B724B-56C5-4EFB-9147-BB0E25AB9A4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -151,6 +161,9 @@ Global
 		{41524442-7DA0-44E9-88AC-44C8FC5B00C0} = {092134EB-C57D-404B-9F59-B9E5673E39EA}
 		{9F7E399C-B85E-43B6-AC8A-123429B938C7} = {092134EB-C57D-404B-9F59-B9E5673E39EA}
 		{D4BEFD05-A156-44FB-B3FD-29F7AF7E0DEE} = {092134EB-C57D-404B-9F59-B9E5673E39EA}
+		{00CB0449-F208-4B73-821F-699713B0B856} = {65507135-64DE-4BD5-AB2D-A0CC5455FD97}
+		{2BA11ABB-A425-403F-9E7C-F6E30D22CFAA} = {00CB0449-F208-4B73-821F-699713B0B856}
+		{BF3B724B-56C5-4EFB-9147-BB0E25AB9A4A} = {2BA11ABB-A425-403F-9E7C-F6E30D22CFAA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C8D162F0-CA39-495D-9796-16A8004BB075}
