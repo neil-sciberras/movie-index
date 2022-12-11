@@ -63,7 +63,7 @@ namespace Movies.Infrastructure.Orleans.Storage.Redis
 			
 		}
 
-		private string GetETag(object movie)
+		private static string GetETag(object movie)
 		{
 			return movie == null ? null : JsonConvert.SerializeObject(movie);
 		}

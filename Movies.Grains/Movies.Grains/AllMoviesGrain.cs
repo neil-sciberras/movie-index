@@ -33,7 +33,7 @@ namespace Movies.Grains
 				await RefetchStateAsync();
 			}
 
-			return _state.State!.Movies.ToList();
+			return _state.State!.Movies.OrderBy(m => m.Id).ToList();
 		}
 
 		public Task ResetAsync()

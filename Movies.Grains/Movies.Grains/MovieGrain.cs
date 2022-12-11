@@ -31,8 +31,8 @@ namespace Movies.Grains
 
 		public async Task DeleteMovieAsync()
 		{
-			_state.State = null;
 			await _state.ClearStateAsync();
+			_state.State = null;
 		}
 	}
 }

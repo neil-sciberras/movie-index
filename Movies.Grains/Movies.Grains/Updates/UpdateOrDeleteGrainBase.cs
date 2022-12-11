@@ -3,8 +3,6 @@ using Movies.Contracts.Models;
 using Movies.Grains.Interfaces;
 using Orleans;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Movies.Grains.Updates
@@ -34,7 +32,7 @@ namespace Movies.Grains.Updates
 			
 			await allMoviesGrain.ResetAsync();
 
-			return movie;
+			return (await movieGrain.GetMovieAsync()) ?? movie;
 		}
 	}
 }
