@@ -32,7 +32,7 @@ namespace Movies.Infrastructure.File.Tests
 				.Setup(m => m.GetContentsAsync(It.IsAny<FileOptions>()))
 				.ReturnsAsync(SampleMoviesJson);
 
-			var reader = new FileMoviesReader(_fileRepoMock.Object, new FileOptions("", ""));
+			var reader = new FileMoviesReader(_fileRepoMock.Object, new FileOptions());
 			
 			// Act
 			var results = await reader.ReadMoviesAsync();

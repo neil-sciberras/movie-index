@@ -20,7 +20,7 @@ namespace Movies.Infrastructure.File.Tests
 		{
 			// Arrange
 			_fileRepoMock.Setup(m => m.WriteContentsAsync(It.IsAny<FileOptions>(), It.IsAny<string>())).Verifiable();
-			var writer = new FileMoviesWriter(_fileRepoMock.Object, new FileOptions("", ""));
+			var writer = new FileMoviesWriter(_fileRepoMock.Object, new FileOptions());
 
 			// Act
 			await writer.WriteMoviesAsync(new Contracts.Models.Movies());

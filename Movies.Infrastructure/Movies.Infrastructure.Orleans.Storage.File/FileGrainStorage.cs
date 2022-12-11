@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Movies.Infrastructure.File;
+using Newtonsoft.Json;
 using Orleans;
 using Orleans.Configuration;
 using Orleans.Runtime;
@@ -9,6 +10,7 @@ using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using FileOptions = Movies.Infrastructure.File.FileOptions;
 
 namespace Movies.Infrastructure.Orleans.Storage.File
 {
@@ -23,15 +25,15 @@ namespace Movies.Infrastructure.Orleans.Storage.File
 	public class FileGrainStorage : IGrainStorage, ILifecycleParticipant<ISiloLifecycle>
 	{
 		private readonly string _storageName;
-		private readonly FileStorageOptions _fileStorageOptions;
+		private readonly FileOptions _fileOptions;
 		private readonly ClusterOptions _clusterOptions;
 
 		private FileInfo _fileInfo;
 
-		public FileGrainStorage(string storageName, FileStorageOptions fileStorageOptions, ClusterOptions clusterOptions)
+		public FileGrainStorage(string storageName, FileOptions fileOptions, ClusterOptions clusterOptions)
 		{
 			_storageName = storageName;
-			_fileStorageOptions = fileStorageOptions;
+			_fileOptions = fileOptions;
 			_clusterOptions = clusterOptions;
 		}
 
@@ -86,12 +88,7 @@ namespace Movies.Infrastructure.Orleans.Storage.File
 
 		private Task Init(CancellationToken ct)
 		{
-			_fileInfo = new FileInfo(_fileStorageOptions.FullFileName);
-
-			if (!_fileInfo.Exists)
-			{
-				throw new FileNotFoundException($"File '{_fileInfo.FullName}' does not exist");
-			}
+			_fileInfo = FileInfoHelper.GetFileInfo(_fileOptions);
 
 			return Task.CompletedTask;
 		}

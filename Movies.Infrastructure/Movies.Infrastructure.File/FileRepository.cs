@@ -7,7 +7,7 @@ namespace Movies.Infrastructure.File
 	{
 		public async Task<string> GetContentsAsync(FileOptions fileOptions)
 		{
-			var fileInfo = GetFileInfo(fileOptions);
+			var fileInfo = FileInfoHelper.GetFileInfo(fileOptions);
 
 			using (var stream = fileInfo.OpenText())
 			{
@@ -17,25 +17,12 @@ namespace Movies.Infrastructure.File
 
 		public async Task WriteContentsAsync(FileOptions fileOptions, string contents)
 		{
-			var fileInfo = GetFileInfo(fileOptions);
+			var fileInfo = FileInfoHelper.GetFileInfo(fileOptions);
 
 			using (var streamWriter = new StreamWriter(fileInfo.Open(FileMode.Create, FileAccess.Write)))
 			{
 				await streamWriter.WriteAsync(contents);
 			}
-		}
-
-		private FileInfo GetFileInfo(FileOptions fileOptions)
-		{
-			var fileInfo = new FileInfo(fileOptions.FullFileName);
-
-			if (!fileInfo.Exists)
-			{
-				throw new FileNotFoundException($"File '{fileInfo.FullName}' does not exist");
-			}
-
-			return fileInfo;
-
 		}
 	}
 }

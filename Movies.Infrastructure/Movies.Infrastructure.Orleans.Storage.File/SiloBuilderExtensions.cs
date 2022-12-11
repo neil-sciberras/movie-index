@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Movies.Infrastructure.File;
 using Orleans;
 using Orleans.Hosting;
 using Orleans.Runtime;
@@ -12,7 +13,7 @@ namespace Movies.Infrastructure.Orleans.Storage.File
 	/// </summary>
 	public static class SiloBuilderExtensions
 	{
-		public static ISiloBuilder AddFileGrainStorage(this ISiloBuilder builder, string providerName, Action<FileStorageOptions> options)
+		public static ISiloBuilder AddFileGrainStorage(this ISiloBuilder builder, string providerName, Action<FileOptions> options)
 		{
 			return builder.ConfigureServices(services =>
 				{
@@ -20,9 +21,9 @@ namespace Movies.Infrastructure.Orleans.Storage.File
 				});
 		}
 
-		private static IServiceCollection AddFileGrainStorage(this IServiceCollection services, string providerName, Action<FileStorageOptions> options)
+		private static IServiceCollection AddFileGrainStorage(this IServiceCollection services, string providerName, Action<FileOptions> options)
 		{
-			services.AddOptions<FileStorageOptions>(providerName).Configure(options);
+			services.AddOptions<FileOptions>(providerName).Configure(options);
 
 			return services
 				.AddSingletonNamedService(name: providerName, factory: FileGrainStorageFactory.Create)

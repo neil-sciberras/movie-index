@@ -20,7 +20,11 @@ namespace Movies.Server.RedisBootstrap
 
 		private static IServiceCollection ConfigureFile(this IServiceCollection services, Configuration configuration)
 		{
-			var fileOptions = new FileOptions(rootDirectory: configuration.FileStore.MoviesFileDirectory, fileName: configuration.FileStore.MoviesFileName);
+			var fileOptions = new FileOptions
+			{
+				RootDirectory = configuration.FileStore.MoviesFileDirectory,
+				FileName = configuration.FileStore.MoviesFileName
+			};
 
 			return services.ConfigureFileReadingAndWriting(fileOptions);
 		}
