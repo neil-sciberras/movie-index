@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Movies.AppInfo;
+using Movies.Infrastructure.DataSource.Interfaces;
 using StackExchange.Redis;
 
 namespace Movies.Infrastructure.Redis
@@ -15,6 +16,8 @@ namespace Movies.Infrastructure.Redis
 
 			services.AddSingleton(redisSettings);
 			services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+			services.AddSingleton<RedisWriter>();
+			services.AddSingleton<RedisReader>();
 			services.AddSingleton<IRedisWriter, RedisWriter>();
 			services.AddSingleton<IRedisReader, RedisReader>();
 

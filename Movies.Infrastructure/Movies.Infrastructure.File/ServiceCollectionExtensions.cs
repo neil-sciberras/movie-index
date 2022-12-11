@@ -9,8 +9,8 @@ namespace Movies.Infrastructure.File
 		{
 			services.AddSingleton(fileOptions);
 			services.AddScoped<IFileRepository, FileRepository>();
-			services.AddSingleton<IMoviesReader, FileMoviesReader>();
-			services.AddSingleton<IMoviesWriter, FileMoviesWriter>();
+			services.AddSingleton<FileMoviesReader>();
+			services.AddSingleton<FileMoviesWriter>();
 
 			return services;
 		}

@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Movies.AppInfo;
+using Movies.Infrastructure.DataSource.Interfaces;
 using Movies.Infrastructure.File;
 using Movies.Infrastructure.Redis;
+using System;
 
 namespace Movies.Server.RedisBootstrap
 {
@@ -12,6 +14,7 @@ namespace Movies.Server.RedisBootstrap
 			return services
 				.ConfigureFile(configuration)
 				.ConfigureRedis(configuration, appInfo)
+				.ConfigureServiceResolvers()
 				.AddSingleton<IRedisBootstrapper, RedisBootstrapper>();
 		}
 
@@ -29,6 +32,31 @@ namespace Movies.Server.RedisBootstrap
 				password: configuration.Redis.Password);
 
 			return services.ConfigureRedis(redisSettings, appInfo);
+		}
+
+		private static IServiceCollection ConfigureServiceResolvers(this IServiceCollection services)
+		{
+			services.AddSingleton<Func<MovieStorage, IMoviesWriter>>(implementationFactory: provider => movieStorage =>
+			{
+				switch (movieStorage)
+				{
+					case MovieStorage.File: return provider.GetService<FileMoviesWriter>();
+					case MovieStorage.Redis: return provider.GetService<RedisWriter>();
+					default: return null;
+				}
+			});
+
+			services.AddSingleton<Func<MovieStorage, IMoviesReader>>(implementationFactory: provider => movieStorage =>
+			{
+				switch (movieStorage)
+				{
+					case MovieStorage.File: return provider.GetService<FileMoviesReader>();
+					case MovieStorage.Redis: return provider.GetService<RedisReader>();
+					default: return null;
+				}
+			});
+
+			return services;
 		}
 	}
 }

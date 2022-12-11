@@ -1,22 +1,22 @@
 ﻿using Movies.Infrastructure.DataSource.Interfaces;
-using Movies.Infrastructure.Redis;
+using System;
 using System.Threading.Tasks;
 
 namespace Movies.Server.RedisBootstrap
 {
 	public class RedisBootstrapper : IRedisBootstrapper
 	{
-		private readonly IMoviesReader _fileReader;
+		private readonly IMoviesReader _fileReader; 
+		private readonly IMoviesReader _redisReader;
 		private readonly IMoviesWriter _fileWriter;
-		private readonly IRedisReader _redisReader;
-		private readonly IRedisWriter _redisWriter;
+		private readonly IMoviesWriter _redisWriter;
 
-		public RedisBootstrapper(IMoviesReader fileReader, IMoviesWriter fileWriter, IRedisReader redisReader, IRedisWriter redisWriter)
+		public RedisBootstrapper(Func<MovieStorage, IMoviesReader> readerResolver, Func<MovieStorage, IMoviesWriter> writerResolver)
 		{
-			_fileReader = fileReader;
-			_fileWriter = fileWriter;
-			_redisReader = redisReader;
-			_redisWriter = redisWriter;
+			_fileReader = readerResolver(MovieStorage.File);
+			_fileWriter = writerResolver(MovieStorage.File);
+			_redisReader = readerResolver(MovieStorage.Redis);
+			_redisWriter = writerResolver(MovieStorage.Redis);
 		}
 
 		public async Task PreLoadRedisAsync()
