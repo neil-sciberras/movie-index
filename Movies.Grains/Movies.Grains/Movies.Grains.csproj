@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Movies.Grains.Interfaces\Movies.Grains.Interfaces.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Orleans_CodeGenInputs Remove="Updates\UpdateOrDeleteGrainBase.cs" />
+  </ItemGroup>
+
 </Project>
