@@ -1,13 +1,4 @@
-# Docker
-- start docker desktop
-- build the image from the Dockerfile (form the root directory)
-`docker build . -t movies-server`
-- run the image as a container
-`docker run --publish 6600:6600 movies-server`
-
-
-# Sample GraphQL query/mutations:
-
+## The 2 top most rated movies
 ```
 query {
   topRatedMovies(amount: 2){
@@ -17,6 +8,7 @@ query {
 }
 ```
 
+## Get all movies
 ```
 query{
   moviesList{
@@ -25,6 +17,7 @@ query{
 }
 ```
 
+## Filter by genre
 ```
 query {
   moviesWithGenre(genre: SCI_FI){
@@ -33,6 +26,7 @@ query {
 }
 ```
 
+## Add a movie
 ```
 mutation{
   addMovie(newMovie:{
@@ -49,6 +43,7 @@ mutation{
 }
 ```
 
+## Retrieve the latest added movie
 ```
 query {
   movie(id: 24){
@@ -61,6 +56,7 @@ query {
 }
 ```
 
+## Update the latest added movie
 ```
 mutation{
   updateMovie(movieUpdate:{
@@ -77,6 +73,7 @@ mutation{
 }
 ```
 
+## Delete the latest added movie
 ```
 mutation{
   deleteMovie(movieId: 24){
