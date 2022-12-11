@@ -1,12 +1,10 @@
-﻿using Movies.Contracts.Models;
-using System.Collections.Generic;
+﻿using Movies.Infrastructure.DataSource.Interfaces;
 using System.Threading.Tasks;
 
 namespace Movies.Infrastructure.Redis
 {
-	public interface IRedisWriter
+	public interface IRedisWriter : IMoviesWriter
 	{
-		Task WriteMoviesAsync(ICollection<Movie> movies);
 		Task<bool> WriteMovieAsync(string id, object movie);
 		Task DeleteAsync(string id);
 	}

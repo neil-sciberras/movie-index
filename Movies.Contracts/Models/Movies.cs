@@ -1,9 +1,8 @@
-﻿using Movies.Contracts.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace Movies.Infrastructure.File
+namespace Movies.Contracts.Models
 {
 	[Serializable]
 	public class Movies

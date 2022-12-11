@@ -1,7 +1,5 @@
-﻿using Movies.Contracts.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using StackExchange.Redis;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,10 +14,10 @@ namespace Movies.Infrastructure.Redis
 			_redisConnection = redisConnection;
 		}
 
-		public async Task WriteMoviesAsync(ICollection<Movie> movies)
+		public async Task WriteMoviesAsync(Contracts.Models.Movies movies)
 		{
 			var db = _redisConnection.GetDatabase();
-			var setTasks = movies.Select(m => WriteMovieAsync(id: m.Id.ToString(), movie: m, database: db));
+			var setTasks = movies.MovieList.Select(m => WriteMovieAsync(id: m.Id.ToString(), movie: m, database: db));
 
 			var counter = 0;
 
@@ -33,9 +31,9 @@ namespace Movies.Infrastructure.Redis
 				}
 			}
 
-			if (counter != movies.Count)
+			if (counter != movies.MovieList.Count())
 			{
-				throw new RedisLoadingException($"{movies.Count} were supposed to be loaded into Redis, but {counter} were successfully loaded");
+				throw new RedisLoadingException($"{movies.MovieList.Count()} were supposed to be loaded into Redis, but {counter} were successfully loaded");
 			}
 		}
 

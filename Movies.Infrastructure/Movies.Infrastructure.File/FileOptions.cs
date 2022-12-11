@@ -1,13 +1,15 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Movies.Infrastructure.File
 {
-	public class FileStorageOptions
+	[ExcludeFromCodeCoverage]
+	public class FileOptions
 	{
 		private readonly string _rootDirectory;
 		private readonly string _fileName;
 
-		public FileStorageOptions(string rootDirectory, string fileName)
+		public FileOptions(string rootDirectory, string fileName)
 		{
 			_rootDirectory = rootDirectory;
 			_fileName = fileName;

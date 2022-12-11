@@ -18,7 +18,7 @@ namespace Movies.Infrastructure.Redis
 			_redisSettings = redisSettings;
 		}
 
-		public async Task<IEnumerable<Movie>> ReadMoviesAsync()
+		public async Task<Contracts.Models.Movies> ReadMoviesAsync()
 		{
 			var ids = GetAllIds();
 			var db = _redisConnection.GetDatabase();
@@ -29,7 +29,7 @@ namespace Movies.Infrastructure.Redis
 				movies.Add(await ReadMovieAsync(id.ToString(), db));
 			}
 
-			return movies;
+			return new Contracts.Models.Movies {MovieList = movies};
 		}
 
 		public async Task<Movie> ReadMovieAsync(int id)
