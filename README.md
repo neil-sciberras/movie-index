@@ -22,11 +22,11 @@ Prior to this approach being taken, an alternative design was implemented. It st
 
 It included one `AllMoviesGrain`, whose persistent state was not in memory but the `movies.json` file itself. Any movie updates were directly written to file. 
 
-In addition, the `GenreFilterGrain`, `TopRatedMoviesGrain` and `MovieSearch` were keyed on the genre, amount of top-rated movies, and the search id respectively. And the list of movies each returned was kept in memory in the grain state. So this essentially cached the results for multiple requests of the same query. E.g. if two requests came in for the top-5 rated movies, the first request would call `AllMoviesGrain` and save the list of movies in the state. The second one would simply return the list in the state.
+In addition, the `GenreFilterGrain`, `TopRatedMoviesGrain` and `MovieSearch` were keyed on the genre, amount of top-rated movies, and the search id respectively. The list of movies each returned was kept in memory in the grain state. So this essentially cached the results for multiple requests of the same query. E.g. if two requests came in for the top-5 rated movies, the first request would call `AllMoviesGrain` and save the list of movies in the state. The second one would simply return the list in the state.
 
 To do this effectively though, the states (lists of movie-results) of each of the query grains had to be invalidated / reset whenever there was an update to the movie list. This was achieved by having three supervisor grains (`GenreFilterSupervisorGrain`, `TopRatedSupervisorGrain`, `MovieSearchSupervisorGrain`). Each of the supervisors maintained an in-memory set containing the Ids of the supervised grains (where the Ids represent the variable in the queries; e.g. the amount of top-rated movies to be returned).
 
-Then whenever an update (addition, update, deletion) was done to the original movie list, the supervisors were instructed to reset all their supervised grains's states. 
+Then whenever an update (addition, update, deletion) was done to the original movie list, the supervisors were instructed to reset all their supervised grains' states. 
 
 The implementation for this alternative approach is maintained on a secondary branch [checkpoint/supervisor-implementation-no-redis](https://github.com/neil-scib/movie-index/tree/checkpoint/supervisor-implementation-no-redis), and is also in a fully-working state. It can be run via its version of `run.ps1`, and the same sample graphQL queries mentioned above can be used.
 
