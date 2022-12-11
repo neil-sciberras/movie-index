@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Movies.Infrastructure.Authentication
 {
-	public static class AuthServiceCollectionExtensions
+	public static class ServiceCollectionExtensions
 	{
 		public static void AddCustomAuthentication(this IServiceCollection services)
 		{
