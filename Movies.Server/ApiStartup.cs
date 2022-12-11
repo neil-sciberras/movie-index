@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using Movies.AppInfo;
 using Movies.Grains.Clients;
 using Movies.GraphQL;
@@ -45,11 +44,6 @@ namespace Movies.Server
 			services.AddGrainClients();
 			services.AddAppGraphQL();
 			services.AddControllers().AddNewtonsoftJson();
-			services.AddSwaggerGen();
-			services.AddSwaggerGen(opt =>
-			{
-				opt.SwaggerDoc("v1", new OpenApiInfo { Version = _appInfo.Version, Title = _appInfo.Name });
-			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,12 +75,6 @@ namespace Movies.Server
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
-			});
-
-			app.UseSwagger();
-			app.UseSwaggerUI(opt =>
-			{
-				opt.SwaggerEndpoint("/swagger/v1/swagger.json", _appInfo.ShortName);
 			});
 		}
 	}
