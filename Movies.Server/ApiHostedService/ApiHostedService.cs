@@ -21,7 +21,7 @@ namespace Movies.Server.ApiHostedService
 		private readonly IAppInfo _appInfo;
 		private readonly ILogger _logger;
 		private readonly IWebHost _host;
-		private readonly IRedisBootstrapper _dataHelper;
+		private readonly IRedisBootstrapper _redisBootstrapper;
 
 		public ApiHostedService(
 			IOptions<ApiHostedServiceOptions> options,
@@ -30,11 +30,11 @@ namespace Movies.Server.ApiHostedService
 			IConfiguration configuration,
 			IAppInfo appInfo,
 			ILogger<ApiHostedService> logger, 
-			IRedisBootstrapper dataHelper)
+			IRedisBootstrapper redisBootstrapper)
 		{
 			_appInfo = appInfo;
 			_logger = logger;
-			_dataHelper = dataHelper;
+			_redisBootstrapper = redisBootstrapper;
 
 			logger.LogInformation("Initializing api {appName} ({version}) [{env}] on port {apiPort}...",
 				appInfo.Name, appInfo.Version, appInfo.Environment, options.Value.Port);
@@ -64,7 +64,7 @@ namespace Movies.Server.ApiHostedService
 		{
 			_logger.LogInformation("Loading movies from file to Redis");
 
-			await _dataHelper.PreLoadRedisAsync();
+			await _redisBootstrapper.PreLoadRedisAsync();
 
 			_logger.LogInformation("App started successfully {appName} ({version}) [{env}]", _appInfo.Name, _appInfo.Version, _appInfo.Environment);
 
@@ -77,7 +77,7 @@ namespace Movies.Server.ApiHostedService
 		{
 			_logger.LogInformation("Saving movies to file from Redis");
 
-			await _dataHelper.SaveRedisDataAsync();
+			await _redisBootstrapper.SaveRedisDataAsync();
 
 			await _host.StopAsync(cancellationToken);
 		}
