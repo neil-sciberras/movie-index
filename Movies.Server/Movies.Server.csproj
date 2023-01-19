@@ -21,17 +21,18 @@
     <PackageReference Include="GraphQL" Version="3.0.0-preview-1552" />
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore.NewtonsoftJson" Version="3.5.0-alpha0060" />
     <PackageReference Include="GraphQL.Server.Ui.Playground" Version="3.5.0-alpha0060" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="$(MicrosoftExtensionsVersion)" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="$(MicrosoftExtensionsVersion)" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="$(MicrosoftExtensionsVersion)" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="$(MicrosoftExtensionsVersion)" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="$(MicrosoftExtensionsVersion)" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="$(MicrosoftExtensionsVersion)" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="$(MicrosoftExtensionsVersion)" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="$(MicrosoftExtensionsVersion)" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsVersion)" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsVersion)" />
-    <PackageReference Include="Microsoft.Orleans.Server" Version="$(OrleansVersion)" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Orleans.Server" Version="3.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
     <PackageReference Include="Serilog" Version="2.9.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
     <PackageReference Include="Serilog.Extensions.Hosting" Version="3.1.0" />
@@ -50,17 +51,30 @@
   <PropertyGroup>
     <ServerGarbageCollection>true</ServerGarbageCollection>
     <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Movies.AppInfo\Movies.AppInfo.csproj" />
     <ProjectReference Include="..\Movies.Contracts\Movies.Contracts.csproj" />
-    <ProjectReference Include="..\Movies.Core\Movies.Core.csproj" />
-    <ProjectReference Include="..\Movies.GrainClients\Movies.GrainClients.csproj" />
-    <ProjectReference Include="..\Movies.Grains\Movies.Grains.csproj" />
+    <ProjectReference Include="..\Movies.Grains\Movies.Grains.Clients\Movies.Grains.Clients.csproj" />
+    <ProjectReference Include="..\Movies.Grains\Movies.Grains\Movies.Grains.csproj" />
+    <ProjectReference Include="..\Movies.GraphQL\Movies.GraphQL.csproj" />
+    <ProjectReference Include="..\Movies.Infrastructure\Movies.Infrastructure.Authentication\Movies.Infrastructure.Authentication.csproj" />
+    <ProjectReference Include="..\Movies.Infrastructure\Movies.Infrastructure.File\Movies.Infrastructure.File.csproj" />
+    <ProjectReference Include="..\Movies.Infrastructure\Movies.Infrastructure.Orleans\Movies.Infrastructure.Orleans.csproj" />
+    <ProjectReference Include="..\Movies.Infrastructure\Movies.Infrastructure.Redis\Movies.Infrastructure.Redis.csproj" />
+    <ProjectReference Include="..\Movies.Utils\Movies.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Update="app-info.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.docker.dev.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.docker.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="appsettings.dev.json">

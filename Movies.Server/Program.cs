@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Movies.Core;
-using Movies.Server.Infrastructure;
+using Movies.AppInfo;
+using Movies.Extensions;
 using Orleans;
 using Orleans.Hosting;
 using Serilog;
@@ -10,7 +10,12 @@ using System;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using Movies.Infrastructure.Orleans.Filters;
+using Movies.Server.ApiHostedService;
+using Movies.Infrastructure.Orleans.Silo;
 using Movies.Grains;
+using Movies.Grains.Updates;
+using Movies.Server.RedisBootstrap;
 
 namespace Movies.Server
 {
@@ -19,8 +24,10 @@ namespace Movies.Server
 		public static Task Main(string[] args)
 		{
 			var hostBuilder = new HostBuilder();
-
+			Configuration configuration = null;
+			
 			IAppInfo appInfo = null;
+
 			hostBuilder
 				.ConfigureHostConfiguration(cfg =>
 				{
@@ -30,7 +37,7 @@ namespace Movies.Server
 				})
 				.ConfigureServices((ctx, services) =>
 				{
-					appInfo = new AppInfo(ctx.Configuration);
+					appInfo = new AppInfo.AppInfo(ctx.Configuration);
 					Console.Title = $"{appInfo.Name} - {appInfo.Environment}";
 
 					services.AddSingleton(appInfo);
@@ -46,20 +53,24 @@ namespace Movies.Server
 				})
 				.ConfigureAppConfiguration((ctx, cfg) =>
 				{
-					var shortEnvName = AppInfo.MapEnvironmentName(ctx.HostingEnvironment.EnvironmentName);
+					var shortEnvName = AppInfo.AppInfo.MapEnvironmentName(ctx.HostingEnvironment.EnvironmentName);
+					
 					cfg.AddJsonFile("appsettings.json")
 						.AddJsonFile($"appsettings.{shortEnvName}.json", optional: true)
 						.AddJsonFile("app-info.json")
 						.AddEnvironmentVariables()
 						.AddCommandLine(args);
 
-					appInfo = new AppInfo(cfg.Build());
+					appInfo = new AppInfo.AppInfo(cfg.Build());
 
-					if (!appInfo.IsDockerized) return;
+					if (!appInfo.IsDockerized)
+					{
+						return;
+					}
 
 					cfg.Sources.Clear();
 
-					cfg.AddJsonFile("appsettings.json")
+					cfg.AddJsonFile("appsettings.docker.json")
 						.AddJsonFile($"appsettings.{shortEnvName}.json", optional: true)
 						.AddJsonFile("app-info.json")
 						.AddEnvironmentVariables()
@@ -67,7 +78,8 @@ namespace Movies.Server
 				})
 				.UseSerilog((ctx, loggerConfig) =>
 				{
-					loggerConfig.Enrich.FromLogContext()
+					loggerConfig
+						.Enrich.FromLogContext()
 						.ReadFrom.Configuration(ctx.Configuration)
 						.Enrich.WithMachineName()
 						.Enrich.WithDemystifiedStackTraces()
@@ -77,27 +89,33 @@ namespace Movies.Server
 				})
 				.UseOrleans((ctx, builder) =>
 				{
+					configuration = new Configuration(ctx.Configuration);
+
 					builder
-						.UseAppConfiguration(new AppSiloBuilderContext
+						.ConfigureSilo(new AppSiloBuilderContext
 						{
 							AppInfo = appInfo,
 							HostBuilderContext = ctx,
 							SiloOptions = new AppSiloOptions
 							{
 								SiloPort = GetAvailablePort(11111, 12000),
-								GatewayPort = 30001
+								GatewayPort = 30001,
+								StorageFileName = configuration.FileStore.MoviesFileName,
+								StorageFileDirectory = configuration.FileStore.MoviesFileDirectory
 							}
 						})
 						.ConfigureApplicationParts(parts => parts
-							.AddApplicationPart(typeof(SampleGrain).Assembly).WithReferences()
+							.AddApplicationPart(typeof(AddMovieGrain).Assembly).WithReferences()
+							.AddApplicationPart(typeof(AllMoviesGrain).Assembly).WithReferences()
 						)
 						.AddIncomingGrainCallFilter<LoggingIncomingCallFilter>()
-					;
+						.AddOutgoingGrainCallFilter<LoggingOutgoingCallFilter>();
 
 				})
 				.ConfigureServices((ctx, services) =>
 				{
-					services.AddHostedService<ApiHostedService>();
+					services.ConfigureDatabase(configuration, appInfo);
+					services.AddHostedService<ApiHostedService.ApiHostedService>();
 				})
 				;
 
